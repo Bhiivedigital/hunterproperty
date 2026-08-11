@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
+declare const bootstrap: any;
 
 @Component({
   selector: 'app-header',
@@ -21,9 +22,8 @@ export class HeaderComponent {
      emailjs.init('Ib8KzPUHhor6Az9D2');
     this.form = this.formBuilder.group(
       {
-        firstName: ['', Validators.required],
-        //lastName: ['', Validators.required],
-        phoneNo: ['',Validators.required],
+        fullName: ['', Validators.required],
+        Phno: ['',Validators.required],
         email: ['', [Validators.required, Validators.email]],
        message:['']
       },
@@ -52,12 +52,10 @@ async onSubmit() {
       // alert("Please fill in all required fields correctly.");
       return;
     }
-
     try {
-         let response = await emailjs.send("service_wrsfjtp","template_0uxx83q",{
-          firstName: this.form.value.firstName,
-          //lastName: this.form.value.lastName,
-          phoneNo: this.form.value.phoneNo,
+         let response = await emailjs.send("service_37vso18","template_wo2b83h",{
+          fullName: this.form.value.fullName,
+          Phno: this.form.value.Phno,
           email: this.form.value.email,
           message: this.form.value.message
           });
@@ -80,5 +78,21 @@ callNow(): void {
   const phoneNumber = '7550110784'; // Include country code if needed
   window.location.href = `tel:${phoneNumber}`;
 }
+ ngAfterViewInit(): void {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const offcanvasNavbar = document.getElementById('offcanvasNavbar');
+    const offcanvasAnother = document.getElementById('offcanvasAnother');
 
+    const offcanvas1 = offcanvasNavbar ? new bootstrap.Offcanvas(offcanvasNavbar) : null;
+    const offcanvas2 = offcanvasAnother ? new bootstrap.Offcanvas(offcanvasAnother) : null;
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (offcanvas1) offcanvas1.hide();
+        setTimeout(() => {
+          if (offcanvas2) offcanvas2.show();
+        }, 300); // slight delay to avoid backdrop conflict
+      });
+    });
+  }
 }

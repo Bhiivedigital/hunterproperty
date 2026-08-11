@@ -5,6 +5,7 @@ import { HomelayoutComponent } from './components/homelayout/homelayout.componen
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { BlogComponent } from './components/blog/blog.component';
 import { ServicesComponent } from './components/services/services.component';
+import { LandingpageComponent } from './components/landingpage/landingpage.component';
 
 export const routes: Routes = [
     {path:'', component:HomelayoutComponent},
@@ -12,6 +13,7 @@ export const routes: Routes = [
     {path:'contactus', component:ContactusComponent},
     {path:'services', component:ServicesComponent},
     {path:'portfolio', component:PortfolioComponent},
-     {path:'blog', component:BlogComponent}
+     {path:'blog', component:BlogComponent},
+     {path:'home', component:LandingpageComponent}
 
 ];

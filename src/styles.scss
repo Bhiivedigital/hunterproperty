@@ -154,7 +154,7 @@ button.accordion-button.collapsed {
 }
 .heroslider-abt h2.hero-title {
     color: var(--color-white);
-    font-size: 61px;
+    font-size: 54px;
     font-weight: 700;
     margin: 20px 0;
     text-transform: capitalize;
@@ -218,5 +218,11 @@ button.accordion-button.collapsed {
    }
    .service-item{
     margin-top: 20px;
+   }
+   .navbar-toggler{
+    border: none;
+   }
+   .navbar-toggler:focus{
+    box-shadow: none;
    }
 }

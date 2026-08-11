@@ -19,9 +19,8 @@ submitted = false;
      emailjs.init('Ib8KzPUHhor6Az9D2');
     this.form = this.formBuilder.group(
       {
-        firstName: ['', Validators.required],
-        //lastName: ['', Validators.required],
-        phoneNo: ['',Validators.required],
+        fullName: ['', Validators.required],
+        Phno: ['',Validators.required],
         email: ['', [Validators.required, Validators.email]],
        message:['']
       },
@@ -52,10 +51,9 @@ async onSubmit() {
     }
 
     try {
-         let response = await emailjs.send("service_wrsfjtp","template_0uxx83q",{
-          firstName: this.form.value.firstName,
-          //lastName: this.form.value.lastName,
-          phoneNo: this.form.value.phoneNo,
+         let response = await emailjs.send("service_37vso18","template_wo2b83h",{
+          fullName: this.form.value.fullName,
+          Phno: this.form.value.Phno,
           email: this.form.value.email,
           message: this.form.value.message
           });

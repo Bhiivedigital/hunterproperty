@@ -18,10 +18,10 @@
                         <div class="form-group">
                             <div class="form-icon">
                                 <i class="far fa-user-tie"></i>
-                                 <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"  placeholder="Full Name" />
-                                @if (submitted && f['firstName'].errors) {
+                                 <input type="text" formControlName="fullName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['fullName'].errors }"  placeholder="Full Name" />
+                                @if (submitted && f['fullName'].errors) {
                                 <div class="invalid-feedback">
-                                    @if (f['firstName'].errors['required']) {
+                                    @if (f['fullName'].errors['required']) {
                                     <div>First Name is required</div>
                                     }
                                 </div>
@@ -48,10 +48,10 @@
                         <div class="form-group">
                             <div class="form-icon">
                                 <i class="far fa-user-tie"></i>
-                                 <input type="text" formControlName="phoneNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['phoneNo'].errors }"  placeholder="Phone Number" maxlength="10" />
-                                @if (submitted && f['phoneNo'].errors) {
+                                 <input type="text" formControlName="Phno" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['Phno'].errors }"  placeholder="Phone Number" maxlength="10" />
+                                @if (submitted && f['Phno'].errors) {
                                 <div class="invalid-feedback">
-                                    @if (f['phoneNo'].errors['required']) {
+                                    @if (f['Phno'].errors['required']) {
                                     <div>Phone Number is required</div>
                                     }
                                 </div>
