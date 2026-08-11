@@ -146,8 +146,22 @@ button.accordion-button.collapsed {
   background: #f90; /* Orange scroll */
   border-radius: 10px;
 }
-
-
+.testimonial-slider .owl-theme .owl-nav{
+    display: none!important;
+}
+.heroslider-abt img {
+    height: 100px;
+}
+.heroslider-abt h2.hero-title {
+    color: var(--color-white);
+    font-size: 61px;
+    font-weight: 700;
+    margin: 20px 0;
+    text-transform: capitalize;
+}
+.heroslider-abt h2.hero-title span {
+      color: var(--theme-color);
+}
 @media screen and (max-width: 640px) and (min-width: 320px) {
 .popup {
   position: fixed;
@@ -201,5 +215,8 @@ button.accordion-button.collapsed {
     }
     .owl-theme .owl-nav{
         display: none;
+   }
+   .service-item{
+    margin-top: 20px;
    }
 }

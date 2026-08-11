@@ -227,7 +227,7 @@
                              </div>
                             </div>
                              <div class="pricing-btn">
-                                <a href="pricing.html" class="theme-btn2">Purchase Now <i class="fas fa-arrow-right"></i></a>
+                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="theme-btn2">Purchase Now <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -458,7 +458,7 @@
                              </div>
                             </div>
                             <div class="pricing-btn">
-                                <a href="pricing.html" class="theme-btn">Purchase Now <i class="fas fa-arrow-right"></i></a>
+                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="theme-btn">Purchase Now <i class="fas fa-arrow-right"></i></a>
                             </div>
 
                         </div>
@@ -693,7 +693,7 @@
                              </div>
                             </div>
                              <div class="pricing-btn">
-                                <a href="pricing.html" class="theme-btn2">Purchase Now <i class="fas fa-arrow-right"></i></a>
+                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="theme-btn2">Purchase Now <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -940,16 +940,114 @@
                              </div>
                             </div>
                             <div class="pricing-btn">
-                                <a href="pricing.html" class="theme-btn2">Purchase Now <i class="fas fa-arrow-right"></i></a>
+                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="theme-btn2">Purchase Now <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
             </div>
         </div>
         <!-- pricing area end -->
 
 
-       
+       <!-- Modal -->
+<div class="modal modal-lg fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content ">
+      <div class="modal-header border-0 py-4 px-4 pb-0">
+        <h5 class="modal-title" id="exampleModalLabel">Get A Quote</h5>
+          <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close">
+            <span class="icon-x">x</span>
+          </button>
+      </div>
+      <div class="modal-body ">
+         <div class="quote-form p-3">
+              <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="form-icon">
+                                <i class="far fa-user-tie"></i>
+                                 <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"  placeholder="Full Name" />
+                                @if (submitted && f['firstName'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['firstName'].errors['required']) {
+                                    <div>First Name is required</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>   
+                    <!-- <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="form-icon">
+                                <i class="far fa-user-tie"></i>
+                                 <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"  placeholder="Last Name" />
+                                @if (submitted && f['lastName'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['lastName'].errors['required']) {
+                                    <div>Last Name is required</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div> -->
+                     <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="form-icon">
+                                <i class="far fa-user-tie"></i>
+                                 <input type="text" formControlName="phoneNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['phoneNo'].errors }"  placeholder="Phone Number" maxlength="10" />
+                                @if (submitted && f['phoneNo'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['phoneNo'].errors['required']) {
+                                    <div>Phone Number is required</div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">   
+                         <div class="form-group">
+                            <div class="form-icon">
+                                <i class="far fa-envelope"></i>
+                               <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" placeholder="Email" />
+                                @if (submitted && f['email'].errors) {
+                                <div class="invalid-feedback">
+                                    @if (f['email'].errors['required']) {
+                                    <div>Email is required</div>
+                                    } @if (f['email'].errors['email']) {
+                                    <div>Email is invalid</div>
+                                    }
+                                </div>
+                                  }
+                            </div>
+                        </div>            
+                    
+                    </div>   
+                    
+                <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="form-icon">
+                                <i class="far fa-comment-lines"></i>
+                                <textarea class="form-control" formControlName="message" cols="30" rows="4" placeholder="Your Message"></textarea>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+
+                <div class="col-lg-12">
+                        <button type="submit" class="theme-btn">Get a Quote<i class="fas fa-arrow-right"></i></button>
+                    </div>
+               
+            </form>
+            
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

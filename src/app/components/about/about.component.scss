@@ -8,6 +8,9 @@
 .ts-bg{
   background: var(--theme-color2);
 }
+::ng-deep .theme-btn{
+  display: none;
+}
 
 // .ts-bg::before{
 //   content: "";

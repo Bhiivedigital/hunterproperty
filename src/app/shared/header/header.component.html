@@ -129,11 +129,11 @@
                                 <div class="nav-btn">
                                     <a class="theme-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Get a Quote<i class="fas fa-arrow-right"></i></a>
                                 </div>
-                                <button type="button" class="sidebar-btn nav-right-link" data-bs-toggle="offcanvas" data-bs-target="#sidebarPopup">
+                                <!-- <button type="button" class="sidebar-btn nav-right-link" data-bs-toggle="offcanvas" data-bs-target="#sidebarPopup">
                                     <span></span>
                                     <span></span>
                                     <span></span>
-                                </button>
+                                </button> -->
                             </div>
                         </div>
                     </div>
@@ -235,7 +235,7 @@
                         <div class="form-group">
                             <div class="form-icon">
                                 <i class="far fa-user-tie"></i>
-                                 <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"  placeholder="First Name" />
+                                 <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"  placeholder="Full Name" />
                                 @if (submitted && f['firstName'].errors) {
                                 <div class="invalid-feedback">
                                     @if (f['firstName'].errors['required']) {
@@ -246,7 +246,7 @@
                             </div>
                         </div>
                     </div>   
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="form-group">
                             <div class="form-icon">
                                 <i class="far fa-user-tie"></i>
@@ -260,7 +260,7 @@
                                 }
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                      <div class="col-lg-6">
                         <div class="form-group">
                             <div class="form-icon">
@@ -276,7 +276,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">   
+                    <div class="col-lg-12">   
                          <div class="form-group">
                             <div class="form-icon">
                                 <i class="far fa-envelope"></i>

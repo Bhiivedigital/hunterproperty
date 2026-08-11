@@ -18,7 +18,7 @@ import { RequestquoteComponent } from "./requestquote/requestquote.component";
 @Component({
   selector: 'app-homelayout',
   standalone: true,
-  imports: [BannerComponent, FeatureareaComponent, AboutsectionComponent, ServicesectionComponent, OurskillsComponent, HomeportfolioComponent, PricingComponent, PricingComponent, WhychooseusComponent, TeamComponent, FaqComponent, HomeblogComponent, WorkingprocessComponent, ProjectskillsComponent, RequestquoteComponent],
+  imports: [BannerComponent, FeatureareaComponent, AboutsectionComponent, ServicesectionComponent, HomeportfolioComponent, PricingComponent, PricingComponent, WhychooseusComponent, TeamComponent, FaqComponent, HomeblogComponent, WorkingprocessComponent, ProjectskillsComponent, RequestquoteComponent],
   templateUrl: './homelayout.component.html',
   styleUrl: './homelayout.component.scss'
 })

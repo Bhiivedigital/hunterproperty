@@ -2586,8 +2586,9 @@ label {
 
 .service-content p{
   color: var(--body-text-color);
-  margin-top: 10px;
-  margin-bottom: 30px;
+  /* margin-top: 10px;
+  margin-bottom: 30px; */
+  margin: 0px;
 }
 
 /* service area 2 */
@@ -3228,11 +3229,12 @@ label {
 }
 
 .pricing-price{
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   margin: 20px 0px;
+  text-align: center;
 }
 
 .pricing-icon{
@@ -3809,16 +3811,16 @@ label {
   border-radius: 30px;
 }
 
-.testimonial-quote::before {
+/* .testimonial-quote::before {
   content: "\f0dd";
   position: absolute;
   font-family: "Font Awesome 6 Pro";
-  bottom: -52px;
+  bottom: -42px;
   left: 40px;
   font-weight: bold;
   font-size: 70px;
   color: var(--color-white);
-}
+} */
 
 .testimonial-quote p{
   position: relative;
@@ -3883,7 +3885,7 @@ label {
 }
 
 .testimonial-shadow-icon img{
-  width: 200px !important;
+  width: 150px !important;
 }
 
 .testimonial-rate {
@@ -4600,8 +4602,8 @@ label {
 .faq-area .accordion-item {
   border: none;
   background: var(--color-white);
-  border-radius: 40px;
-  margin-bottom: 30px;
+  border-radius: 0px;
+  margin-bottom: 10px;
   box-shadow: var(--box-shadow);
 }
 
@@ -5217,9 +5219,9 @@ label {
   position: relative;
 }
 
-.footer-widget-box.about-us{
+/* .footer-widget-box.about-us{
   margin-right: 50px;
-}
+} */
 
 .footer-widget-box p {
   color: var(--color-white);

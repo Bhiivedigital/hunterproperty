@@ -89,7 +89,7 @@ constructor(private router: Router, private formBuilder: FormBuilder) {
       this.form = this.formBuilder.group(
         {
           firstName: ['', Validators.required],
-          lastName: ['', Validators.required],
+          //lastName: ['', Validators.required],
           phoneNo: ['',Validators.required],
           email: ['', [Validators.required, Validators.email]],
          message:['']
@@ -123,7 +123,7 @@ constructor(private router: Router, private formBuilder: FormBuilder) {
     try {
          let response = await emailjs.send("service_wrsfjtp","template_0uxx83q",{
           firstName: this.form.value.firstName,
-          lastName: this.form.value.lastName,
+          //lastName: this.form.value.lastName,
           phoneNo: this.form.value.phoneNo,
           email: this.form.value.email,
           message: this.form.value.message

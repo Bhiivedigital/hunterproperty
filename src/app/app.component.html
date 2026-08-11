@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <div class="form-icon">
                                 <i class="far fa-user-tie"></i>
-                                 <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"  placeholder="First Name" />
+                                 <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"  placeholder="Full Name" />
                                 @if (submitted && f['firstName'].errors) {
                                 <div class="invalid-feedback">
                                     @if (f['firstName'].errors['required']) {
@@ -29,7 +29,7 @@
                             </div>
                         </div>
                     </div>   
-                    <div class="col-lg-6">
+                    <!-- <div class="col-lg-6">
                         <div class="form-group">
                             <div class="form-icon">
                                 <i class="far fa-user-tie"></i>
@@ -43,7 +43,7 @@
                                 }
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                      <div class="col-lg-6">
                         <div class="form-group">
                             <div class="form-icon">
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">   
+                    <div class="col-lg-12">   
                          <div class="form-group">
                             <div class="form-icon">
                                 <i class="far fa-envelope"></i>

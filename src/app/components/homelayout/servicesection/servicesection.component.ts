@@ -1,10 +1,11 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-servicesection',
   standalone: true,
-  imports: [CarouselModule],
+  imports: [CarouselModule, RouterLink],
   templateUrl: './servicesection.component.html',
   styleUrl: './servicesection.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
@@ -17,7 +18,7 @@ serviceSlide: OwlOptions = {
     touchDrag: true,
     pullDrag: false,
     dots: false,
-    autoplay:true,
+    autoplay:false,
     margin:15,
     //navSpeed: 600,
     navText: ['<i class="far fa-long-arrow-left"></i>', '<i class="far fa-long-arrow-right"></i>'],

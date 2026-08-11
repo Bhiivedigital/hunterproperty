@@ -16,7 +16,7 @@ testmonialsSlide: OwlOptions = {
     touchDrag: true,
     pullDrag: false,
     dots: false,
-    autoplay:true,
+    autoplay:false,
     margin:15,
     //navSpeed: 600,
     navText: ['<i class="far fa-long-arrow-left"></i>', '<i class="far fa-long-arrow-right"></i>'],
