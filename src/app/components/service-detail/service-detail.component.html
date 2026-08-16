@@ -1,0 +1,39 @@
+<ng-container *ngIf="service">
+
+  <div class="site-breadcrumb" style="background: url(../../../assets/img/portfolio/01.jpg)">
+    <div class="container">
+      <h2 class="breadcrumb-title">{{ service.title }}</h2>
+      <ul class="breadcrumb-menu">
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/services">Services</a></li>
+        <li class="active">{{ service.title }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="service-area py-120">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        <div class="col-lg-6">
+          <div class="service-single-img">
+            <img class="img-fluid w-100" [src]="service.image" [alt]="service.title" style="border-radius: 15px;">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="service-icon mb-3">
+            <img [src]="service.icon" alt="" style="width: 50px;">
+          </div>
+          <h1>{{ service.title }}</h1>
+          <p>{{ service.text }}</p>
+          <div class="d-flex gap-3 flex-wrap mt-4">
+            <a class="theme-btn" [routerLink]="['/', service.slug]">
+              {{ service.title }} Guides<i class="fas fa-arrow-right"></i>
+            </a>
+            <a class="theme-btn" routerLink="/contactus">Get a Quote<i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-container>

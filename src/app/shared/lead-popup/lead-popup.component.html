@@ -1,0 +1,84 @@
+<div class="lp-backdrop" *ngIf="isVisible" (click)="closePopup()"></div>
+
+<div class="lp-modal" *ngIf="isVisible" role="dialog" aria-modal="true" aria-label="Get a free consultation">
+  <div class="lp-aside">
+    <span class="lp-eyebrow">Free consultation</span>
+    <h3>Get a cost estimate for your dream home</h3>
+    <p class="lp-sub">Tell us four things. We'll come back with an indicative budget and a plan — not a sales pitch.</p>
+    <ul class="lp-trust">
+      <li><i class="fas fa-check"></i><span><b>Daily progress reports</b> from every site, straight to your phone</span></li>
+      <li><i class="fas fa-check"></i><span><b>Vastu-compliant</b> custom designs — blueprint to handover</span></li>
+      <li><i class="fas fa-check"></i><span><b>Title-clear, CMDA-approved</b> land and full legal documentation</span></li>
+    </ul>
+    <div class="lp-foot">
+      <i class="fas fa-lock"></i>
+      <span>Your number is used only to call you back. Never sold, never spammed.</span>
+    </div>
+  </div>
+
+  <div class="lp-form">
+    <button type="button" class="lp-close" aria-label="Close" (click)="closePopup()">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <ng-container *ngIf="!sendSucceeded">
+      <h4>Request your free estimate</h4>
+      <p class="lp-lede">Takes under 40 seconds. We call back within 24 hours.</p>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="lp-grid">
+          <div class="lp-field lp-full">
+            <label>Your name <span class="req">*</span></label>
+            <input type="text" formControlName="name" class="lp-ctrl" [class.error]="submitted && f['name'].errors" placeholder="e.g. Karthik Raman" />
+            <span class="lp-err" *ngIf="submitted && f['name'].errors">Name is required</span>
+          </div>
+
+          <div class="lp-field">
+            <label>Mobile number <span class="req">*</span></label>
+            <input type="tel" formControlName="phone" class="lp-ctrl" [class.error]="submitted && f['phone'].errors" placeholder="98xxx xxxxx" maxlength="10" />
+            <span class="lp-err" *ngIf="submitted && f['phone'].errors">Enter all 10 digits so we can call you back</span>
+          </div>
+
+          <div class="lp-field">
+            <label>Plot / site location <span class="req">*</span></label>
+            <input type="text" formControlName="location" class="lp-ctrl" [class.error]="submitted && f['location'].errors" placeholder="Area in Chennai" />
+            <span class="lp-err" *ngIf="submitted && f['location'].errors">Location is required</span>
+          </div>
+
+          <div class="lp-field">
+            <label>Service required <span class="req">*</span></label>
+            <select formControlName="service" class="lp-ctrl" [class.error]="submitted && f['service'].errors">
+              <option value="" disabled selected>Select one</option>
+              <option *ngFor="let s of services" [value]="s">{{ s }}</option>
+            </select>
+            <span class="lp-err" *ngIf="submitted && f['service'].errors">Please select a service</span>
+          </div>
+
+        </div>
+
+        <div class="lp-btn-row">
+          <button type="submit" class="lp-btn-primary" [disabled]="sending">
+            <span class="lp-spinner" *ngIf="sending"></span>
+            {{ sending ? 'Sending your request…' : 'Get my free estimate' }}
+          </button>
+          <a class="lp-btn-ghost" href="https://wa.me/7550110784" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i> WhatsApp us
+          </a>
+        </div>
+
+        <p class="lp-fail" *ngIf="sendFailed">
+          Couldn't send your request. Check your connection and try again, or WhatsApp us on 07550 10784.
+          <button type="button" class="lp-retry" (click)="retry()">Try again</button>
+        </p>
+
+        <p class="lp-micro">No obligation · No spam · Homes delivered across Chennai</p>
+      </form>
+    </ng-container>
+
+    <div class="lp-success" *ngIf="sendSucceeded">
+      <div class="lp-success-ic"><i class="fas fa-check"></i></div>
+      <h5>Thanks — we've got it</h5>
+      <p>Our team will call you within 24 hours with an indicative estimate.</p>
+    </div>
+  </div>
+</div>

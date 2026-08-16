@@ -1,1 +1,12 @@
 node_modules
+.angular
+dist
+*.zip
+
+# Strapi CMS
+cms/.tmp
+cms/.cache
+cms/build
+cms/dist
+cms/.env
+cms/.strapi

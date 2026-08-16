@@ -1,19 +1,30 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { HeroLeadFormComponent } from '../hero-lead-form/hero-lead-form.component';
+import { HomeContentService } from '../../../shared/services/home-content.service';
+import { HomeBanner } from '../../../shared/models/home-content.model';
 
 
 @Component({
   selector: 'app-banner',
   standalone: true,
-  imports: [CommonModule, CarouselModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, CarouselModule, RouterLink, RouterLinkActive, HeroLeadFormComponent],
   templateUrl: './banner.component.html',
   styleUrl: './banner.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 
 })
-export class BannerComponent {
+export class BannerComponent implements OnInit {
+  banner?: HomeBanner;
+
+  constructor(private homeContentService: HomeContentService) {}
+
+  ngOnInit(): void {
+    this.homeContentService.getBanner().subscribe(banner => this.banner = banner);
+  }
+
 customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -37,6 +48,6 @@ customOptions: OwlOptions = {
         items: 1,
       },
     },
-    nav: true,
+    nav: false,
   };
 }

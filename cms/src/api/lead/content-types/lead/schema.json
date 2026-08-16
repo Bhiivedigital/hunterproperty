@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "leads",
+  "info": {
+    "singularName": "lead",
+    "pluralName": "leads",
+    "displayName": "Lead",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fullName": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "message": {
+      "type": "text"
+    },
+    "service": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "sourceForm": {
+      "type": "enumeration",
+      "enum": ["contactus", "requestquote", "pricing", "hero-lead-form", "lead-popup"]
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["new", "contacted", "closed"],
+      "default": "new"
+    }
+  }
+}

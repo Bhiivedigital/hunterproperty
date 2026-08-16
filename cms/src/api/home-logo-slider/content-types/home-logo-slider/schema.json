@@ -1,0 +1,10 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_logo_slider",
+  "info": { "singularName": "home-logo-slider", "pluralName": "home-logo-slider-list", "displayName": "Home Logo Slider" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "logos": { "type": "json" }
+  }
+}

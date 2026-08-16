@@ -1,0 +1,12 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_testimonials",
+  "info": { "singularName": "home-testimonials", "pluralName": "home-testimonials-list", "displayName": "Home Testimonials" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "tagline": { "type": "string" },
+    "titleHtml": { "type": "string" },
+    "items": { "type": "component", "component": "shared.testimonial-item", "repeatable": true }
+  }
+}

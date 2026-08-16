@@ -1,0 +1,16 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_about",
+  "info": { "singularName": "home-about", "pluralName": "home-abouts", "displayName": "Home About" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "tagline": { "type": "string" },
+    "titleHtml": { "type": "string" },
+    "paragraphs": { "type": "json" },
+    "experienceYears": { "type": "string" },
+    "experienceLabel": { "type": "string" },
+    "image1": { "type": "string" },
+    "image2": { "type": "string" }
+  }
+}

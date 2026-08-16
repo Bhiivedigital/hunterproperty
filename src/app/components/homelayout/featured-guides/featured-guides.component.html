@@ -1,0 +1,36 @@
+<div class="blog-area py-120" *ngIf="guides.length">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="site-heading text-center wow fadeInDown" data-wow-delay=".25s">
+                    <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> Insights</span>
+                    <h2 class="site-title">Property & Construction <span>Guides</span></h2>
+                    <div class="heading-divider"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" *ngFor="let guide of guides">
+                <div class="blog-item blog-item-clickable wow fadeInUp" data-wow-delay=".25s">
+                    <a class="blog-item-stretched-link" [routerLink]="['/' + guide.category.slug, guide.slug]"
+                        [attr.aria-label]="guide.title"></a>
+                    <div class="blog-item-img" *ngIf="guide.coverImage">
+                        <img [src]="guide.coverImage" [alt]="guide.title">
+                    </div>
+                    <div class="blog-item-info">
+                        <div class="blog-item-meta">
+                            <ul>
+                                <li><a [routerLink]="['/' + guide.category.slug]"><i [class]="guide.category.icon"></i> {{ guide.category.name }}</a></li>
+                            </ul>
+                        </div>
+                        <h4 class="blog-title">
+                            <a [routerLink]="['/' + guide.category.slug, guide.slug]">{{ guide.title }}</a>
+                        </h4>
+                        <p>{{ guide.excerpt }}</p>
+                        <a class="theme-btn" [routerLink]="['/' + guide.category.slug, guide.slug]">Read Guide<i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

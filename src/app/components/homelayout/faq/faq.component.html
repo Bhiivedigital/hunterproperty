@@ -6,65 +6,27 @@
                     <div class="col-lg-6">
                         <div class="faq-content wow fadeInUp" data-wow-delay=".25s">
                             <div class="site-heading mb-3">
-                                <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> Faq's</span>
-                                <h2 class="site-title my-3">General <span>frequently</span> asked questions</h2>
+                                <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ faq?.tagline }}</span>
+                                <h2 class="site-title my-3" [innerHTML]="faqTitleHtml"></h2>
                             </div>
-                            <p class="mb-3">Starting a construction project in Chennai—whether it’s residential home building, villa construction, apartment development, or commercial property renovation—can bring many questions about cost estimates, timelines, materials, and approvals. At Hunter Property, we prioritize transparency and clear communication to guide you through every step of your construction journey.</p>
+                            <p class="mb-3">{{ faq?.introText1 }}</p>
                             <p class="mb-4">
-                                This FAQ section answers common queries on affordable construction pricing, Vastu-compliant designs, project scheduling, quality control, legal permits, and site management. Our aim is to help you make informed decisions with confidence and ensure your project is completed on time, within budget, and to the highest standards.
+                                {{ faq?.introText2 }}
                             </p>
-                            <a href="contact.html" class="theme-btn mt-2">Have Any Question ?</a>
+                            <a href="contact.html" class="theme-btn mt-2">{{ faq?.ctaText }}</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="accordion wow fadeInRight" data-wow-delay=".25s" id="accordionExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <span><i class="far fa-question"></i></span> What types of projects do you handle?
+                            <div class="accordion-item" *ngFor="let item of faq?.items; let i = index">
+                                <h2 class="accordion-header" [id]="'heading' + i">
+                                    <button class="accordion-button" [class.collapsed]="i !== 0" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" [attr.aria-expanded]="i === 0" [attr.aria-controls]="'collapse' + i">
+                                        <span><i class="far fa-question"></i></span> {{ item.question }}
                                     </button>
                                 </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div [id]="'collapse' + i" class="accordion-collapse collapse" [class.show]="i === 0" [attr.aria-labelledby]="'heading' + i" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        We build homes, villas, apartments, office spaces, and commercial buildings. We also offer interior renovation services in Chennai.
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        <span><i class="far fa-question"></i></span> How long does a project usually take?
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                       Homes: 6–9 months, Commercial: 8–12 months, We share detailed timelines during the planning stage.
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        <span><i class="far fa-question"></i></span> Are your designs custom and Vastu-compliant?
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        Yes! We provide fully tailored and Vastu-approved building designs.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingFour">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                        <span><i class="far fa-question"></i></span> Can changes be made mid-project?
-                                    </button>
-                                </h2>
-                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        Yes, minor revisions are possible early in the construction phase.
+                                        {{ item.answer }}
                                     </div>
                                 </div>
                             </div>
@@ -82,15 +44,15 @@
                     <div class="row">
                         <div class="col-lg-6 mx-auto">
                             <div class="site-heading text-center wow fadeInDown" data-wow-delay=".25s">
-                                <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> Testimonials</span>
-                                <h2 class="site-title text-white">What Our Client <span>Say's</span> about us</h2>
+                                <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ testimonials?.tagline }}</span>
+                                <h2 class="site-title text-white" [innerHTML]="testimonialsTitleHtml"></h2>
                                 <div class="heading-divider"></div>
                             </div>
                         </div>
                     </div>
                     <div class="testimonial-slider wow fadeInUp" data-wow-delay=".25s">
                         <owl-carousel-o [options]="testmonialsSlide">
-                            <ng-template carouselSlide>
+                            <ng-template carouselSlide *ngFor="let item of testimonials?.items">
                                    <div class="testimonial-item">
                             <div class="testimonial-quote">
                                 <span class="testimonial-quote-icon"><i class="fal fa-quote-right"></i></span>
@@ -98,107 +60,20 @@
                                     <img src="assets/img/icon/quote.svg" alt="">
                                 </div>
                                 <div class="testimonial-rate">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star" *ngFor="let star of [].constructor(item.rating)"></i>
                                 </div>
                                 <p class="review-cnt">
-                                    The construction quality is Amazing, out elevation and interior very good price also comport for us. Thank you for Mr. Ali sir 🙏🙏🙏
+                                    {{ item.quote }}
                                 </p>
-                            
+
                                 <div class="testimonial-content text-end">
-                                    
+
                                     <div class="testimonial-author-info">
-                                        <h4>sk anbalagan</h4>
-                                        <p>Customer</p>
+                                        <h4>{{ item.authorName }}</h4>
+                                        <p>{{ item.authorRole }}</p>
                                     </div>
                                 </div>
                              </div>
-                        </div>
-                            </ng-template>
-                        <ng-template carouselSlide>
-                            <div class="testimonial-item">
-                            <div class="testimonial-quote">
-                                <span class="testimonial-quote-icon"><i class="fal fa-quote-right"></i></span>
-                                <div class="testimonial-shadow-icon">
-                                    <img src="assets/img/icon/quote.svg" alt="">
-                                </div>
-                                <div class="testimonial-rate">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="review-cnt">
-                                    A very helpful and reliable partner who helped me register the land for my ancestral house and also built our dream home.
-                                </p>                            
-                                <div class="testimonial-content text-end">
-                                    <div class="testimonial-author-info">
-                                        <h4>Tathheer Fathima Syed</h4>
-                                        <p>Customer</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                            </ng-template>
-                           
-                            <ng-template carouselSlide>
-                                  <div class="testimonial-item">
-                            <div class="testimonial-quote">
-                                <span class="testimonial-quote-icon"><i class="fal fa-quote-right"></i></span>
-                                <div class="testimonial-shadow-icon">
-                                    <img src="assets/img/icon/quote.svg" alt="">
-                                </div>
-                                <div class="testimonial-rate">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="review-cnt">
-                                    Very Fair & transparent people, it's one stop shop for all ur needs, most importantly they make u feel comfortable, I already have 2 properties developed and looking forward fr many more A special thanks to the Boss ALI bhai
-                                </p>
-                           
-                            <div class="testimonial-content text-end">
-                               
-                                <div class="testimonial-author-info">
-                                    <h4>samkay india enterprises</h4>
-                                    <p>Customer</p>
-                                </div>
-                            </div>
-                             </div>
-                        </div>
-                            </ng-template>
-                            <ng-template carouselSlide>
-                                 <div class="testimonial-item">
-                            <div class="testimonial-quote">
-                                <span class="testimonial-quote-icon"><i class="fal fa-quote-right"></i></span>
-                                <div class="testimonial-shadow-icon">
-                                    <img src="assets/img/icon/quote.svg" alt="">
-                                </div>
-                                <div class="testimonial-rate">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p class="review-cnt">
-                                    Excellent one stop shop for all your real estate needs. Ali Bhai will guide you smoothly and ensure your requirements are fulfilled. I am very satisfied with the service and Ali Bhai has helped me with my concerns very satisfactorily. Highly recommended!
-                                </p>
-                            
-                            <div class="testimonial-content text-end">
-                               
-                                <div class="testimonial-author-info">
-                                    <h4>Syed Safdar Hussain</h4>
-                                    <p>Customer</p>
-                                </div>
-                            </div>
-                            </div>
                         </div>
                             </ng-template>
                             </owl-carousel-o>

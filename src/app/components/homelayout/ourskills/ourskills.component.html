@@ -8,35 +8,20 @@
                     <div class="row g-4 align-items-center">
                         <div class="col-lg-6">
                             <div class="skill-img wow fadeInLeft" data-wow-delay=".25s">
-                                <img src="assets/img/skill/01.jpg" alt="thumb">
+                                <img [src]="skills?.image" alt="thumb">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="skill-content wow fadeInUp" data-wow-delay=".25s">
-                                <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> Our
-                                    Skills</span>
-                                <h2 class="site-title">We Offers You Best <span>Construction</span> Services</h2>
+                                <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ skills?.tagline }}</span>
+                                <h2 class="site-title" [innerHTML]="titleHtml"></h2>
                                 <p class="skill-text">
-                                    There are many variations of passages of Lorem Ipsum available, but the majority
-                                    have suffered alteration in some form, by injected humour, or randomised words which
-                                    don't look even slightly believable.
+                                    {{ skills?.text }}
                                 </p>
                                 <div class="skill-progress">
-                                    <div class="progress-item">
-                                        <h5>Construction <span class="percent">85%</span></h5>
-                                        <div class="progress" data-value="85">
-                                            <div class="progress-bar" role="progressbar"></div>
-                                        </div>
-                                    </div>
-                                    <div class="progress-item">
-                                        <h5>Experience <span class="percent">65%</span></h5>
-                                        <div class="progress" data-value="65">
-                                            <div class="progress-bar" role="progressbar"></div>
-                                        </div>
-                                    </div>
-                                    <div class="progress-item">
-                                        <h5>Architecture <span class="percent">75%</span></h5>
-                                        <div class="progress" data-value="75">
+                                    <div class="progress-item" *ngFor="let bar of skills?.skills">
+                                        <h5>{{ bar.label }} <span class="percent">{{ bar.percent }}%</span></h5>
+                                        <div class="progress" [attr.data-value]="bar.percent">
                                             <div class="progress-bar" role="progressbar"></div>
                                         </div>
                                     </div>

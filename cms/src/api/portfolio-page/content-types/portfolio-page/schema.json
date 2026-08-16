@@ -1,0 +1,12 @@
+{
+  "kind": "singleType",
+  "collectionName": "portfolio_page",
+  "info": { "singularName": "portfolio-page", "pluralName": "portfolio-page-list", "displayName": "Portfolio Page" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "tagline": { "type": "string" },
+    "titleHtml": { "type": "string" },
+    "images": { "type": "json" }
+  }
+}

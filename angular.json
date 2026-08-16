@@ -37,15 +37,13 @@
                 "output": "/assets/"
               }
             ],
-
             "styles": [
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
-               "node_modules/ngx-owl-carousel-o/fesm2022/ngx-owl-carousel-o.mjs"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
             ]
           },
           "configurations": {
@@ -58,11 +56,17 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,
@@ -74,6 +78,12 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "allowedHosts": [
+              "6d96-2409-40f4-411d-33db-a068-f38e-8598-76e8.ngrok-free.app",
+              ".ngrok-free.app"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "hunterproperty:build:production"
@@ -110,5 +120,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "6e2b3c93-1fe0-4cd7-bf08-2df79ca80fc1"
   }
 }

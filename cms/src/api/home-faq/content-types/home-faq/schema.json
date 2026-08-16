@@ -1,0 +1,15 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_faq",
+  "info": { "singularName": "home-faq", "pluralName": "home-faq-list", "displayName": "Home FAQ" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "tagline": { "type": "string" },
+    "titleHtml": { "type": "string" },
+    "introText1": { "type": "text" },
+    "introText2": { "type": "text" },
+    "ctaText": { "type": "string" },
+    "items": { "type": "component", "component": "shared.faq-item", "repeatable": true }
+  }
+}

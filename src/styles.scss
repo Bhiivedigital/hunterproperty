@@ -22,6 +22,17 @@
     right: 15px;
     top: 50%;
 }
+/* Hero owl-nav arrows are vertically centered over the whole slide
+   (top:50%). Below 992px the hero text + lead-form card stack and grow
+   taller than the image, so the arrows land mid-content and overlap the
+   CTA buttons / form card instead of sitting over the image. Hide them
+   there — mobile/tablet users swipe the carousel anyway. */
+@media screen and (max-width: 991px) {
+    .slidersec .owl-nav {
+        display: none;
+    }
+}
+
 .owl-theme .owl-nav [class*=owl-] {
     color: #fc8c03;
     font-size:23px;
@@ -162,6 +173,16 @@ button.accordion-button.collapsed {
 .heroslider-abt h2.hero-title span {
       color: var(--theme-color);
 }
+@media screen and (max-width: 767px) {
+    .heroslider-abt h2.hero-title {
+        font-size: 32px;
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .heroslider-abt h2.hero-title {
+        font-size: 42px;
+    }
+}
 @media screen and (max-width: 640px) and (min-width: 320px) {
 .popup {
   position: fixed;
@@ -207,12 +228,6 @@ button.accordion-button.collapsed {
     .choose-img .img-2{
         height: auto;
     }
-    .heroslider-container{
-        left: 0px!important;
-    }
-    .heroslider-container .hero-content .hero-title{
-        font-size: 40px !important;
-    }
     .owl-theme .owl-nav{
         display: none;
    }
@@ -225,4 +240,134 @@ button.accordion-button.collapsed {
    .navbar-toggler:focus{
     box-shadow: none;
    }
+}
+
+/* =========================================================
+   Site-wide typography & spacing responsive pass
+   Base theme (assets/css/style.css) declares most heading,
+   section-title, spacing-utility and icon-badge sizes with
+   ZERO responsive reduction. These rules fill that gap.
+   ========================================================= */
+
+/* base heading tags (h1-h6 default to 40/35/28/22/18/16px, unscaled) */
+@media screen and (max-width: 767px) {
+    h1 { font-size: 30px; }
+    h2 { font-size: 26px; }
+    h3 { font-size: 22px; }
+    h4 { font-size: 19px; }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    h1 { font-size: 34px; }
+    h2 { font-size: 30px; }
+    h3 { font-size: 24px; }
+}
+
+/* .site-title: shared section heading across feature/service/process/
+   skills/pricing/team/portfolio/blog/faq sections, fixed at 45px */
+@media screen and (max-width: 767px) {
+    .site-title { font-size: 28px; }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .site-title { font-size: 34px; }
+}
+
+/* vertical spacing utilities (pt-N, pb-N, py-N) never shrink on mobile,
+   producing excessive scroll distance between sections on phones/tablets */
+@media screen and (max-width: 767px) {
+    .pt-60, .pt-70, .pt-80, .pt-90, .pt-100, .pt-110, .pt-120 { padding-top: 50px; }
+    .pb-60, .pb-70, .pb-80, .pb-90, .pb-100, .pb-110, .pb-120 { padding-bottom: 50px; }
+    .py-80, .py-90, .py-100, .py-110, .py-120 { padding: 50px 0; }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .pt-90, .pt-100, .pt-110, .pt-120 { padding-top: 70px; }
+    .pb-90, .pb-100, .pb-110, .pb-120 { padding-bottom: 70px; }
+    .py-90, .py-100, .py-110, .py-120 { padding: 70px 0; }
+}
+
+/* page breadcrumb hero (about/services/blog/contactus/portfolio headers):
+   120px top+bottom padding plus a 35px title, unscaled at any width */
+@media screen and (max-width: 767px) {
+    .site-breadcrumb { padding-top: 60px; padding-bottom: 60px; }
+    .site-breadcrumb .breadcrumb-title { font-size: 26px; }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .site-breadcrumb { padding-top: 80px; padding-bottom: 80px; }
+    .site-breadcrumb .breadcrumb-title { font-size: 30px; }
+}
+
+/* fixed-size icon badges/circles across feature/service/process/counter/
+   faq/contact sections - unscaled, crowd narrow cards on phones */
+@media screen and (max-width: 767px) {
+    .feature-icon { width: 55px; height: 55px; }
+    .feature-item .count { font-size: 34px; }
+    .service-icon { width: 70px; height: 70px; right: 20px; margin-top: -35px; }
+    .service-item .count { font-size: 40px; line-height: 40px; }
+    .process-item .icon { width: 65px; height: 65px; right: 10px; margin-top: -15px; }
+    .counter-item .icon { width: 55px; height: 55px; font-size: 24px; }
+    .counter-item .counter { font-size: 34px; }
+    .counter-item .unit { font-size: 18px; }
+    .faq-area .accordion-button span,
+    .faq-area .accordion-button span i { width: 32px; height: 32px; line-height: 32px; }
+}
+
+/* blog sidebar category widget - radio-style selector */
+.category-radio-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.category-radio-item {
+    border-bottom: 1px solid var(--border-info-color);
+}
+.category-radio-item:last-child {
+    border-bottom: none;
+}
+.category-radio-item label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 0;
+    margin: 0;
+    cursor: pointer;
+    color: var(--color-dark);
+    font-weight: 500;
+    transition: var(--transition);
+}
+.category-radio-item label:hover {
+    color: var(--theme-color);
+}
+.category-radio-item .radio-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.category-radio-item .radio-left i {
+    color: var(--theme-color);
+}
+.category-radio-item input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    margin: 0;
+    border: 2px solid var(--theme-color);
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+.category-radio-item input[type="radio"]:checked {
+    background: var(--theme-color);
+    box-shadow: inset 0 0 0 3px var(--color-white);
+}
+.category-radio-item .cat-count {
+    font-size: 14px;
+    color: var(--color-dark);
+}
+
+/* pricing card amount: the existing max-width:991px rule re-sets 50px to
+   50px (a no-op), so it's effectively unscaled all the way to 360px */
+@media screen and (max-width: 767px) {
+    .pricing-amount strong { font-size: 34px; }
 }

@@ -1,0 +1,12 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_working_process",
+  "info": { "singularName": "home-working-process", "pluralName": "home-working-process-list", "displayName": "Home Working Process" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "tagline": { "type": "string" },
+    "titleHtml": { "type": "string" },
+    "steps": { "type": "component", "component": "shared.icon-text-item", "repeatable": true }
+  }
+}

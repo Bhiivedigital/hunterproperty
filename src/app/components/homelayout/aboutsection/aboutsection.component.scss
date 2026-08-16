@@ -1,0 +1,8 @@
+// Base theme (assets/css/style.css) sets top:10px on .about-experience and only
+// overrides right/bottom at <=767px — top being set means bottom is ignored per
+// spec, so the badge never actually moves for mobile. Clear top so bottom applies.
+@media all and (max-width: 767px) {
+  .about-experience {
+    top: auto;
+  }
+}

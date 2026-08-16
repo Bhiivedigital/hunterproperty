@@ -1,72 +1,75 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
+import { LeadPopupService } from '../lead-popup/lead-popup.service';
+import { ServiceContentService } from '../services/service-content.service';
+import { MenuCategory } from '../models/service-content.model';
 declare const bootstrap: any;
+
+const DESKTOP_BREAKPOINT = 992;
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
-  submitted = false;
-  form: any;
+  isScrolled = false;
+  menuCategories: MenuCategory[] = [];
+  megaMenuOpen = false;
+  openMobileCategory: string | null = null;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private leadPopupService: LeadPopupService, private contentService: ServiceContentService) {}
+
   ngOnInit(): void {
-     emailjs.init('Ib8KzPUHhor6Az9D2');
-    this.form = this.formBuilder.group(
-      {
-        fullName: ['', Validators.required],
-        Phno: ['',Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-       message:['']
-      },
-      
-    );
+    this.contentService.getMenuCategories().subscribe(categories => this.menuCategories = categories);
   }
 
-  get f(): { [key: string]: AbstractControl } {
-    return this.form.controls;
+  private get isDesktop(): boolean {
+    return window.innerWidth >= DESKTOP_BREAKPOINT;
   }
 
-  // onSubmit(): void {
-  //   this.submitted = true;
+  openMegaMenuDesktop(): void {
+    if (this.isDesktop) this.megaMenuOpen = true;
+  }
 
-  //   if (this.form.invalid) {
-  //     return;
-  //   }
+  closeMegaMenuDesktop(): void {
+    if (this.isDesktop) this.megaMenuOpen = false;
+  }
 
-  //   console.log(JSON.stringify(this.form.value, null, 2));
-  // }
-async onSubmit() {
-    this.submitted = true;
+  toggleMegaMenuMobile(event: MouseEvent): void {
+    if (this.isDesktop) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    this.megaMenuOpen = !this.megaMenuOpen;
+  }
 
-    // Stop submission if form is invalid
-    if (this.form.invalid) {
-      // alert("Please fill in all required fields correctly.");
-      return;
-    }
-    try {
-         let response = await emailjs.send("service_37vso18","template_wo2b83h",{
-          fullName: this.form.value.fullName,
-          Phno: this.form.value.Phno,
-          email: this.form.value.email,
-          message: this.form.value.message
-          });
-      console.log("Email sent successfully!", response);
-      alert('Message sent successfully!');
-      this.submitted = false;
-      this.form.reset();
-    } catch (error) {
-      console.error("Email sending failed:", error);
-      alert('Failed to send message. Please try again.');
-    }
+  closeMegaMenuMobile(): void {
+    this.megaMenuOpen = false;
+    this.openMobileCategory = null;
+  }
+
+  // Mobile mega-menu is a narrow 300px offcanvas drawer, not a wide desktop
+  // panel — a multi-column grid doesn't fit there, so each category collapses
+  // into an accordion instead. Desktop ignores this (grid columns show all
+  // categories at once via CSS, isDesktop short-circuits the toggle).
+  toggleMobileCategory(slug: string, event: Event): void {
+    if (this.isDesktop) return;
+    event.preventDefault();
+    event.stopPropagation();
+    this.openMobileCategory = this.openMobileCategory === slug ? null : slug;
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    this.isScrolled = window.scrollY > 50;
+  }
+
+  openQuotePopup(): void {
+    this.leadPopupService.open();
   }
 
   goToWhatsApp(): void {

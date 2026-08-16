@@ -1974,7 +1974,7 @@ label {
   height: 100%;
   top: 0;
   left: -0.5px;
-  background: linear-gradient(to bottom right, rgb(0, 42, 126) 0%, rgba(0, 42, 126, 0) 100%);
+  background: linear-gradient(to right, rgba(2, 8, 23, .65) 0%, rgba(2, 8, 23, .4) 32%, rgba(2, 8, 23, 0) 62%);
   z-index: -1;
 }
 
@@ -2038,6 +2038,15 @@ label {
 }
 
 @media all and (max-width: 991px) {
+  .hero-single {
+    /* The text + lead form stack vertically here and need real room to
+       breathe — a fixed 70vh clipped them on shorter phones. This is a
+       generous fixed floor (not tied to viewport height) so the image is
+       always at least as tall as the overlay content layered on it. */
+    height: auto;
+    min-height: 1000px;
+  }
+
   .hero-single .hero-content .hero-title {
     font-size: 50px;
   }

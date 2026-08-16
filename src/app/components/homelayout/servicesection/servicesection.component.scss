@@ -11,3 +11,10 @@
  .service-title{
     font-size: 20px;
  }
+
+ @media screen and (max-width: 767px) {
+   .theme-btn, .theme-btn2 {
+     padding: 10px 26px;
+     font-size: 16px;
+   }
+ }

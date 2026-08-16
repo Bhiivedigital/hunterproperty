@@ -1,0 +1,10 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_page",
+  "info": { "singularName": "about-page", "pluralName": "about-page-list", "displayName": "About Page" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "heroTitleHtml": { "type": "text" }
+  }
+}

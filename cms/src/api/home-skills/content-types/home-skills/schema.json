@@ -1,0 +1,14 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_skills",
+  "info": { "singularName": "home-skills", "pluralName": "home-skills-list", "displayName": "Home Skills" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "tagline": { "type": "string" },
+    "titleHtml": { "type": "string" },
+    "text": { "type": "text" },
+    "image": { "type": "string" },
+    "skills": { "type": "component", "component": "shared.skill-bar", "repeatable": true }
+  }
+}

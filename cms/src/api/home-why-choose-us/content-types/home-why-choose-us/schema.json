@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_why_choose_us",
+  "info": { "singularName": "home-why-choose-us", "pluralName": "home-why-choose-us-list", "displayName": "Home Why Choose Us" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "tagline": { "type": "string" },
+    "titleHtml": { "type": "string" },
+    "text": { "type": "text" },
+    "items": { "type": "component", "component": "shared.icon-text-item", "repeatable": true },
+    "image1": { "type": "string" },
+    "image2": { "type": "string" },
+    "videoTagline": { "type": "string" },
+    "videoTitleHtml": { "type": "string" },
+    "videoText": { "type": "text" },
+    "videoBgImage": { "type": "string" },
+    "videoCtaText": { "type": "string" },
+    "galleryImages": { "type": "json" }
+  }
+}

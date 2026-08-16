@@ -1,0 +1,39 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_banner",
+  "info": {
+    "singularName": "home-banner",
+    "pluralName": "home-banners",
+    "displayName": "Home Banner",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heroSubTitle": {
+      "type": "string"
+    },
+    "heroTitleBefore": {
+      "type": "string"
+    },
+    "heroTitleHighlight": {
+      "type": "string"
+    },
+    "heroTitleAfter": {
+      "type": "string"
+    },
+    "trustBadgeTitle": {
+      "type": "string"
+    },
+    "trustBadgeSubtitle": {
+      "type": "string"
+    },
+    "slides": {
+      "type": "component",
+      "component": "shared.slide",
+      "repeatable": true
+    }
+  }
+}

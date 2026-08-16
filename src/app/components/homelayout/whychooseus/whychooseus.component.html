@@ -5,38 +5,20 @@
                     <div class="col-lg-6">
                         <div class="choose-content wow fadeInUp" data-wow-delay=".25s">
                             <div class="site-heading mb-0">
-                                <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> Why Choose Us</span>
-                                <h2 class="site-title">We deliver expertise you can trust our <span>service</span></h2>
+                                <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ data?.tagline }}</span>
+                                <h2 class="site-title" [innerHTML]="titleHtml"></h2>
                                 <p>
-                                   At Hunter Property, we combine affordability, expertise, and transparency to deliver end-to-end construction solutions tailored to your needs. Whether you're building a home or a commercial space, we ensure a hassle-free experience backed by expert guidance and consistent communication.
+                                   {{ data?.text }}
                                 </p>
                             </div>
                             <div class="choose-content-wrap">
-                                <div class="choose-item">
+                                <div class="choose-item" *ngFor="let item of data?.items">
                                     <div class="choose-item-icon">
-                                        <img src="assets/img/icon/money.svg" alt="">
+                                        <img [src]="item.icon" alt="">
                                     </div>
                                     <div class="choose-item-info">
-                                        <h4>Affordable Cost</h4>
-                                        <p>Clear pricing, no hidden charges, and flexible packages</p>
-                                    </div>
-                                </div>
-                                <div class="choose-item">
-                                    <div class="choose-item-icon">
-                                        <img src="assets/img/icon/team.svg" alt="">
-                                    </div>
-                                    <div class="choose-item-info">
-                                        <h4>Our Experience Team</h4>
-                                        <p>Our team brings years of experience in residential and commercial construction.</p>
-                                    </div>
-                                </div>
-                                <div class="choose-item">
-                                    <div class="choose-item-icon">
-                                        <img src="assets/img/icon/certified.svg" alt="">
-                                    </div>
-                                    <div class="choose-item-info">
-                                        <h4> Reliable Company </h4>
-                                        <p>We prioritize communication, quality control, and customer satisfaction.</p>
+                                        <h4>{{ item.title }}</h4>
+                                        <p>{{ item.text }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -44,42 +26,11 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="choose-img wow fadeInRight" data-wow-delay=".25s">
-                            <img class="img-1" src="assets/img/choose/01.jpg" alt="">
-                            <img class="img-2" src="assets/img/choose/02.jpg" alt="">
+                            <img class="img-1" [src]="data?.image1" alt="">
+                            <img class="img-2" [src]="data?.image2" alt="">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- choose area end -->
-
-
-        <!-- video area -->
-        <div class="video-area">
-            <div class="container-fluid px-0">
-                <div class="video-content" style="background-image: url(assets/img/video/01.jpg);">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <div class="col-lg-8">
-                                <div class="video-info">
-                                    <div class="site-heading mb-0">
-                                        <span class="site-title-tagline text-white"><i class="far fa-helmet-safety"></i>Latest Video</span>
-                                        <h2 class="site-title text-white">We provide high quality construction and reliable.</h2>
-                                        <p class="text-white">There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form by injected humour or randomised words which don't look even slightly believable.</p>
-                                    </div>
-                                    <a href="contact.html" class="theme-btn mt-30">Learn More <i class="fas fa-arrow-right"></i></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="video-wrap">
-                                    <a class="play-btn popup-youtube" href="https://www.youtube.com/watch?v=ckHzmP1evNU">
-                                        <i class="fas fa-play"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- video area end-->

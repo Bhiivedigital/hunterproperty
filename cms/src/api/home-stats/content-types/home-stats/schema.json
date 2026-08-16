@@ -1,0 +1,10 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_stats",
+  "info": { "singularName": "home-stats", "pluralName": "home-stats-list", "displayName": "Home Stats" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "stats": { "type": "component", "component": "shared.stat-item", "repeatable": true }
+  }
+}

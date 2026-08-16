@@ -1,0 +1,10 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_portfolio",
+  "info": { "singularName": "home-portfolio", "pluralName": "home-portfolio-list", "displayName": "Home Portfolio" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "images": { "type": "json" }
+  }
+}
