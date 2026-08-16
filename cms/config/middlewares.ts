@@ -7,7 +7,12 @@ const config: Core.Config.Middlewares = [
   {
     name: 'strapi::cors',
     config: {
-      origin: ['http://localhost:4200', 'http://127.0.0.1:4200'],
+      origin: [
+        'http://localhost:4200',
+        'http://127.0.0.1:4200',
+        'https://hunterproperty.in',
+        'https://www.hunterproperty.in',
+      ],
       credentials: true,
     },
   },
