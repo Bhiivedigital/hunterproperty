@@ -1,17 +1,35 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { HomeContentService } from '../../../shared/services/home-content.service';
+import { ServiceCard } from '../../../shared/models/home-content.model';
 
 @Component({
   selector: 'app-servicesection',
   standalone: true,
-  imports: [CarouselModule, RouterLink],
+  imports: [CommonModule, CarouselModule, RouterLink],
   templateUrl: './servicesection.component.html',
   styleUrl: './servicesection.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
-  
+
 })
-export class ServicesectionComponent {
+export class ServicesectionComponent implements OnInit {
+  tagline?: string;
+  titleHtml?: SafeHtml;
+  items: ServiceCard[] = [];
+
+  constructor(private homeContentService: HomeContentService, private sanitizer: DomSanitizer) {}
+
+  ngOnInit(): void {
+    this.homeContentService.getServices().subscribe(services => {
+      this.tagline = services.tagline;
+      this.titleHtml = this.sanitizer.bypassSecurityTrustHtml(services.titleHtml);
+      this.items = services.items ?? [];
+    });
+  }
+
 serviceSlide: OwlOptions = {
     loop: true,
     mouseDrag: true,

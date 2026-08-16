@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
+import { LeadService } from '../../../shared/services/lead.service';
 
 @Component({
   selector: 'app-requestquote',
@@ -14,7 +15,7 @@ export class RequestquoteComponent {
   submitted = false;
   form: any;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private leadService: LeadService) {}
   ngOnInit(): void {
     emailjs.init('Ib8KzPUHhor6Az9D2');
     this.form = this.formBuilder.group(
@@ -22,7 +23,6 @@ export class RequestquoteComponent {
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         phoneNo: ['',[Validators.required, Validators.pattern("^[0-9]{10,13}$")]],
-        email: ['', [Validators.required, Validators.email]],
         message:['' ]
       },
       
@@ -52,12 +52,18 @@ export class RequestquoteComponent {
       return;
     }
 
+    this.leadService.submit({
+      fullName: `${this.form.value.firstName} ${this.form.value.lastName}`.trim(),
+      phone: this.form.value.phoneNo,
+      message: this.form.value.message,
+      sourceForm: 'requestquote'
+    }).subscribe({ error: err => console.error('Strapi lead capture failed', err) });
+
     try {
          let response = await emailjs.send("service_wrsfjtp","template_0uxx83q",{
           firstName: this.form.value.firstName,
           lastName: this.form.value.lastName,
           phoneNo: this.form.value.phoneNo,
-          email: this.form.value.email,
           message: this.form.value.message
           });
       console.log("Email sent successfully!", response);

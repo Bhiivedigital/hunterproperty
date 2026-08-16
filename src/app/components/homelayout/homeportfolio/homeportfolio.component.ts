@@ -1,15 +1,25 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { HomeContentService } from '../../../shared/services/home-content.service';
 
 @Component({
   selector: 'app-homeportfolio',
   standalone: true,
-  imports: [CarouselModule],
+  imports: [CommonModule, CarouselModule],
   templateUrl: './homeportfolio.component.html',
   styleUrl: './homeportfolio.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomeportfolioComponent {
+export class HomeportfolioComponent implements OnInit {
+  images: string[] = [];
+
+  constructor(private homeContentService: HomeContentService) {}
+
+  ngOnInit(): void {
+    this.homeContentService.getHomePortfolio().subscribe(data => this.images = data.images ?? []);
+  }
+
 portfolioSlide: OwlOptions = {
     loop: true,
     mouseDrag: true,

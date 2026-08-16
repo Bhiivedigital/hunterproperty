@@ -1,15 +1,25 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { HomeContentService } from '../../../shared/services/home-content.service';
 
 @Component({
   selector: 'app-logoslider',
   standalone: true,
-  imports: [CarouselModule],
+  imports: [CommonModule, CarouselModule],
   templateUrl: './logoslider.component.html',
   styleUrl: './logoslider.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class LogosliderComponent {
+export class LogosliderComponent implements OnInit {
+  logos: string[] = [];
+
+  constructor(private homeContentService: HomeContentService) {}
+
+  ngOnInit(): void {
+    this.homeContentService.getLogoSlider().subscribe(data => this.logos = data.logos ?? []);
+  }
+
 logoSlide: OwlOptions = {
     loop: true,
     mouseDrag: true,

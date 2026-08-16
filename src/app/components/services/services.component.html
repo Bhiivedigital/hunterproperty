@@ -5,9 +5,7 @@
              <!-- <div  class="icon"><img  src="assets/img/icon/sustainability.svg" alt=""></div> -->
             <div class="hero-content">
                 
-                <h2 class="hero-title" data-animation="fadeInRight" data-delay=".50s">
-                    We <span>offer </span>end-to-end <span> Construction </span> services 
-                    <!-- We are the leader in <span>construction</span> company -->
+                <h2 class="hero-title" data-animation="fadeInRight" data-delay=".50s" [innerHTML]="heroTitleHtml">
                 </h2>
                 
                 
@@ -22,127 +20,32 @@
                 <div class="row">
                     <div class="col-lg-6 mx-auto">
                         <div class="site-heading text-center wow fadeInDown" data-wow-delay=".25s" style="visibility: visible; animation-delay: 0.25s; animation-name: fadeInDown;">
-                            <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> Services</span>
-                            <h2 class="site-title">What Services we are <span>provide</span> to you</h2>
+                            <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ tagline }}</span>
+                            <h2 class="site-title" [innerHTML]="titleHtml"></h2>
                             <div class="heading-divider"></div>
                         </div>
                     </div>
                 </div>
                 <div class="row g-4 wow fadeInUp" data-wow-delay=".25s" style="visibility: visible; animation-delay: 0.25s; animation-name: fadeInUp;">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let item of items; let i = index">
                         <div class="service-item">
-                            <span class="count">01</span>
+                            <span class="count">{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>
                             <div class="service-img">
-                                <img src="assets/img/service/01.jpg" alt="">
+                                <img [src]="item.image" alt="">
                             </div>
                             <div class="service-icon">
-                                <img src="assets/img/icon/construction.svg" alt="">
+                                <img [src]="item.icon" alt="">
                             </div>
                             <div class="service-content">
                             <h4 class="service-title">
-                               Dream Home Construction
+                               <a *ngIf="item.slug; else plainTitle" [routerLink]="['/services', item.slug]">{{ item.title }}</a>
+                               <ng-template #plainTitle>{{ item.title }}</ng-template>
                             </h4>
-                            <p class="service-text">
-                               We specialize in constructing custom-built homes that reflect your personality, lifestyle, and future aspirations. From blueprint to handover, our end-to-end construction services cover architectural planning, structural work, electrical and plumbing, finishing, and landscaping.                            </p>
+                            <p class="service-text">{{ item.text }}</p>
+                            <a *ngIf="item.slug" class="theme-btn" [routerLink]="['/services', item.slug]">Learn More<i class="fas fa-arrow-right"></i></a>
                         </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="service-item">
-                            <span class="count">02</span>
-                            <div class="service-img">
-                                <img src="assets/img/service/02.jpg" alt="">
-                            </div>
-                            <div class="service-icon">
-                                <img src="assets/img/icon/maintenance.svg" alt="">
-                            </div>
-                            <div class="service-content">
-                            <h4 class="service-title">
-                                 Interior Design Solutions
-                            </h4>
-                            <p class="service-text">Our team crafts personalized spaces that reflect your unique style, balancing beauty and functionality to enhance everyday living. From layout planning to décor selection, every detail is thoughtfully considered. We work closely with you to turn your vision into a cohesive, inspiring environment that aligns with your lifestyle and needs.                            </p>
-                            
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="service-item">
-                            <span class="count">03</span>
-                            <div class="service-img">
-                                <img src="assets/img/service/03.jpg" alt="">
-                            </div>
-                            <div class="service-icon">
-                                <img src="assets/img/icon/design-2.svg" alt="">
-                            </div>
-                            <div class="service-content">
-                            <h4 class="service-title">
-                                Property Legal Services
-                            </h4>
-                            <p class="service-text">
-                                Whether structural upgrades or cosmetic enhancements, we specialize in transforming outdated spaces into modern, efficient, and stylish living areas.
-                            </p>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="service-item">
-                            <span class="count">04</span>
-                            <div class="service-img">
-                                <img src="assets/img/service/04.jpg" alt="">
-                            </div>
-                            <div class="service-icon">
-                                <img src="assets/img/icon/plan.svg" alt="">
-                            </div>
-                            <div class="service-content">
-                            <h4 class="service-title">
-                                Renovation & Remodeling
-                            </h4>
-                            <p class="service-text">Whether it’s structural upgrades or aesthetic enhancements, we breathe new life into old spaces. Our team specializes in transforming outdated interiors into modern, functional, and visually stunning living environments. From concept to completion, we ensure every detail reflects your vision, lifestyle, and comfort
-                            </p>
-                            
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="service-item">
-                            <span class="count">05</span>
-                            <div class="service-img">
-                                <img src="assets/img/service/05.jpg" alt="">
-                            </div>
-                            <div class="service-icon">
-                                <img src="assets/img/icon/contract.svg" alt="">
-                            </div>
-                            <div class="service-content">
-                            <h4 class="service-title">
-                               Joint Development Projects
-                            </h4>
-                            <p class="service-text">
-                                We enable successful collaborations between landowners and top-tier developers. Our focus is on identifying and offering title-clear, CMDA-approved land parcels suited for residential, commercial, and integrated developments. With a sharp eye on compliance and value creation, we simplify the joint development process from start to finish. 
-                            </p>
-                            
-                        </div>
-                        </div>
-                    </div>
-                    <!-- <div class="col-lg-4">
-                        <div class="service-item">
-                            <span class="count">06</span>
-                            <div class="service-img">
-                                <img src="assets/img/service/08.jpg" alt="">
-                            </div>
-                            <div class="service-icon">
-                                <img src="assets/img/icon/architecture.svg" alt="">
-                            </div>
-                            <div class="service-content">
-                                <h4 class="service-title">
-                                    <a href="service-single.html">Architecture Design</a>
-                                </h4>
-                                <p class="service-text">
-                                    There are many variations of passages have available but the majority have suffered some form by injected humour words believable. 
-                                </p>
-                                
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>

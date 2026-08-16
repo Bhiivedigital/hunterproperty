@@ -3,29 +3,10 @@
             <div class="container">
                 <div class="partner-wrapper partner-slider">
                     <owl-carousel-o [options]="logoSlide">
-                        
-                        <ng-template carouselSlide>
-                             <img src="assets/img/partner/01.png" alt="thumb">
+                        <ng-template carouselSlide *ngFor="let logo of logos">
+                             <img [src]="logo" alt="thumb">
                         </ng-template>
-                         <ng-template carouselSlide>
-                             <img src="assets/img/partner/02.png" alt="thumb">
-                        </ng-template>
-                         <ng-template carouselSlide>
-                             <img src="assets/img/partner/03.png" alt="thumb">
-                        </ng-template>
-                         <ng-template carouselSlide>
-                            <img src="assets/img/partner/01.png" alt="thumb">
-                        </ng-template>
-                         <ng-template carouselSlide>
-                             <img src="assets/img/partner/02.png" alt="thumb">
-                        </ng-template>
-                         <ng-template carouselSlide>
-                             <img src="assets/img/partner/03.png" alt="thumb">
-                        </ng-template>
-                         <ng-template carouselSlide>
-                            <img src="assets/img/partner/02.png" alt="thumb">
-                        </ng-template>
-                     </owl-carousel-o>                    
+                     </owl-carousel-o>                  
                 </div>
             </div>
         </div>

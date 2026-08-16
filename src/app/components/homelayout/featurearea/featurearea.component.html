@@ -4,39 +4,15 @@
                 <div class="col-lg-12">
                     <div class="feature-wrap">
                         <div class="row g-4">
-                            <div class="col-md-6 col-lg-4">
+                            <div class="col-md-6 col-lg-4" *ngFor="let item of items; let i = index">
                                 <div class="feature-item">
-                                    <span class="count">01</span>
+                                    <span class="count">{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>
                                     <div class="feature-icon">
-                                        <img src="assets/img/icon/money.svg" alt="">
+                                        <img [src]="item.icon" alt="">
                                     </div>
                                     <div class="feature-content">
-                                        <h4>The Best Price</h4>
-                                        <p>Chennai’s affordable construction partner for villas, apartments, and commercial buildings. Competitive rates with clear, honest quotes.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-4">
-                                <div class="feature-item">
-                                    <span class="count">02</span>
-                                    <div class="feature-icon">
-                                        <img src="assets/img/icon/consultation.svg" alt="">
-                                    </div>
-                                    <div class="feature-content">
-                                        <h4>Daily Consultant</h4>
-                                        <p>As a trusted Chennai builder, we provide real-time updates. Our site consultants keep you informed on materials, progress, and timelines.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-4">
-                                <div class="feature-item">
-                                    <span class="count">03</span>
-                                    <div class="feature-icon">
-                                        <img src="assets/img/icon/design.svg" alt="">
-                                    </div>
-                                    <div class="feature-content">
-                                        <h4>Custom Design</h4>
-                                        <p>Expert custom home design in Chennai with Vastu-compliant layouts, sleek interiors, and modern architecture—crafted for your lifestyle.</p>
+                                        <h4>{{ item.title }}</h4>
+                                        <p>{{ item.text }}</p>
                                     </div>
                                 </div>
                             </div>

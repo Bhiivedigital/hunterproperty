@@ -5,8 +5,7 @@
         <div class="col-md-12">
              <!-- <div  class="icon"><img  src="assets/img/icon/construction.svg" alt=""></div> -->
             <div class="hero-content">
-                <h2 class="hero-title" data-animation="fadeInRight" data-delay=".50s">
-                   We Don’t <span>Just Build </span>Structures <br> We Build <span>Dreams</span>
+                <h2 class="hero-title" data-animation="fadeInRight" data-delay=".50s" [innerHTML]="heroTitleHtml">
                 </h2>
             </div>
         </div>
@@ -34,21 +33,17 @@
                         <div class="testimonial-slider  owl-theme wow fadeInUp owl-loaded owl-drag" data-wow-delay=".25s" style="visibility: visible; animation-delay: 0.25s; animation-name: fadeInUp;">                            
                         
                         <owl-carousel-o [options]="aboutTestimonial">
-                            <ng-template carouselSlide>
+                            <ng-template carouselSlide *ngFor="let item of testimonialItems">
                                    <div class="testimonial-item">
                                 <div class="testimonial-content">
                                     <div class="testimonial-author-img">
-                                        <img src="assets/img/testimonial/03.jpg" alt="">
+                                        <img [src]="item.authorImage" alt="">
                                     </div>
                                     <div class="testimonial-author-info">
-                                        <h4>sk anbalagan</h4>
-                                        <p>Customer</p>
+                                        <h4>{{ item.authorName }}</h4>
+                                        <p>{{ item.authorRole }}</p>
                                         <div class="testimonial-rate">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star" *ngFor="let star of [].constructor(item.rating)"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -57,151 +52,12 @@
                                         <img src="../../../assets/img/icon/quoteab.svg" alt="">
                                     </div>
                                      <p class="review-cnt">
-                                    The construction quality is Amazing, out elevation and interior very good price also comport for us. Thank you for Mr. Ali sir 🙏🙏🙏
+                                    {{ item.quote }}
                                 </p>
                                 </div>
                             </div>
                             </ng-template>
-                             <ng-template carouselSlide>
-                                 <div class="testimonial-item">
-                                <div class="testimonial-content">
-                                    <div class="testimonial-author-img">
-                                        <img src="assets/img/testimonial/04.jpg" alt="">
-                                    </div>
-                                    <div class="testimonial-author-info">
-                                        <h4>Tathheer Fathima Syed</h4>
-                                        <p>Customer</p>
-                                        <div class="testimonial-rate">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="testimonial-quote">
-                                    <div class="testimonial-quote-icon">
-                                        <img src="../../../assets/img/icon/quoteab.svg" alt="">
-                                    </div>
-                                      <p class="review-cnt">
-                                    A very helpful and reliable partner who helped me register the land for my ancestral house and also built our dream home.
-                                </p>   
-                                </div>
-                            </div>
-                            </ng-template>
-                             <ng-template carouselSlide>
-                                  <div class="testimonial-item">
-                                <div class="testimonial-content">
-                                    <div class="testimonial-author-img">
-                                        <img src="assets/img/testimonial/01.jpg" alt="">
-                                    </div>
-                                    <div class="testimonial-author-info">
-                                        <h4>samkay india enterprises</h4>
-                                        <p>Customer</p>
-                                        <div class="testimonial-rate">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="testimonial-quote">
-                                    <div class="testimonial-quote-icon">
-                                        <img src="../../../assets/img/icon/quoteab.svg" alt="">
-                                    </div>
-                                     <p class="review-cnt">
-                                    Very Fair & transparent people, it's one stop shop for all ur needs, most importantly they make u feel comfortable, I already have 2 properties developed and looking forward fr many more A special thanks to the Boss ALI bhai
-                                </p>
-                                </div>
-                            </div>
-                            </ng-template>
-                             <ng-template carouselSlide>
-                                <div class="testimonial-item">
-                                <div class="testimonial-content">
-                                    <div class="testimonial-author-img">
-                                        <img src="assets/img/testimonial/02.jpg" alt="">
-                                    </div>
-                                    <div class="testimonial-author-info">
-                                        <h4>Syed Safdar Hussain</h4>
-                                        <p>Customer</p>
-                                        <div class="testimonial-rate">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="testimonial-quote">
-                                    <div class="testimonial-quote-icon">
-                                        <img src="../../../assets/img/icon/quoteab.svg" alt="">
-                                    </div>
-                                    <p class="review-cnt">
-                                    Excellent one stop shop for all your real estate needs. Ali Bhai will guide you smoothly and ensure your requirements are fulfilled. I am very satisfied with the service and Ali Bhai has helped me with my concerns very satisfactorily. Highly recommended!
-                                </p>
-                                </div>
-                            </div>
-                            </ng-template>
-                             <ng-template carouselSlide>
-                                  <div class="testimonial-item">
-                                <div class="testimonial-content">
-                                    <div class="testimonial-author-img">
-                                        <img src="assets/img/testimonial/04.jpg" alt="">
-                                    </div>
-                                    <div class="testimonial-author-info">
-                                        <h4>Dinesh Ca</h4>
-                                        <p>Customer</p>
-                                        <div class="testimonial-rate">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="testimonial-quote">
-                                    <div class="testimonial-quote-icon">
-                                        <img src="../../../assets/img/icon/quoteab.svg" alt="">
-                                    </div>
-                                    <p class="review-cnt">It's good quality material for a construction on site,so never comparmais quality makeing.then complestion for on time.i give my thoughts for 5 star ratings for HP it's more growing and more successful project.
-                                    </p>
-                                </div>
-                            </div>
-                            </ng-template>
-                             <!-- <ng-template carouselSlide>
-                                <div class="testimonial-item">
-                                <div class="testimonial-content">
-                                    <div class="testimonial-author-img">
-                                        <img src="assets/img/testimonial/03.jpg" alt="">
-                                    </div>
-                                    <div class="testimonial-author-info">
-                                        <h4>Ebony Swihart</h4>
-                                        <p>Customer</p>
-                                        <div class="testimonial-rate">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="testimonial-quote">
-                                    <div class="testimonial-quote-icon">
-                                        <img src="../../../assets/img/icon/quoteab.svg" alt="">
-                                    </div>
-                                    <p>
-                                        There are many variations passage available the majority have suffered of alteration in some form by the injected humour or randomised words which look even slightly believable.
-                                    </p>
-                                </div>
-                            </div>
-                            </ng-template> -->
-                            
+
                         </owl-carousel-o>
                         </div>
                     </div>

@@ -10,3 +10,505 @@ button.btn-close {
     border-radius: 100%;
     opacity: 1;
 }
+
+// .nav-right is hidden globally below 992px (style.css), but it's the only
+// place the "Get a Quote" CTA lives — it's nested inside the offcanvas menu,
+// not duplicated outside it. Force it visible there so mobile/tablet keep the CTA.
+.offcanvas-body .nav-right {
+    display: flex !important;
+    justify-items: center;
+    margin: 20px 0 0;
+}
+
+// style.css pins .sidebaricons at top:50% right:0 — fixed to the viewport's
+// vertical center regardless of scroll position, so it collides with
+// whatever page content happens to be there (e.g. the hero lead-form card).
+// Move it to the conventional bottom-right floating-button stack instead,
+// clear of #scroll-top (fixed bottom:20px/right:30px) beneath it.
+.sidebaricons {
+    top: auto;
+    bottom: 86px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.whatsapp-icon,
+.call-icon {
+    width: 46px;
+    height: 46px;
+    padding-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+}
+
+@media screen and (max-width: 575px) {
+    .sidebaricons {
+        bottom: 78px;
+        right: 22px;
+        gap: 8px;
+    }
+    .whatsapp-icon,
+    .call-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px !important;
+    }
+}
+
+// ================= Modern navbar redesign =================
+
+// Flat top info bar — the stock theme used an aggressive orange diagonal
+// clip-path split here; replaced with a clean solid bar and a subtle
+// divider so it reads as one calm strip instead of two colliding shapes.
+.header-top {
+    background: var(--theme-color2);
+}
+.header-top::before {
+    display: none;
+}
+.header-top-list .list-item .icon {
+    background: rgba(255, 255, 255, .12);
+}
+.header-top-list .list-item .icon img {
+    filter: none;
+}
+.header-top-right {
+    position: relative;
+    padding-left: 24px;
+}
+.header-top-right::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 26px;
+    background: rgba(255, 255, 255, .18);
+}
+.header-top-social a {
+    border-color: rgba(255, 255, 255, .35);
+}
+
+// Compact the strip — smaller padding/icons, and email/phone collapse to a
+// single inline line (icon + value) instead of a stacked "label above
+// value" block, which is what was eating the extra height.
+.header-top {
+    padding: 6px 0;
+}
+.header-top-list ul {
+    gap: 18px;
+}
+.header-top-list .list-item {
+    gap: 8px;
+}
+.header-top-list .list-item .icon {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+}
+.header-top-list .list-item .icon img {
+    width: 13px;
+}
+.header-top-list .list-item .content {
+    display: flex;
+    align-items: center;
+}
+.header-top-list .list-item .content h6 {
+    display: none;
+}
+.header-top-list .list-item .content a {
+    font-size: 13px;
+}
+
+// Floating nav — three independent pieces (logo chip / link pill / CTA
+// chip) laid out across a transparent bar, not one connected block. Each
+// piece carries its own background so the hero image shows through the
+// gaps between them.
+.main-navigation {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    transition: top .25s ease;
+}
+// isScrolled (Angular, window:scroll) — tighten the gap once the bar is no
+// longer sitting right under the top info strip.
+@media all and (min-width: 992px) {
+    .main-navigation.nav-scrolled {
+        top: 14px;
+    }
+}
+.navbar,
+.navbar.fixed-top {
+    pointer-events: auto;
+    position: static !important;
+    width: 100%;
+    margin: 0;
+    background: transparent !important;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    animation: none;
+}
+.navbar .container {
+    position: relative;
+    max-width: 100%;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+.navbar-brand {
+    background: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+}
+.navbar-brand img {
+    width: 118px;
+    transition: width .25s ease;
+}
+.offcanvas-brand {
+    width: 120px !important;
+}
+
+@media all and (min-width: 992px) {
+    // .offcanvas becomes the inline flex item holding both the link list
+    // and the CTA at this breakpoint — stretch it so the link pill can be
+    // centered inside the true middle of the bar, independent of how wide
+    // the logo chip or CTA chip happen to be.
+    .navbar .offcanvas {
+        flex: 1 1 auto;
+    }
+    .offcanvas-body {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+    }
+    // Bootstrap's flex-grow-1 utility class (on the <ul> in markup) stretches
+    // the pill across all remaining space — override it back to content-sized
+    // and position it absolutely against the outer .container so it's a true
+    // center of the whole bar, independent of the logo/CTA widths on either
+    // side (and independent of the offcanvas-body flex row it lives inside).
+    .navbar .navbar-nav {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        flex-grow: 0 !important;
+        background: rgba(255, 255, 255, .14);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, .3);
+        box-shadow: 0 12px 34px rgba(9, 20, 48, .18);
+        border-radius: 999px;
+        padding: 4px;
+        margin: 0;
+        justify-content: center !important;
+    }
+    .navbar .nav-item .nav-link,
+    .navbar.fixed-top .nav-item .nav-link {
+        border-radius: 999px;
+        padding: 8px 14px;
+        margin-right: 0;
+        color: #fff;
+        transition: background-color .2s ease, color .2s ease;
+    }
+    .navbar .nav-item .nav-link.active,
+    .navbar .nav-item:hover .nav-link {
+        background: #000;
+        color: #fff !important;
+    }
+
+    // isScrolled (Angular, window:scroll) — once the bar sits over ordinary
+    // (usually light) page content instead of the dark hero, the white link
+    // text on the light-grey glass pill loses all contrast. Swap to dark
+    // text; the active/hover rule above still wins via !important.
+    .main-navigation.nav-scrolled .nav-item .nav-link {
+        color: var(--theme-color2);
+    }
+
+    // Scoped to the nav's own CTA only — .theme-btn is reused elsewhere
+    // in the app (forms, other CTAs) and must keep its normal look there.
+    // Premium black/white — no brand orange in this floating nav.
+    .nav-right {
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto;
+        margin-left: 18px;
+    }
+    .nav-right .theme-btn {
+        background: #000;
+        color: #fff;
+        border-radius: 999px !important;
+        padding: 12px 24px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .nav-right .theme-btn::before {
+        background: #2b2b2b;
+    }
+    .nav-right .theme-btn:hover {
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, .4);
+    }
+}
+
+@media all and (max-width: 991px) {
+    .main-navigation {
+        top: 14px;
+    }
+    .navbar-brand img {
+        width: 96px;
+    }
+    .navbar .mobile-menu-right .nav-right-link {
+        color: #fff;
+    }
+}
+
+// Mobile hamburger — its own floating chip, matching the logo/CTA treatment.
+.navbar-toggler {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(18, 39, 92, .6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, .14);
+    box-shadow: 0 12px 34px rgba(9, 20, 48, .28);
+}
+.navbar-toggler span {
+    width: 16px !important;
+    margin-top: 4px !important;
+    border-color: #fff !important;
+}
+.navbar-toggler span:first-child {
+    margin-top: 0 !important;
+}
+
+// ================= Services mega-menu =================
+// Visibility is driven entirely by Angular state ([class.show]="megaMenuOpen"),
+// not :hover — desktop toggles it on mouseenter/mouseleave (header.component.ts),
+// mobile toggles it on tap. This block makes that .show class the single source
+// of truth on both breakpoints, on top of the dormant multi-column layout
+// already defined in assets/css/style.css (.mega-menu, .mega-content, .mega-menu-title).
+.mega-menu-caret {
+    font-size: 11px;
+    margin-left: 6px;
+    transition: transform .2s ease;
+}
+.nav-item.mega-menu.menu-open .mega-menu-caret {
+    transform: rotate(180deg);
+}
+// The base theme's caret-only toggle on .mega-menu-title belongs to a
+// different (mobile-only) affordance — this one is the per-category
+// accordion arrow, shown only below 992px (see that media block).
+.mega-menu-cat-caret {
+    display: none;
+    font-size: 12px;
+    transition: transform .2s ease;
+}
+
+@media all and (min-width: 992px) {
+    // This project's floating pill navbar makes .navbar-nav itself
+    // position:absolute (see the "Floating nav" block above) — so the theme's
+    // usual ".nav-item.mega-menu { position: static }" trick (which expects to
+    // hand positioning up to a static .navbar .container) instead hands it to
+    // that small absolutely-positioned pill, crushing the panel down to the
+    // pill's own width. Give the <li> its own positioning context instead so
+    // the panel sizes against the real navbar-wide area, not the pill.
+    .nav-item.mega-menu {
+        position: relative;
+    }
+
+    // Higher specificity than assets/css/style.css's
+    // ".navbar .nav-item.mega-menu .dropdown-menu" (width: 98.2%; left: 12px)
+    // so this actually wins instead of needing !important. Capped well under
+    // the old 1160px — a wide panel was the wrong fix for long titles;
+    // wrapping text is (see .mega-menu-list .dropdown-item below).
+    .navbar .nav-item.mega-menu .dropdown-menu.mega-menu-panel {
+        left: 50%;
+        right: auto;
+        width: min(1200px, calc(100vw - 40px));
+        border: 1px solid rgba(15, 23, 42, .07);
+        transform: translateX(-50%) translateY(8px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+        // .theme-btn (the "Get a Quote" chip) sets position:relative for its
+        // own hover overlay, which makes it a positioned sibling painted at
+        // z-index:auto — since it sits later in the DOM than this dropdown,
+        // it was painting on top of the panel. An explicit positive z-index
+        // moves the panel to the layer above any z-index:auto sibling.
+        z-index: 1200;
+    }
+    .navbar .nav-item.mega-menu .dropdown-menu.mega-menu-panel.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    // Compact, content-sized grid instead of fixed wide columns — 5 categories
+    // fill one row naturally; a 6th (or more) reflows into a second row
+    // without stretching every column to match the tallest one (align-items:
+    // start keeps a 2-link category from inheriting a 4-link neighbor's height).
+    .mega-content {
+        padding: 26px !important;
+    }
+    .mega-menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+        column-gap: 24px;
+        row-gap: 26px;
+        align-items: start;
+    }
+    .mega-menu-col {
+        min-width: 0;
+        padding: 0 4px;
+    }
+    .mega-menu-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+        line-height: 1.2 !important;
+        margin-bottom: 14px !important;
+        white-space: normal;
+        overflow-wrap: break-word;
+        cursor: default;
+    }
+    .mega-menu-title i {
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+    // Titles wrap to as many lines as they need instead of being cut to
+    // "Designing Inte..." — a narrow-but-tall column reads better than a
+    // wide column or a truncated one.
+    .mega-menu-list .dropdown-item {
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        line-height: 1.5;
+        padding: 5px 0 !important;
+        white-space: normal;
+        overflow-wrap: break-word;
+        color: var(--color-dark, #12275c);
+        transition: color .2s ease, transform .2s ease;
+    }
+    .mega-menu-list li + li {
+        margin-top: 6px;
+    }
+    // Base theme's hover (solid brand-color fill + a padding-left jump) reads
+    // heavy for a dense text list. A simple color shift + a 2px nudge is the
+    // "subtle" SaaS-style hover the redesign calls for.
+    .mega-menu-list .dropdown-item:hover {
+        background: none !important;
+        color: var(--theme-color) !important;
+        padding-left: 0 !important;
+        transform: translateX(2px);
+    }
+    // The base ::before is a second, decorative arrow icon that slides in on
+    // hover — harmless on a plain link, but "View All" already has its own
+    // trailing arrow icon, so hovering it showed two arrows. Drop the
+    // decorative one everywhere in the mega menu.
+    .mega-menu-list .dropdown-item::before {
+        content: none !important;
+    }
+    .mega-menu-view-all {
+        font-weight: 600 !important;
+        color: var(--theme-color);
+    }
+    .mega-menu-view-all i {
+        display: inline-block;
+        transition: transform .2s ease;
+    }
+    .mega-menu-view-all:hover i {
+        transform: translateX(4px);
+    }
+}
+
+@media all and (max-width: 991px) {
+    // The offcanvas drawer is a fixed 300px column (assets/css/style.css) —
+    // too narrow for a multi-column grid, so categories collapse into an
+    // accordion instead: only the tapped category's link list is visible.
+    .mega-menu-panel {
+        position: static !important;
+        width: 100% !important;
+        left: auto !important;
+        display: none;
+        box-shadow: none;
+        border-radius: 0;
+        margin: 6px 0 10px;
+        padding: 0 6px;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+    .mega-menu-panel.show {
+        display: block;
+    }
+    .mega-menu-col {
+        margin-bottom: 6px;
+        border-bottom: 1px solid rgba(0, 0, 0, .06);
+    }
+    .mega-menu-col:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    .mega-menu-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        color: var(--color-dark, #12275c);
+        padding: 10px 2px;
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+    .mega-menu-title i:first-child {
+        font-size: 16px;
+    }
+    .mega-menu-cat-caret {
+        display: inline-block;
+        margin-left: auto;
+    }
+    .mega-menu-col.mobile-open .mega-menu-cat-caret {
+        transform: rotate(180deg);
+    }
+    // Collapsed by default; the accordion toggle (toggleMobileCategory) adds
+    // .mobile-open to the column, which is what actually reveals the list —
+    // no [class.show] state is needed on the <ul> itself.
+    .mega-menu-list {
+        display: none;
+        padding: 0 0 12px 2px;
+    }
+    .mega-menu-col.mobile-open .mega-menu-list {
+        display: block;
+    }
+    .mega-menu-list .dropdown-item {
+        font-size: 13px !important;
+        line-height: 1.5;
+        white-space: normal;
+        overflow-wrap: break-word;
+        color: var(--color-dark, #12275c);
+        padding: 6px 0 !important;
+    }
+}

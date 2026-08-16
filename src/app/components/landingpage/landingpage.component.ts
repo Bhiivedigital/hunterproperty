@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HomeblogComponent } from "../homelayout/homeblog/homeblog.component";
+import { FeaturedGuidesComponent } from "../homelayout/featured-guides/featured-guides.component";
 import { BannerComponent } from "../homelayout/banner/banner.component";
 import { FeatureareaComponent } from "../homelayout/featurearea/featurearea.component";
 import { AboutsectionComponent } from "../homelayout/aboutsection/aboutsection.component";
@@ -16,7 +16,7 @@ import { FaqComponent } from "../homelayout/faq/faq.component";
 @Component({
   selector: 'app-landingpage',
   standalone: true,
-  imports: [HomeblogComponent, BannerComponent, AboutsectionComponent, ServicesectionComponent, WorkingprocessComponent, HomeportfolioComponent, PricingComponent, ProjectskillsComponent, WhychooseusComponent, TeamComponent, RequestquoteComponent, FaqComponent],
+  imports: [FeaturedGuidesComponent, BannerComponent, AboutsectionComponent, ServicesectionComponent, WorkingprocessComponent, HomeportfolioComponent, PricingComponent, ProjectskillsComponent, WhychooseusComponent, TeamComponent, RequestquoteComponent, FaqComponent],
   templateUrl: './landingpage.component.html',
   styleUrl: './landingpage.component.scss'
 })

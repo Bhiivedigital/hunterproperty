@@ -14,7 +14,7 @@
                                     </div>
                                     <div class="content">
                                         <h6>Email</h6>
-                                        <a href=""><span class="">hunterproperty14&#64;gmail.com</span></a>
+                                        <a href=""><span class="">info&#64;hunterproperty.in</span></a>
                                     </div>
                                 </li>
                                 <li class="list-item">
@@ -42,9 +42,7 @@
                         <div class="header-top-social">
                             <span>Follow Us: </span>
                             <a href="https://www.facebook.com/Hunterpropertypvtltd/" target="_blank"><i class="fab fa-facebook"></i></a>
-                            <a href="#"><i class="fab fa-x-twitter"></i></a>
                             <a href="https://www.instagram.com/explore/locations/2476603152370114/hunter-property-pvt-ltd/" target="_blank"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +51,7 @@
         <!-- header top end -->
 
         <!-- navbar -->
-        <div class="main-navigation">
+        <div class="main-navigation" [class.nav-scrolled]="isScrolled">
             <nav class="navbar navbar-expand-lg">
                 <div class="container position-relative">
                     <a class="navbar-brand" href="index.html">
@@ -77,9 +75,35 @@
                             <ul class="navbar-nav justify-content-end flex-grow-1">
                                 <li class="nav-item"><a class="nav-link" [routerLink]="''" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
                                 <li class="nav-item"><a class="nav-link" [routerLink]="'/about'" [routerLinkActive]="'active'">About</a></li>
-                                 <li class="nav-item"><a class="nav-link" [routerLink]="'/services'" [routerLinkActive]="'active'">Services</a></li>
+                                 <li class="nav-item mega-menu" [class.menu-open]="megaMenuOpen"
+                                     (mouseenter)="openMegaMenuDesktop()" (mouseleave)="closeMegaMenuDesktop()">
+                                     <a class="nav-link" [routerLink]="'/services'" [routerLinkActive]="'active'"
+                                         (click)="toggleMegaMenuMobile($event)">
+                                         Services
+                                         <i class="fas fa-chevron-down mega-menu-caret" *ngIf="menuCategories.length"></i>
+                                     </a>
+                                     <div class="dropdown-menu mega-menu-panel" *ngIf="menuCategories.length" [class.show]="megaMenuOpen">
+                                         <div class="mega-content">
+                                             <div class="mega-menu-grid">
+                                                 <div class="mega-menu-col" *ngFor="let category of menuCategories" [class.mobile-open]="openMobileCategory === category.slug">
+                                                     <h5 class="mega-menu-title" (click)="toggleMobileCategory(category.slug, $event)">
+                                                         <i [class]="category.icon || 'far fa-helmet-safety'"></i> {{ category.name }}
+                                                         <i class="fas fa-chevron-down mega-menu-cat-caret"></i>
+                                                     </h5>
+                                                     <ul class="mega-menu-list">
+                                                         <li *ngFor="let item of category.menuItems">
+                                                             <a class="dropdown-item" [routerLink]="['/' + category.slug, item.slug]" (click)="closeMegaMenuMobile()">{{ item.title }}</a>
+                                                         </li>
+                                                         <li>
+                                                             <a class="dropdown-item mega-menu-view-all" [routerLink]="['/' + category.slug]" (click)="closeMegaMenuMobile()">View All <i class="fas fa-arrow-right"></i></a>
+                                                         </li>
+                                                     </ul>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </li>
                                  <li class="nav-item"><a class="nav-link" [routerLink]="'/portfolio'" [routerLinkActive]="'active'">Portfolio</a></li>
-                                <li class="nav-item"><a class="nav-link" [routerLink]="'/blog'" [routerLinkActive]="'active'">Blog</a> </li>
                                 <li class="nav-item"><a class="nav-link" [routerLink]="'/contactus'" [routerLinkActive]="'active'">Contact</a></li>
                             </ul>
                             <div class="header-top-left d-lg-none d-block d-md-none d-sm-none">
@@ -91,7 +115,7 @@
                                     </div>
                                     <div class="content">
                                         <h6>Email</h6>
-                                        <a href=""><span class="">hunterproperty14&#64;gmail.com</span></a>
+                                        <a href=""><span class="">info&#64;hunterproperty.in</span></a>
                                     </div>
                                 </li>
                                 <li class="list-item">
@@ -127,7 +151,7 @@
                             <!-- nav-right -->
                             <div class="nav-right">
                                 <div class="nav-btn">
-                                    <a class="theme-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Get a Quote<i class="fas fa-arrow-right"></i></a>
+                                    <a class="theme-btn" role="button" (click)="openQuotePopup()">Get a Quote<i class="fas fa-arrow-right"></i></a>
                                 </div>
                                 <!-- <button type="button" class="sidebar-btn nav-right-link" data-bs-toggle="offcanvas" data-bs-target="#sidebarPopup">
                                     <span></span>
@@ -171,7 +195,7 @@
                             </div>
                             <div class="content">
                                 <h6>Email</h6>
-                                <a href=""><span class="">hunterproperty14&#64;gmail.com</span></a>
+                                <a href=""><span class="">info&#64;hunterproperty.in</span></a>
                             </div>
                         </li>
                         <li>
@@ -216,104 +240,3 @@
     </div>
 
 
-
-<!-- Modal -->
-<div class="modal modal-lg fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog  modal-dialog-centered">
-    <div class="modal-content ">
-      <div class="modal-header border-0 py-4 px-4 pb-0">
-        <h5 class="modal-title" id="exampleModalLabel">Get A Quote</h5>
-          <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close">
-            <span class="icon-x">x</span>
-          </button>
-      </div>
-      <div class="modal-body ">
-         <div class="quote-form p-3">
-              <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <div class="form-icon">
-                                <i class="far fa-user-tie"></i>
-                                 <input type="text" formControlName="fullName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['fullName'].errors }"  placeholder="Full Name" />
-                                @if (submitted && f['fullName'].errors) {
-                                <div class="invalid-feedback">
-                                    @if (f['fullName'].errors['required']) {
-                                    <div>First Name is required</div>
-                                    }
-                                </div>
-                                }
-                            </div>
-                        </div>
-                    </div>   
-                    <!-- <div class="col-lg-6">
-                        <div class="form-group">
-                            <div class="form-icon">
-                                <i class="far fa-user-tie"></i>
-                                 <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"  placeholder="Last Name" />
-                                @if (submitted && f['lastName'].errors) {
-                                <div class="invalid-feedback">
-                                    @if (f['lastName'].errors['required']) {
-                                    <div>Last Name is required</div>
-                                    }
-                                </div>
-                                }
-                            </div>
-                        </div>
-                    </div> -->
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                            <div class="form-icon">
-                                <i class="far fa-user-tie"></i>
-                                 <input type="text" formControlName="Phno" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['Phno'].errors }"  placeholder="Phone Number" maxlength="10" />
-                                @if (submitted && f['Phno'].errors) {
-                                <div class="invalid-feedback">
-                                    @if (f['Phno'].errors['required']) {
-                                    <div>Phone Number is required</div>
-                                    }
-                                </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">   
-                         <div class="form-group">
-                            <div class="form-icon">
-                                <i class="far fa-envelope"></i>
-                               <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" placeholder="Email" />
-                                @if (submitted && f['email'].errors) {
-                                <div class="invalid-feedback">
-                                    @if (f['email'].errors['required']) {
-                                    <div>Email is required</div>
-                                    } @if (f['email'].errors['email']) {
-                                    <div>Email is invalid</div>
-                                    }
-                                </div>
-                                  }
-                            </div>
-                        </div>            
-                    
-                    </div>   
-                    
-                <div class="col-lg-12">
-                        <div class="form-group">
-                            <div class="form-icon">
-                                <i class="far fa-comment-lines"></i>
-                                <textarea class="form-control" formControlName="message" cols="30" rows="4" placeholder="Your Message"></textarea>
-                            </div>
-                        </div>
-                    </div>
-              </div>
-
-                <div class="col-lg-12">
-                        <button type="submit" class="theme-btn">Get a Quote<i class="fas fa-arrow-right"></i></button>
-                    </div>
-               
-            </form>
-            
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</div>

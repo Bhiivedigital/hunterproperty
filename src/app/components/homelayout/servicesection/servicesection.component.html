@@ -4,115 +4,34 @@
                 <div class="row g-4 align-items-center wow fadeInDown" data-wow-delay=".25s">
                     <div class="col-lg-6">
                         <div class="site-heading mb-0">
-                            <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> Services</span>
-                            <h2 class="site-title text-white">What Services we are <span>provide</span> to you</h2>
+                            <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ tagline }}</span>
+                            <h2 class="site-title text-white" [innerHTML]="titleHtml"></h2>
                         </div>
                     </div>
                    
                     
                 </div>
                 <div class="row service-slider  mt-4 wow fadeInUp" data-wow-delay=".25s">
-                    <div class="col-lg-4 col-12 col-sm-6 col-md-4">
+                    <div class="col-lg-4 col-12 col-sm-6 col-md-4" *ngFor="let item of items; let i = index">
                         <div class="service-item">
-                        <span class="count">01</span>
+                        <span class="count">{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>
                         <div class="service-img">
-                            <img src="assets/img/service/01.jpg" alt="">
+                            <img [src]="item.image" alt="">
                         </div>
                         <div class="service-icon">
-                            <img src="assets/img/icon/construction.svg" alt="">
+                            <img [src]="item.icon" alt="">
                         </div>
                         <div class="service-content">
                             <h4 class="service-title">
-                               Dream Home Construction
+                               {{ item.title }}
                             </h4>
                             <p class="service-text">
-                               We specialize in constructing custom-built homes that reflect your personality, lifestyle, and future aspirations. From blueprint to handover, our end-to-end construction services cover architectural planning, structural work, electrical and plumbing, finishing, and landscaping.                            </p>
+                               {{ item.text }}
+                            </p>
                         </div>
                     </div>
-                    
                      </div>
-                      <div class="col-lg-4 col-12 col-sm-6 col-md-4">
-                         <div class="service-item">
-                        <span class="count">02</span>
-                        <div class="service-img">
-                            <img src="assets/img/service/02.jpg" alt="">
-                        </div>
-                        <div class="service-icon">
-                            <img src="assets/img/icon/maintenance.svg" alt="">
-                        </div>
-                        <div class="service-content">
-                            <h4 class="service-title">
-                                 Interior Design Solutions
-                            </h4>
-                            <p class="service-text">
-Our team crafts personalized spaces that reflect your unique style, balancing beauty and functionality to enhance everyday living. From layout planning to décor selection, every detail is thoughtfully considered. We work closely with you to turn your vision into a cohesive, inspiring environment that aligns with your lifestyle and needs.                            </p>
-                            
-                        </div>
-                    </div>
-                    </div>
-                    
-                      <div class="col-lg-4 col-12 col-sm-6 col-md-4">
-                         <div class="service-item">
-                        <span class="count">03</span>
-                        <div class="service-img">
-                            <img src="assets/img/service/03.jpg" alt="">
-                        </div>
-                        <div class="service-icon">
-                            <img src="assets/img/icon/design-2.svg" alt="">
-                        </div>
-                        <div class="service-content">
-                            <h4 class="service-title">
-                                Property Legal Services
-                            </h4>
-                            <p class="service-text">
-                                Experience seamless property transactions with our end-to-end legal support. We handle documentation, title verification, approvals, and compliance with ease—ensuring every deal is secure, transparent, and hassle-free
-                            </p>
-                            
-                        </div>
-                    </div>
-                    </div>
-                     
-                         <!-- <div class="service-item">
-                        <span class="count">04</span>
-                        <div class="service-img">
-                            <img src="assets/img/service/04.jpg" alt="">
-                        </div>
-                        <div class="service-icon">
-                            <img src="assets/img/icon/plan.svg" alt="">
-                        </div>
-                        <div class="service-content">
-                            <h4 class="service-title">
-                                Renovation & Remodeling
-                            </h4>
-                            <p class="service-text">
-                                Whether it’s structural upgrades or aesthetic enhancements, we breathe new life into old spaces. Our team specializes in transforming outdated interiors into modern, functional, and visually stunning living environments. From concept to completion, we ensure every detail reflects your vision, lifestyle, and comfort
-                            </p>
-                            
-                        </div>
-                        <a  [routerLink]="'/services'" class="theme-btn">Get More Services<i class="fas fa-arrow-right"></i></a>
-                    </div> -->
-                    
-                     
-                         <!-- <div class="service-item">
-                        <span class="count">05</span>
-                        <div class="service-img">
-                            <img src="assets/img/service/05.jpg" alt="">
-                        </div>
-                        <div class="service-icon">
-                            <img src="assets/img/icon/contract.svg" alt="">
-                        </div>
-                        <div class="service-content">
-                            <h4 class="service-title">
-                               Joint Development Projects
-                            </h4>
-                            <p class="service-text">
-                                We enable successful collaborations between landowners and top-tier developers. Our focus is on identifying and offering title-clear, CMDA-approved land parcels suited for residential, commercial, and integrated developments. With a sharp eye on compliance and value creation, we simplify the joint development process from start to finish. 
-                            </p>
-                            
-                        </div>
-                        <a  [routerLink]="'/services'" class="theme-btn">Get More Services<i class="fas fa-arrow-right"></i></a>
-                    </div> -->
-                    
+
                      <div class="text-center services-btn">
                         <a [routerLink]="'/services'" class="theme-btn">Get More Services<i class="fas fa-arrow-right"></i></a>
                     </div>

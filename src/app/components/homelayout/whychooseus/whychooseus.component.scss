@@ -1,0 +1,9 @@
+// Base theme fixes .choose-img .img-2 at height:400px with a fluid 60% width.
+// styles.scss only relaxes it to height:auto below 640px, leaving the 641-991px
+// tablet band with a stretched/cropped circular image.
+@media all and (max-width: 991px) {
+  .choose-img .img-2 {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}

@@ -1,0 +1,41 @@
+<div class="hero-quote-card" data-animation="fadeInUp" data-delay=".5s">
+  <img src="assets/img/illustration/support-agent.png" alt="" class="hq-illustration" />
+  <ng-container *ngIf="!sendSucceeded">
+    <h3>Take the First Step Toward Your Dream Home</h3>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="hq-field">
+        <input type="text" formControlName="name" class="hq-ctrl" [class.error]="submitted && f['name'].errors" placeholder="Name" />
+        <span class="hq-err" *ngIf="submitted && f['name'].errors">Name is required</span>
+      </div>
+
+      <div class="hq-row">
+        <div class="hq-field hq-phone">
+          <span class="hq-prefix">+91</span>
+          <input type="tel" formControlName="phone" class="hq-ctrl" [class.error]="submitted && f['phone'].errors" placeholder="Mobile No" maxlength="10" />
+        </div>
+        <div class="hq-field">
+          <input type="text" formControlName="pincode" class="hq-ctrl" [class.error]="submitted && f['pincode'].errors" placeholder="Pincode" maxlength="6" />
+        </div>
+      </div>
+      <span class="hq-err" *ngIf="submitted && f['phone'].errors">Enter a valid 10-digit number</span>
+      <span class="hq-err" *ngIf="submitted && f['pincode'].errors">Enter a valid 6-digit pincode</span>
+
+      <button type="submit" class="hq-btn" [disabled]="sending || !f['consent'].value">
+        {{ sending ? 'Sending…' : 'Get Free Estimate' }}
+      </button>
+
+      <label class="hq-consent">
+        <input type="checkbox" formControlName="consent" [class.error]="submitted && f['consent'].errors" />
+        <span>By providing my details, I consent to receive assistance from Hunter Property regarding my enquiry through any valid communication channel.</span>
+      </label>
+
+      <p class="hq-fail" *ngIf="sendFailed">Couldn't send. Please try again.</p>
+    </form>
+  </ng-container>
+
+  <div class="hq-success" *ngIf="sendSucceeded">
+    <i class="fas fa-check-circle"></i>
+    <p>Thanks! We'll call you back shortly.</p>
+  </div>
+</div>

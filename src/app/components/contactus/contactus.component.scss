@@ -76,6 +76,21 @@
   color: var(--color-dark);
 }
 
+@media screen and (max-width: 767px) {
+  .contact-info .icon {
+    font-size: 26px;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+  }
+  .contact-form-header h2 {
+    font-size: 24px;
+  }
+  .contact-form {
+    padding: 20px;
+  }
+}
+
 .contact-form-header p{
   color: var(--body-text-color);
 }

@@ -4,60 +4,23 @@
                 <div class="row">
                     <div class="col-lg-6 mx-auto">
                         <div class="site-heading text-center wow fadeInDown" data-wow-delay=".25s">
-                            <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> Working
-                                Process</span>
-                            <h2 class="site-title">Easy steps for <span>Hunter Property</span></h2>
+                            <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ tagline }}</span>
+                            <h2 class="site-title" [innerHTML]="titleHtml"></h2>
                             <div class="heading-divider"></div>
                         </div>
                     </div>
                 </div>
                 <div class="process-wrap mt-3 wow fadeInUp" data-wow-delay=".25s">
                     <div class="row g-4">
-                        <div class="col-md-6 col-lg-4 col-xl-3">
+                        <div class="col-md-6 col-lg-4 col-xl-3" *ngFor="let step of steps; let i = index">
                             <div class="process-item">
-                                <span class="count">01</span>
+                                <span class="count">{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>
                                 <div class="icon">
-                                    <img src="assets/img/icon/service.svg" alt="">
+                                    <img [src]="step.icon" alt="">
                                 </div>
                                 <div class="content">
-                                    <h4>Choose Service</h4>
-                                    <p>From home builds to office interiors find the right construction service in Chennai for you.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="process-item">
-                                <span class="count">02</span>
-                                <div class="icon">
-                                    <img src="assets/img/icon/consultation.svg" alt="">
-                                </div>
-                                <div class="content">
-                                    <h4>Free  Consultation</h4>
-                                    <p>Discuss your ideas with our team for a free, no-obligation planning session.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="process-item">
-                                <span class="count">03</span>
-                                <div class="icon">
-                                    <img src="assets/img/icon/money.svg" alt="">
-                                </div>
-                                <div class="content">
-                                    <h4>Estimate Budget</h4>
-                                    <p>Know your budget upfront. We provide clear construction pricing in Chennai.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="process-item">
-                                <span class="count">04</span>
-                                <div class="icon">
-                                    <img src="assets/img/icon/construction-2.svg" alt="">
-                                </div>
-                                <div class="content">
-                                    <h4>Project Production</h4>
-                                    <p>Once we begin, expect on-site supervision, real-time reports, and timely delivery.</p>
+                                    <h4>{{ step.title }}</h4>
+                                    <p>{{ step.text }}</p>
                                 </div>
                             </div>
                         </div>

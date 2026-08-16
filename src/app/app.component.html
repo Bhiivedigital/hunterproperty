@@ -1,115 +1,13 @@
-<div  #backdropDiv class="modal-backdrop"  [class.show]="isPopupVisible" *ngIf="isPopupVisible"></div>
+<app-lead-popup></app-lead-popup>
 
-
-<div #popupDiv class="popup"  [@popupAnimation]="isPopupVisible ? 'visible' : 'hidden'">
-  <div class="modal-dialog  modal-dialog-centered">
-     <div class="modal-content ">
-      <div class="modal-header border-0 py-4 px-4 pb-0 mb-3">
-        <h5 class="modal-title" id="exampleModalLabel">Get A Quote</h5>
-          <button type="button" class="close-btn" (click)="hidePopup()">
-            <span class="icon-x">x</span>
-          </button>
-      </div>
-      <div class="modal-body ">
-         <div class="quote-form p-2">
-              <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <div class="form-icon">
-                                <i class="far fa-user-tie"></i>
-                                 <input type="text" formControlName="fullName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['fullName'].errors }"  placeholder="Full Name" />
-                                @if (submitted && f['fullName'].errors) {
-                                <div class="invalid-feedback">
-                                    @if (f['fullName'].errors['required']) {
-                                    <div>First Name is required</div>
-                                    }
-                                </div>
-                                }
-                            </div>
-                        </div>
-                    </div>   
-                    <!-- <div class="col-lg-6">
-                        <div class="form-group">
-                            <div class="form-icon">
-                                <i class="far fa-user-tie"></i>
-                                 <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"  placeholder="Last Name" />
-                                @if (submitted && f['lastName'].errors) {
-                                <div class="invalid-feedback">
-                                    @if (f['lastName'].errors['required']) {
-                                    <div>Last Name is required</div>
-                                    }
-                                </div>
-                                }
-                            </div>
-                        </div>
-                    </div> -->
-                     <div class="col-lg-6">
-                        <div class="form-group">
-                            <div class="form-icon">
-                                <i class="far fa-user-tie"></i>
-                                 <input type="text" formControlName="Phno" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['Phno'].errors }"  placeholder="Phone Number" maxlength="10" />
-                                @if (submitted && f['Phno'].errors) {
-                                <div class="invalid-feedback">
-                                    @if (f['Phno'].errors['required']) {
-                                    <div>Phone Number is required</div>
-                                    }
-                                </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">   
-                         <div class="form-group">
-                            <div class="form-icon">
-                                <i class="far fa-envelope"></i>
-                               <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" placeholder="Email" />
-                                @if (submitted && f['email'].errors) {
-                                <div class="invalid-feedback">
-                                    @if (f['email'].errors['required']) {
-                                    <div>Email is required</div>
-                                    } @if (f['email'].errors['email']) {
-                                    <div>Email is invalid</div>
-                                    }
-                                </div>
-                                  }
-                            </div>
-                        </div>            
-                    
-                    </div>   
-                    
-                <div class="col-lg-12">
-                        <div class="form-group">
-                            <div class="form-icon">
-                                <i class="far fa-comment-lines"></i>
-                                <textarea class="form-control" formControlName="message" cols="30" rows="4" placeholder="Your Message"></textarea>
-                            </div>
-                        </div>
-                    </div>
-              </div>
-
-                <div class="col-lg-12">
-                        <button type="submit" class="theme-btn">Get a Quote<i class="fas fa-arrow-right"></i></button>
-                    </div>
-               
-            </form>
-            
-        </div>
-      </div>
-      
+<div class="preloader" *ngIf="isLoading">
+    <div class="loader-ripple">
+        <div></div>
+        <div></div>
     </div>
-  </div>
 </div>
- <div class="preloader" *ngIf="isLoading">
-        <div class="loader-ripple">
-            <div></div>
-            <div></div>
-        </div>
-    </div>
 <app-header></app-header>
 <main class="main">
 <router-outlet />
 </main>
 <app-footer></app-footer>
-
-

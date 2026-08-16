@@ -4,17 +4,17 @@
                 <div class="row">
                     <div class="col-lg-6 mx-auto">
                         <div class="site-heading text-center wow fadeInDown" data-wow-delay=".25s">
-                            <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> Our Team</span>
-                            <h2 class="site-title">Meet With Our <span>Experts</span></h2>
+                            <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ team?.tagline }}</span>
+                            <h2 class="site-title" [innerHTML]="titleHtml"></h2>
                             <div class="heading-divider"></div>
                         </div>
                     </div>
                 </div>
                 <div class="row g-4">
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-md-6 col-lg-3" *ngFor="let member of team?.members">
                         <div class="team-item wow fadeInUp" data-wow-delay=".25s">
                             <div class="team-img">
-                                <img src="assets/img/team/01.jpg" alt="thumb">
+                                <img [src]="member.photo" alt="thumb">
                                 <div class="team-social-wrap">
                                     <div class="team-social-btn">
                                         <button type="button"><i class="far fa-share-alt"></i></button>
@@ -28,74 +28,8 @@
                                 </div>
                             </div>
                             <div class="team-content">
-                                <!-- <h4><a href="team.html">Rodrigues Christy</a></h4> -->
-                                <span>CEO & Founder</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="team-item wow fadeInDown" data-wow-delay=".25s">
-                            <div class="team-img">
-                                <img src="assets/img/team/02.jpg" alt="thumb">
-                                <div class="team-social-wrap">
-                                    <div class="team-social-btn">
-                                        <button type="button"><i class="far fa-share-alt"></i></button>
-                                    </div>
-                                    <div class="team-social">
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-x-twitter"></i></a>
-                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#"><i class="fab fa-youtube"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="team-content">
-                                <!-- <h4><a href="team.html">Matthew Hong</a></h4> -->
-                                <span>Project Manager</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="team-item wow fadeInUp" data-wow-delay=".25s">
-                            <div class="team-img">
-                                <img src="assets/img/team/03.jpg" alt="thumb">
-                                <div class="team-social-wrap">
-                                    <div class="team-social-btn">
-                                        <button type="button"><i class="far fa-share-alt"></i></button>
-                                    </div>
-                                    <div class="team-social">
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-x-twitter"></i></a>
-                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#"><i class="fab fa-youtube"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="team-content">
-                                <!-- <h4><a href="team.html">Anita Bentley</a></h4> -->
-                                <span>Marketing Manager</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="team-item wow fadeInDown" data-wow-delay=".25s">
-                            <div class="team-img">
-                                <img src="assets/img/team/04.jpg" alt="thumb">
-                                <div class="team-social-wrap">
-                                    <div class="team-social-btn">
-                                        <button type="button"><i class="far fa-share-alt"></i></button>
-                                    </div>
-                                    <div class="team-social">
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-x-twitter"></i></a>
-                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#"><i class="fab fa-youtube"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="team-content">
-                                <!-- <h4><a href="team.html">Beverly Dyer</a></h4> -->
-                                <span>Civil Engineer</span>
+                                <h4 *ngIf="member.name">{{ member.name }}</h4>
+                                <span>{{ member.role }}</span>
                             </div>
                         </div>
                     </div>
