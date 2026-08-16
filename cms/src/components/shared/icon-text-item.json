@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_shared_icon_text_items",
+  "info": {
+    "displayName": "Icon Text Item",
+    "icon": "star"
+  },
+  "attributes": {
+    "icon": { "type": "string" },
+    "title": { "type": "string" },
+    "text": { "type": "text" }
+  }
+}

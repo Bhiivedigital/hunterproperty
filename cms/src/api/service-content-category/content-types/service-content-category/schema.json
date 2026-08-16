@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "service_content_categories",
+  "info": {
+    "singularName": "service-content-category",
+    "pluralName": "service-content-categories",
+    "displayName": "Service Content Category",
+    "description": "SEO content categories (e.g. Home Construction, Interior Design) shown in the Services mega-menu and at /:categorySlug"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "menuOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "showInMenu": {
+      "type": "boolean",
+      "default": true
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "contentPages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service-content-page.service-content-page",
+      "mappedBy": "category"
+    }
+  }
+}

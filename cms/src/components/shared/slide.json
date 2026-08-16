@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_shared_slides",
+  "info": {
+    "displayName": "Slide",
+    "icon": "image"
+  },
+  "attributes": {
+    "backgroundImage": {
+      "type": "string"
+    }
+  }
+}

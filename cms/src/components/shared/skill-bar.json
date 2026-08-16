@@ -1,0 +1,11 @@
+{
+  "collectionName": "components_shared_skill_bars",
+  "info": {
+    "displayName": "Skill Bar",
+    "icon": "bulb"
+  },
+  "attributes": {
+    "label": { "type": "string" },
+    "percent": { "type": "integer" }
+  }
+}

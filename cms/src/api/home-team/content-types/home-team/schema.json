@@ -1,0 +1,12 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_team",
+  "info": { "singularName": "home-team", "pluralName": "home-team-list", "displayName": "Home Team" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "tagline": { "type": "string" },
+    "titleHtml": { "type": "string" },
+    "members": { "type": "component", "component": "shared.team-member", "repeatable": true }
+  }
+}

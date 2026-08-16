@@ -1,0 +1,13 @@
+{
+  "kind": "singleType",
+  "collectionName": "services_page",
+  "info": { "singularName": "services-page", "pluralName": "services-page-list", "displayName": "Services Page" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "heroTitleHtml": { "type": "text" },
+    "tagline": { "type": "string" },
+    "titleHtml": { "type": "string" },
+    "items": { "type": "component", "component": "shared.service-card", "repeatable": true }
+  }
+}

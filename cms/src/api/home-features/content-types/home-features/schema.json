@@ -1,0 +1,10 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_features",
+  "info": { "singularName": "home-features", "pluralName": "home-features-list", "displayName": "Home Features" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "items": { "type": "component", "component": "shared.icon-text-item", "repeatable": true }
+  }
+}

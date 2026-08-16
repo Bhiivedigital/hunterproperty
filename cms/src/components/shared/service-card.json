@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_service_cards",
+  "info": {
+    "displayName": "Service Card",
+    "icon": "briefcase"
+  },
+  "attributes": {
+    "image": { "type": "string" },
+    "icon": { "type": "string" },
+    "title": { "type": "string" },
+    "text": { "type": "text" },
+    "slug": { "type": "string" }
+  }
+}
