@@ -18,7 +18,7 @@
         <div class="col-lg-8">
           <article class="content-page">
             <div class="content-page-img" *ngIf="page.coverImage">
-              <img class="img-fluid w-100" [src]="page.coverImage" [alt]="page.title">
+              <img class="img-fluid w-100" [src]="page.coverImage" [alt]="page.title" loading="lazy">
             </div>
 
             <div class="content-page-meta" *ngIf="page.updatedAt">
@@ -48,7 +48,9 @@
         </div>
 
         <div class="col-lg-4">
-          <div class="content-page-panel">
+          <div class="content-page-panel content-page-panel-sticky">
+            <app-hero-lead-form heading="Get a Free Consultation for Your Project" sourceForm="content-page"></app-hero-lead-form>
+
             <div class="widget">
               <h4 class="widget-title">In {{ page.category.name }}</h4>
               <p>{{ page.category.description }}</p>
@@ -61,7 +63,7 @@
               <h4 class="widget-title">Related Guides</h4>
               <div class="related-guide-item" *ngFor="let item of related">
                 <div class="related-guide-img" *ngIf="item.coverImage">
-                  <img [src]="item.coverImage" [alt]="item.title">
+                  <img [src]="item.coverImage" [alt]="item.title" loading="lazy">
                 </div>
                 <div class="related-guide-info">
                   <h6><a [routerLink]="['/' + page.category.slug, item.slug]">{{ item.title }}</a></h6>

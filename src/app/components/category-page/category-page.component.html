@@ -29,7 +29,7 @@
           <div class="blog-item blog-item-clickable wow fadeInUp">
             <a class="blog-item-stretched-link" [routerLink]="['/' + category.slug, item.slug]" [attr.aria-label]="item.title"></a>
             <div class="blog-item-img" *ngIf="item.coverImage">
-              <img [src]="item.coverImage" [alt]="item.title">
+              <img [src]="item.coverImage" [alt]="item.title" loading="lazy">
             </div>
             <div class="blog-item-info">
               <h4 class="blog-title">

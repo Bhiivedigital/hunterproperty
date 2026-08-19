@@ -31,10 +31,10 @@
                         <div class="service-item">
                             <span class="count">{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>
                             <div class="service-img">
-                                <img [src]="item.image" alt="">
+                                <img [src]="item.image" alt="" loading="lazy">
                             </div>
                             <div class="service-icon">
-                                <img [src]="item.icon" alt="">
+                                <img [src]="item.icon" alt="" loading="lazy">
                             </div>
                             <div class="service-content">
                             <h4 class="service-title">

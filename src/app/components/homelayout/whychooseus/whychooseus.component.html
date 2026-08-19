@@ -14,7 +14,7 @@
                             <div class="choose-content-wrap">
                                 <div class="choose-item" *ngFor="let item of data?.items">
                                     <div class="choose-item-icon">
-                                        <img [src]="item.icon" alt="">
+                                        <img [src]="item.icon" alt="" loading="lazy">
                                     </div>
                                     <div class="choose-item-info">
                                         <h4>{{ item.title }}</h4>
@@ -26,8 +26,8 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="choose-img wow fadeInRight" data-wow-delay=".25s">
-                            <img class="img-1" [src]="data?.image1" alt="">
-                            <img class="img-2" [src]="data?.image2" alt="">
+                            <img class="img-1" [src]="data?.image1" alt="" loading="lazy">
+                            <img class="img-2" [src]="data?.image2" alt="" loading="lazy">
                         </div>
                     </div>
                 </div>
