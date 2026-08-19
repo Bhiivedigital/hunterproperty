@@ -24,7 +24,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let image of images">
                         <div class="portfolio-item">
                             <div class="portfolio-img">
-                                <img class="img-fluid" [src]="image" alt="">
+                                <img class="img-fluid" [src]="image" alt="" loading="lazy">
                                 <a class="popup-img portfolio-link" [href]="image"> <i class="far fa-plus"></i></a>
                             </div>
                         </div>

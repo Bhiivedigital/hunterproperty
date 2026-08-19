@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LeadPopupService } from '../lead-popup/lead-popup.service';
 import { ServiceContentService } from '../services/service-content.service';
@@ -15,12 +15,14 @@ const DESKTOP_BREAKPOINT = 992;
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+
+  @ViewChild('headerTop') headerTopRef?: ElementRef<HTMLElement>;
 
   isScrolled = false;
   menuCategories: MenuCategory[] = [];
   megaMenuOpen = false;
-  openMobileCategory: string | null = null;
+  private headerTopResizeObserver?: ResizeObserver;
 
   constructor(private leadPopupService: LeadPopupService, private contentService: ServiceContentService) {}
 
@@ -49,18 +51,6 @@ export class HeaderComponent implements OnInit {
 
   closeMegaMenuMobile(): void {
     this.megaMenuOpen = false;
-    this.openMobileCategory = null;
-  }
-
-  // Mobile mega-menu is a narrow 300px offcanvas drawer, not a wide desktop
-  // panel — a multi-column grid doesn't fit there, so each category collapses
-  // into an accordion instead. Desktop ignores this (grid columns show all
-  // categories at once via CSS, isDesktop short-circuits the toggle).
-  toggleMobileCategory(slug: string, event: Event): void {
-    if (this.isDesktop) return;
-    event.preventDefault();
-    event.stopPropagation();
-    this.openMobileCategory = this.openMobileCategory === slug ? null : slug;
   }
 
   @HostListener('window:scroll', [])
@@ -97,5 +87,29 @@ callNow(): void {
         }, 300); // slight delay to avoid backdrop conflict
       });
     });
+
+    this.observeHeaderTopHeight();
+  }
+
+  ngOnDestroy(): void {
+    this.headerTopResizeObserver?.disconnect();
+  }
+
+  // .header-top is fixed (see header.component.scss) and its rendered height
+  // changes across breakpoints (icon sizes, line wrapping) and is hidden
+  // entirely below 576px — track it live so .main-navigation and <main> can
+  // reserve exactly that much space via --header-top-height instead of a
+  // guessed pixel value.
+  private observeHeaderTopHeight(): void {
+    const el = this.headerTopRef?.nativeElement;
+    if (!el) return;
+
+    const setHeight = () => {
+      document.documentElement.style.setProperty('--header-top-height', `${el.offsetHeight}px`);
+    };
+
+    setHeight();
+    this.headerTopResizeObserver = new ResizeObserver(setHeight);
+    this.headerTopResizeObserver.observe(el);
   }
 }

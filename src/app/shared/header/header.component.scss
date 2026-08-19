@@ -65,8 +65,18 @@ button.btn-close {
 // Flat top info bar — the stock theme used an aggressive orange diagonal
 // clip-path split here; replaced with a clean solid bar and a subtle
 // divider so it reads as one calm strip instead of two colliding shapes.
+// Pinned together with .main-navigation below (was in-flow before, scrolling
+// out of view and leaving the floating nav pill stranded with no top bar).
+// --header-top-height is measured live in header.component.ts (ResizeObserver)
+// since this bar's rendered height changes across breakpoints and is hidden
+// entirely below 576px.
 .header-top {
     background: var(--theme-color2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
 }
 .header-top::before {
     display: none;
@@ -132,7 +142,7 @@ button.btn-close {
 // gaps between them.
 .main-navigation {
     position: fixed;
-    top: 60px;
+    top: var(--header-top-height, 60px);
     left: 0;
     right: 0;
     z-index: 1000;
@@ -140,13 +150,6 @@ button.btn-close {
     justify-content: center;
     pointer-events: none;
     transition: top .25s ease;
-}
-// isScrolled (Angular, window:scroll) — tighten the gap once the bar is no
-// longer sitting right under the top info strip.
-@media all and (min-width: 992px) {
-    .main-navigation.nav-scrolled {
-        top: 14px;
-    }
 }
 .navbar,
 .navbar.fixed-top {
@@ -175,10 +178,21 @@ button.btn-close {
     display: flex;
     align-items: center;
     flex: 0 0 auto;
+    border-radius: 999px;
+    transition: background-color .25s ease, box-shadow .25s ease, padding .25s ease;
 }
 .navbar-brand img {
     width: 118px;
     transition: width .25s ease;
+}
+
+// isScrolled — bar now sits over ordinary page content instead of the dark
+// hero, so a light/transparent logo loses contrast. White chip behind it
+// keeps logo readable over any background.
+.main-navigation.nav-scrolled .navbar-brand {
+    background: #fff;
+    padding: 8px 16px;
+    box-shadow: 0 8px 20px rgba(9, 20, 48, .12);
 }
 .offcanvas-brand {
     width: 120px !important;
@@ -269,9 +283,6 @@ button.btn-close {
 }
 
 @media all and (max-width: 991px) {
-    .main-navigation {
-        top: 14px;
-    }
     .navbar-brand img {
         width: 96px;
     }
@@ -317,14 +328,6 @@ button.btn-close {
 }
 .nav-item.mega-menu.menu-open .mega-menu-caret {
     transform: rotate(180deg);
-}
-// The base theme's caret-only toggle on .mega-menu-title belongs to a
-// different (mobile-only) affordance — this one is the per-category
-// accordion arrow, shown only below 992px (see that media block).
-.mega-menu-cat-caret {
-    display: none;
-    font-size: 12px;
-    transition: transform .2s ease;
 }
 
 @media all and (min-width: 992px) {
@@ -394,7 +397,10 @@ button.btn-close {
         margin-bottom: 14px !important;
         white-space: normal;
         overflow-wrap: break-word;
-        cursor: default;
+        cursor: pointer;
+    }
+    .mega-menu-title:hover {
+        color: var(--theme-color);
     }
     .mega-menu-title i {
         font-size: 18px;
@@ -447,8 +453,10 @@ button.btn-close {
 
 @media all and (max-width: 991px) {
     // The offcanvas drawer is a fixed 300px column (assets/css/style.css) —
-    // too narrow for a multi-column grid, so categories collapse into an
-    // accordion instead: only the tapped category's link list is visible.
+    // too narrow for a multi-column grid, and too narrow for a sub-link list
+    // per category either. Mobile shows category names only, each one a
+    // direct link to that category's page (.mega-menu-list is hidden via
+    // .d-none d-lg-block on the element itself, not here).
     .mega-menu-panel {
         position: static !important;
         width: 100% !important;
@@ -481,34 +489,8 @@ button.btn-close {
         color: var(--color-dark, #12275c);
         padding: 10px 2px;
         margin-bottom: 0;
-        cursor: pointer;
     }
     .mega-menu-title i:first-child {
         font-size: 16px;
-    }
-    .mega-menu-cat-caret {
-        display: inline-block;
-        margin-left: auto;
-    }
-    .mega-menu-col.mobile-open .mega-menu-cat-caret {
-        transform: rotate(180deg);
-    }
-    // Collapsed by default; the accordion toggle (toggleMobileCategory) adds
-    // .mobile-open to the column, which is what actually reveals the list —
-    // no [class.show] state is needed on the <ul> itself.
-    .mega-menu-list {
-        display: none;
-        padding: 0 0 12px 2px;
-    }
-    .mega-menu-col.mobile-open .mega-menu-list {
-        display: block;
-    }
-    .mega-menu-list .dropdown-item {
-        font-size: 13px !important;
-        line-height: 1.5;
-        white-space: normal;
-        overflow-wrap: break-word;
-        color: var(--color-dark, #12275c);
-        padding: 6px 0 !important;
     }
 }

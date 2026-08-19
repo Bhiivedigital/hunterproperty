@@ -2,7 +2,7 @@
     <header class="header">
 
         <!-- header top -->
-        <div class="header-top d-lg-block d-none d-md-block d-sm-block">
+        <div class="header-top d-lg-block d-none d-md-block d-sm-block" #headerTop>
             <div class="container">
                 <div class="header-top-wrap">
                     <div class="header-top-left">
@@ -85,12 +85,11 @@
                                      <div class="dropdown-menu mega-menu-panel" *ngIf="menuCategories.length" [class.show]="megaMenuOpen">
                                          <div class="mega-content">
                                              <div class="mega-menu-grid">
-                                                 <div class="mega-menu-col" *ngFor="let category of menuCategories" [class.mobile-open]="openMobileCategory === category.slug">
-                                                     <h5 class="mega-menu-title" (click)="toggleMobileCategory(category.slug, $event)">
+                                                 <div class="mega-menu-col" *ngFor="let category of menuCategories">
+                                                     <a class="mega-menu-title" [routerLink]="['/' + category.slug]" (click)="closeMegaMenuMobile()">
                                                          <i [class]="category.icon || 'far fa-helmet-safety'"></i> {{ category.name }}
-                                                         <i class="fas fa-chevron-down mega-menu-cat-caret"></i>
-                                                     </h5>
-                                                     <ul class="mega-menu-list">
+                                                     </a>
+                                                     <ul class="mega-menu-list d-none d-lg-block">
                                                          <li *ngFor="let item of category.menuItems">
                                                              <a class="dropdown-item" [routerLink]="['/' + category.slug, item.slug]" (click)="closeMegaMenuMobile()">{{ item.title }}</a>
                                                          </li>

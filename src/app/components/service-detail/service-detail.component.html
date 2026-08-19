@@ -16,12 +16,12 @@
       <div class="row g-5 align-items-center">
         <div class="col-lg-6">
           <div class="service-single-img">
-            <img class="img-fluid w-100" [src]="service.image" [alt]="service.title" style="border-radius: 15px;">
+            <img class="img-fluid w-100" [src]="service.image" [alt]="service.title" style="border-radius: 15px;" loading="lazy">
           </div>
         </div>
         <div class="col-lg-6">
           <div class="service-icon mb-3">
-            <img [src]="service.icon" alt="" style="width: 50px;">
+            <img [src]="service.icon" alt="" style="width: 50px;" loading="lazy">
           </div>
           <h1>{{ service.title }}</h1>
           <p>{{ service.text }}</p>

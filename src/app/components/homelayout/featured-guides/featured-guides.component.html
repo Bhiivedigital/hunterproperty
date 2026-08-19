@@ -15,7 +15,7 @@
                     <a class="blog-item-stretched-link" [routerLink]="['/' + guide.category.slug, guide.slug]"
                         [attr.aria-label]="guide.title"></a>
                     <div class="blog-item-img" *ngIf="guide.coverImage">
-                        <img [src]="guide.coverImage" [alt]="guide.title">
+                        <img [src]="guide.coverImage" [alt]="guide.title" loading="lazy">
                     </div>
                     <div class="blog-item-info">
                         <div class="blog-item-meta">
