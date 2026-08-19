@@ -56,7 +56,7 @@ export interface HomeBanner {
 export interface HomeAbout {
   tagline: string;
   titleHtml: string;
-  paragraphs: string[];
+  paragraphs: string;
   experienceYears: string;
   experienceLabel: string;
   image1: string;

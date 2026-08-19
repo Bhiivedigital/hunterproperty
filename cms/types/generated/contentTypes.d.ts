@@ -454,17 +454,35 @@ export interface ApiAboutPageAboutPage extends Struct.SingleTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    breadcrumbs: Schema.Attribute.Component<'shared.link-item', true>;
+    contentBlocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.content-section',
+        'blocks.banner',
+        'blocks.quick-links',
+        'blocks.accordion',
+        'blocks.faqs',
+        'blocks.video-section',
+        'blocks.scripts',
+      ]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    heroTitleHtml: Schema.Attribute.Text;
+    getQuoteButtonText: Schema.Attribute.String;
+    heroTitleHtml: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::about-page.about-page'
     > &
       Schema.Attribute.Private;
+    mobileImage: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    quickLinks: Schema.Attribute.Component<'blocks.quick-links', false>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    topLevelImages: Schema.Attribute.Media<'images', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -487,15 +505,15 @@ export interface ApiHomeAboutHomeAbout extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     experienceLabel: Schema.Attribute.String;
     experienceYears: Schema.Attribute.String;
-    image1: Schema.Attribute.String;
-    image2: Schema.Attribute.String;
+    image1: Schema.Attribute.Media<'images'>;
+    image2: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::home-about.home-about'
     > &
       Schema.Attribute.Private;
-    paragraphs: Schema.Attribute.JSON;
+    paragraphs: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
     tagline: Schema.Attribute.String;
     titleHtml: Schema.Attribute.String;
@@ -555,8 +573,8 @@ export interface ApiHomeFaqHomeFaq extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     ctaText: Schema.Attribute.String;
-    introText1: Schema.Attribute.Text;
-    introText2: Schema.Attribute.Text;
+    introText1: Schema.Attribute.RichText;
+    introText2: Schema.Attribute.RichText;
     items: Schema.Attribute.Component<'shared.faq-item', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -622,7 +640,7 @@ export interface ApiHomeLogoSliderHomeLogoSlider
       'api::home-logo-slider.home-logo-slider'
     > &
       Schema.Attribute.Private;
-    logos: Schema.Attribute.JSON;
+    logos: Schema.Attribute.Media<'images', true>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -644,7 +662,7 @@ export interface ApiHomePortfolioHomePortfolio extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    images: Schema.Attribute.JSON;
+    images: Schema.Attribute.Media<'images', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -702,7 +720,7 @@ export interface ApiHomeSkillsHomeSkills extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    image: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -712,7 +730,7 @@ export interface ApiHomeSkillsHomeSkills extends Struct.SingleTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     skills: Schema.Attribute.Component<'shared.skill-bar', true>;
     tagline: Schema.Attribute.String;
-    text: Schema.Attribute.Text;
+    text: Schema.Attribute.RichText;
     titleHtml: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -824,9 +842,9 @@ export interface ApiHomeWhyChooseUsHomeWhyChooseUs
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    galleryImages: Schema.Attribute.JSON;
-    image1: Schema.Attribute.String;
-    image2: Schema.Attribute.String;
+    galleryImages: Schema.Attribute.Media<'images', true>;
+    image1: Schema.Attribute.Media<'images'>;
+    image2: Schema.Attribute.Media<'images'>;
     items: Schema.Attribute.Component<'shared.icon-text-item', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -836,15 +854,15 @@ export interface ApiHomeWhyChooseUsHomeWhyChooseUs
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     tagline: Schema.Attribute.String;
-    text: Schema.Attribute.Text;
+    text: Schema.Attribute.RichText;
     titleHtml: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    videoBgImage: Schema.Attribute.String;
+    videoBgImage: Schema.Attribute.Media<'images'>;
     videoCtaText: Schema.Attribute.String;
     videoTagline: Schema.Attribute.String;
-    videoText: Schema.Attribute.Text;
+    videoText: Schema.Attribute.RichText;
     videoTitleHtml: Schema.Attribute.String;
   };
 }
@@ -906,7 +924,14 @@ export interface ApiLeadLead extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     service: Schema.Attribute.String;
     sourceForm: Schema.Attribute.Enumeration<
-      ['contactus', 'requestquote', 'pricing', 'hero-lead-form', 'lead-popup']
+      [
+        'contactus',
+        'requestquote',
+        'pricing',
+        'hero-lead-form',
+        'lead-popup',
+        'content-page',
+      ]
     >;
     status: Schema.Attribute.Enumeration<['new', 'contacted', 'closed']> &
       Schema.Attribute.DefaultTo<'new'>;
@@ -928,19 +953,37 @@ export interface ApiLegalPageLegalPage extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    content: Schema.Attribute.Text;
+    breadcrumbs: Schema.Attribute.Component<'shared.link-item', true>;
+    content: Schema.Attribute.RichText;
+    contentBlocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.content-section',
+        'blocks.banner',
+        'blocks.quick-links',
+        'blocks.accordion',
+        'blocks.faqs',
+        'blocks.video-section',
+        'blocks.scripts',
+      ]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    getQuoteButtonText: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::legal-page.legal-page'
     > &
       Schema.Attribute.Private;
+    mobileImage: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    quickLinks: Schema.Attribute.Component<'blocks.quick-links', false>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    topLevelImages: Schema.Attribute.Media<'images', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -958,19 +1001,37 @@ export interface ApiPortfolioPagePortfolioPage extends Struct.SingleTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    breadcrumbs: Schema.Attribute.Component<'shared.link-item', true>;
+    contentBlocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.content-section',
+        'blocks.banner',
+        'blocks.quick-links',
+        'blocks.accordion',
+        'blocks.faqs',
+        'blocks.video-section',
+        'blocks.scripts',
+      ]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    images: Schema.Attribute.JSON;
+    getQuoteButtonText: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    images: Schema.Attribute.Media<'images', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::portfolio-page.portfolio-page'
     > &
       Schema.Attribute.Private;
+    mobileImage: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    quickLinks: Schema.Attribute.Component<'blocks.quick-links', false>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     tagline: Schema.Attribute.String;
     titleHtml: Schema.Attribute.String;
+    topLevelImages: Schema.Attribute.Media<'images', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -997,9 +1058,9 @@ export interface ApiServiceContentCategoryServiceContentCategory
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.RichText;
     icon: Schema.Attribute.String;
-    image: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1031,17 +1092,31 @@ export interface ApiServiceContentPageServiceContentPage
     draftAndPublish: true;
   };
   attributes: {
+    breadcrumbs: Schema.Attribute.Component<'shared.link-item', true>;
     category: Schema.Attribute.Relation<
       'manyToOne',
       'api::service-content-category.service-content-category'
     >;
-    content: Schema.Attribute.Text;
-    coverImage: Schema.Attribute.String;
+    content: Schema.Attribute.RichText;
+    contentBlocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.content-section',
+        'blocks.banner',
+        'blocks.quick-links',
+        'blocks.accordion',
+        'blocks.faqs',
+        'blocks.video-section',
+        'blocks.scripts',
+      ]
+    >;
+    coverImage: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    excerpt: Schema.Attribute.Text;
+    excerpt: Schema.Attribute.RichText;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    getQuoteButtonText: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1049,12 +1124,15 @@ export interface ApiServiceContentPageServiceContentPage
     > &
       Schema.Attribute.Private;
     menuOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    mobileImage: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    quickLinks: Schema.Attribute.Component<'blocks.quick-links', false>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     showInMenu: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     tags: Schema.Attribute.JSON;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    topLevelImages: Schema.Attribute.Media<'images', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1072,10 +1150,24 @@ export interface ApiServicesPageServicesPage extends Struct.SingleTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    breadcrumbs: Schema.Attribute.Component<'shared.link-item', true>;
+    contentBlocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.content-section',
+        'blocks.banner',
+        'blocks.quick-links',
+        'blocks.accordion',
+        'blocks.faqs',
+        'blocks.video-section',
+        'blocks.scripts',
+      ]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    heroTitleHtml: Schema.Attribute.Text;
+    getQuoteButtonText: Schema.Attribute.String;
+    heroTitleHtml: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<'images'>;
     items: Schema.Attribute.Component<'shared.service-card', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1083,9 +1175,13 @@ export interface ApiServicesPageServicesPage extends Struct.SingleTypeSchema {
       'api::services-page.services-page'
     > &
       Schema.Attribute.Private;
+    mobileImage: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    quickLinks: Schema.Attribute.Component<'blocks.quick-links', false>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     tagline: Schema.Attribute.String;
     titleHtml: Schema.Attribute.String;
+    topLevelImages: Schema.Attribute.Media<'images', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

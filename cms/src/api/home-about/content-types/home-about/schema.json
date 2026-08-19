@@ -7,10 +7,10 @@
   "attributes": {
     "tagline": { "type": "string" },
     "titleHtml": { "type": "string" },
-    "paragraphs": { "type": "json" },
+    "paragraphs": { "type": "richtext" },
     "experienceYears": { "type": "string" },
     "experienceLabel": { "type": "string" },
-    "image1": { "type": "string" },
-    "image2": { "type": "string" }
+    "image1": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "image2": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
   }
 }

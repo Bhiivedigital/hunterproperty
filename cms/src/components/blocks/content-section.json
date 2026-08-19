@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_content_sections",
+  "info": { "displayName": "Content Section", "icon": "layout" },
+  "attributes": {
+    "title": { "type": "string" },
+    "body": { "type": "richtext" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
+  }
+}

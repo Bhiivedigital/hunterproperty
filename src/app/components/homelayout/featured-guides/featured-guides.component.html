@@ -26,7 +26,7 @@
                         <h4 class="blog-title">
                             <a [routerLink]="['/' + guide.category.slug, guide.slug]">{{ guide.title }}</a>
                         </h4>
-                        <p>{{ guide.excerpt }}</p>
+                        <p [innerHTML]="guide.excerpt"></p>
                         <a class="theme-btn" [routerLink]="['/' + guide.category.slug, guide.slug]">Read Guide<i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>

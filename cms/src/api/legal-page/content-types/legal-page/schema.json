@@ -22,7 +22,26 @@
       "required": true
     },
     "content": {
-      "type": "text"
-    }
+      "type": "richtext"
+    },
+    "breadcrumbs": { "type": "component", "component": "shared.link-item", "repeatable": true },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "mobileImage": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "topLevelImages": { "type": "media", "multiple": true, "allowedTypes": ["images"] },
+    "getQuoteButtonText": { "type": "string" },
+    "quickLinks": { "type": "component", "component": "blocks.quick-links", "repeatable": false },
+    "contentBlocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.content-section",
+        "blocks.banner",
+        "blocks.quick-links",
+        "blocks.accordion",
+        "blocks.faqs",
+        "blocks.video-section",
+        "blocks.scripts"
+      ]
+    },
+    "seo": { "type": "component", "component": "shared.seo", "repeatable": false }
   }
 }

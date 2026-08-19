@@ -7,8 +7,8 @@
   "attributes": {
     "tagline": { "type": "string" },
     "titleHtml": { "type": "string" },
-    "text": { "type": "text" },
-    "image": { "type": "string" },
+    "text": { "type": "richtext" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
     "skills": { "type": "component", "component": "shared.skill-bar", "repeatable": true }
   }
 }

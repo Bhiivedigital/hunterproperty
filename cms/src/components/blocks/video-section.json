@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_video_sections",
+  "info": { "displayName": "Video Section", "icon": "play" },
+  "attributes": {
+    "title": { "type": "string" },
+    "videoUrl": { "type": "string" },
+    "thumbnail": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
+  }
+}

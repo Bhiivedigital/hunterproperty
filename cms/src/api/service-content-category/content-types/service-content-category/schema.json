@@ -22,10 +22,12 @@
       "required": true
     },
     "description": {
-      "type": "text"
+      "type": "richtext"
     },
     "image": {
-      "type": "string"
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
     },
     "icon": {
       "type": "string"

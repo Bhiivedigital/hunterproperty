@@ -9,10 +9,8 @@
                                 <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ faq?.tagline }}</span>
                                 <h2 class="site-title my-3" [innerHTML]="faqTitleHtml"></h2>
                             </div>
-                            <p class="mb-3">{{ faq?.introText1 }}</p>
-                            <p class="mb-4">
-                                {{ faq?.introText2 }}
-                            </p>
+                            <p class="mb-3" [innerHTML]="faq?.introText1"></p>
+                            <p class="mb-4" [innerHTML]="faq?.introText2"></p>
                             <a href="contact.html" class="theme-btn mt-2">{{ faq?.ctaText }}</a>
                         </div>
                     </div>
@@ -25,9 +23,7 @@
                                     </button>
                                 </h2>
                                 <div [id]="'collapse' + i" class="accordion-collapse collapse" [class.show]="i === 0" [attr.aria-labelledby]="'heading' + i" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        {{ item.answer }}
-                                    </div>
+                                    <div class="accordion-body" [innerHTML]="item.answer"></div>
                                 </div>
                             </div>
                         </div>
@@ -62,9 +58,7 @@
                                 <div class="testimonial-rate">
                                     <i class="fas fa-star" *ngFor="let star of [].constructor(item.rating)"></i>
                                 </div>
-                                <p class="review-cnt">
-                                    {{ item.quote }}
-                                </p>
+                                <p class="review-cnt" [innerHTML]="item.quote"></p>
 
                                 <div class="testimonial-content text-end">
 

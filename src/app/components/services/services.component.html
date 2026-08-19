@@ -41,7 +41,7 @@
                                <a *ngIf="item.slug; else plainTitle" [routerLink]="['/services', item.slug]">{{ item.title }}</a>
                                <ng-template #plainTitle>{{ item.title }}</ng-template>
                             </h4>
-                            <p class="service-text">{{ item.text }}</p>
+                            <p class="service-text" [innerHTML]="item.text"></p>
                             <a *ngIf="item.slug" class="theme-btn" [routerLink]="['/services', item.slug]">Learn More<i class="fas fa-arrow-right"></i></a>
                         </div>
                         </div>

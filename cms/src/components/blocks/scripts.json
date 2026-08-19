@@ -1,0 +1,8 @@
+{
+  "collectionName": "components_blocks_scripts",
+  "info": { "displayName": "Scripts", "icon": "code" },
+  "attributes": {
+    "name": { "type": "string" },
+    "code": { "type": "text" }
+  }
+}

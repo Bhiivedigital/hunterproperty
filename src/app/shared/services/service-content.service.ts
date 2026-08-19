@@ -43,13 +43,18 @@ export class ServiceContentService {
   }
 
   getCategories(): Observable<ServiceContentCategory[]> {
-    return this.strapi.getCollection<any>(CATEGORY_ENDPOINT, { sort: 'menuOrder:asc' })
+    const params: Record<string, string> = {
+      sort: 'menuOrder:asc',
+      'populate[image]': 'true'
+    };
+    return this.strapi.getCollection<any>(CATEGORY_ENDPOINT, params)
       .pipe(map(res => res.data.map(c => this.toCategory(c))));
   }
 
   getCategoryBySlug(slug: string): Observable<ServiceContentCategory | undefined> {
     const params: Record<string, string> = {
       'filters[slug][$eq]': slug,
+      'populate[image]': 'true',
       'populate[seo][populate][0]': 'ogImage'
     };
     return this.strapi.getCollection<any>(CATEGORY_ENDPOINT, params)
@@ -65,7 +70,7 @@ export class ServiceContentService {
       'fields[0]': 'title',
       'fields[1]': 'slug',
       'fields[2]': 'excerpt',
-      'fields[3]': 'coverImage'
+      'populate[coverImage]': 'true'
     };
     return this.strapi.getCollection<any>(PAGE_ENDPOINT, params).pipe(map(res => {
       const pagination = (res.meta as any)?.pagination ?? { page, pageCount: 1, total: res.data.length };
@@ -83,6 +88,7 @@ export class ServiceContentService {
       'filters[category][slug][$eq]': categorySlug,
       'filters[slug][$eq]': contentSlug,
       'populate[category]': 'true',
+      'populate[coverImage]': 'true',
       'populate[seo][populate][0]': 'ogImage'
     };
     return this.strapi.getCollection<any>(PAGE_ENDPOINT, params)
@@ -98,7 +104,7 @@ export class ServiceContentService {
       'fields[0]': 'title',
       'fields[1]': 'slug',
       'fields[2]': 'excerpt',
-      'fields[3]': 'coverImage'
+      'populate[coverImage]': 'true'
     };
     return this.strapi.getCollection<any>(PAGE_ENDPOINT, params)
       .pipe(map(res => res.data.map(p => this.toPageSummary(p))));
@@ -109,7 +115,8 @@ export class ServiceContentService {
       'filters[featured][$eq]': 'true',
       sort: 'publishedAt:desc',
       'pagination[limit]': String(limit),
-      'populate[category]': 'true'
+      'populate[category]': 'true',
+      'populate[coverImage]': 'true'
     };
     return this.strapi.getCollection<any>(PAGE_ENDPOINT, params)
       .pipe(map(res => res.data.map(p => this.toPage(p))));
@@ -134,7 +141,7 @@ export class ServiceContentService {
       slug: c.slug,
       name: c.name,
       description: c.description,
-      image: c.image,
+      image: this.strapi.mediaUrl(c.image?.url),
       icon: c.icon,
       menuOrder: c.menuOrder ?? 0,
       seo: this.toSeo(c.seo)
@@ -147,7 +154,7 @@ export class ServiceContentService {
       slug: p.slug,
       title: p.title,
       excerpt: p.excerpt,
-      coverImage: p.coverImage
+      coverImage: this.strapi.mediaUrl(p.coverImage?.url)
     };
   }
 

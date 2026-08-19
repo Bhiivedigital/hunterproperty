@@ -1,0 +1,11 @@
+{
+  "collectionName": "components_blocks_banners",
+  "info": { "displayName": "Banner", "icon": "picture" },
+  "attributes": {
+    "title": { "type": "string" },
+    "subtitle": { "type": "string" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "ctaText": { "type": "string" },
+    "ctaUrl": { "type": "string" }
+  }
+}

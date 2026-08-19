@@ -6,7 +6,9 @@
   },
   "attributes": {
     "backgroundImage": {
-      "type": "string"
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
     }
   }
 }

@@ -20,7 +20,7 @@
                                 <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ about?.tagline }}</span>
                                 <h2 class="site-title" [innerHTML]="titleHtml"></h2>
                             </div>
-                            <p class="about-text" *ngFor="let paragraph of about?.paragraphs">{{ paragraph }}</p>
+                            <div class="about-text" [innerHTML]="about?.paragraphs"></div>
 
                             <a [routerLink]="'/about'" [routerLinkActive]="'active'" class="theme-btn">Discover More<i class="fas fa-arrow-right"></i></a>
                         </div>

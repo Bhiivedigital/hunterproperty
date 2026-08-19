@@ -5,7 +5,7 @@
     "icon": "chart-bar"
   },
   "attributes": {
-    "icon": { "type": "string" },
+    "icon": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
     "value": { "type": "string" },
     "suffix": { "type": "string" },
     "label": { "type": "string" }
