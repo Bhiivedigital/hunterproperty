@@ -37,4 +37,8 @@ export class StrapiService {
     if (!url) return '';
     return url.startsWith('http') ? url : `${this.baseUrl}${url}`;
   }
+
+  mediaUrls(media: Array<{ url?: string } | null | undefined> | undefined | null): string[] {
+    return (media ?? []).map(m => this.mediaUrl(m?.url)).filter(Boolean);
+  }
 }

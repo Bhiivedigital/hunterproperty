@@ -5,10 +5,10 @@
     "icon": "quote"
   },
   "attributes": {
-    "quote": { "type": "text" },
+    "quote": { "type": "richtext" },
     "authorName": { "type": "string" },
     "authorRole": { "type": "string" },
-    "authorImage": { "type": "string" },
+    "authorImage": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
     "rating": { "type": "integer", "default": 5 }
   }
 }

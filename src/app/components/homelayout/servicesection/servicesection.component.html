@@ -25,9 +25,7 @@
                             <h4 class="service-title">
                                {{ item.title }}
                             </h4>
-                            <p class="service-text">
-                               {{ item.text }}
-                            </p>
+                            <p class="service-text" [innerHTML]="item.text"></p>
                         </div>
                     </div>
                      </div>

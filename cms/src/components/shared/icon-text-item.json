@@ -5,8 +5,8 @@
     "icon": "star"
   },
   "attributes": {
-    "icon": { "type": "string" },
+    "icon": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
     "title": { "type": "string" },
-    "text": { "type": "text" }
+    "text": { "type": "richtext" }
   }
 }

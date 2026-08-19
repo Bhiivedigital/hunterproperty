@@ -5,10 +5,10 @@
     "icon": "briefcase"
   },
   "attributes": {
-    "image": { "type": "string" },
-    "icon": { "type": "string" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "icon": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
     "title": { "type": "string" },
-    "text": { "type": "text" },
+    "text": { "type": "richtext" },
     "slug": { "type": "string" }
   }
 }

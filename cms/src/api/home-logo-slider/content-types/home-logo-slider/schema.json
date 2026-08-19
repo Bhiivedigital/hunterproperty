@@ -5,6 +5,6 @@
   "options": { "draftAndPublish": false },
   "pluginOptions": {},
   "attributes": {
-    "logos": { "type": "json" }
+    "logos": { "type": "media", "multiple": true, "allowedTypes": ["images"] }
   }
 }

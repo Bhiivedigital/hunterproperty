@@ -51,9 +51,7 @@
                                     <div class="testimonial-quote-icon">
                                         <img src="../../../assets/img/icon/quoteab.svg" alt="">
                                     </div>
-                                     <p class="review-cnt">
-                                    {{ item.quote }}
-                                </p>
+                                     <p class="review-cnt" [innerHTML]="item.quote"></p>
                                 </div>
                             </div>
                             </ng-template>

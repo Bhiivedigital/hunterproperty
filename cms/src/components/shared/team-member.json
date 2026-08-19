@@ -5,7 +5,7 @@
     "icon": "user"
   },
   "attributes": {
-    "photo": { "type": "string" },
+    "photo": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
     "name": { "type": "string" },
     "role": { "type": "string" }
   }

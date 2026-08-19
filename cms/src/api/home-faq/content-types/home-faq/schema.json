@@ -7,8 +7,8 @@
   "attributes": {
     "tagline": { "type": "string" },
     "titleHtml": { "type": "string" },
-    "introText1": { "type": "text" },
-    "introText2": { "type": "text" },
+    "introText1": { "type": "richtext" },
+    "introText2": { "type": "richtext" },
     "ctaText": { "type": "string" },
     "items": { "type": "component", "component": "shared.faq-item", "repeatable": true }
   }

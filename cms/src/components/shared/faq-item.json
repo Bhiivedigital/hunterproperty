@@ -6,6 +6,6 @@
   },
   "attributes": {
     "question": { "type": "string" },
-    "answer": { "type": "text" }
+    "answer": { "type": "richtext" }
   }
 }

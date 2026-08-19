@@ -7,15 +7,15 @@
   "attributes": {
     "tagline": { "type": "string" },
     "titleHtml": { "type": "string" },
-    "text": { "type": "text" },
+    "text": { "type": "richtext" },
     "items": { "type": "component", "component": "shared.icon-text-item", "repeatable": true },
-    "image1": { "type": "string" },
-    "image2": { "type": "string" },
+    "image1": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "image2": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
     "videoTagline": { "type": "string" },
     "videoTitleHtml": { "type": "string" },
-    "videoText": { "type": "text" },
-    "videoBgImage": { "type": "string" },
+    "videoText": { "type": "richtext" },
+    "videoBgImage": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
     "videoCtaText": { "type": "string" },
-    "galleryImages": { "type": "json" }
+    "galleryImages": { "type": "media", "multiple": true, "allowedTypes": ["images"] }
   }
 }
