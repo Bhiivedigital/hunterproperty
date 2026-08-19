@@ -105,6 +105,17 @@ button.btn-close {
     border-color: rgba(255, 255, 255, .35);
 }
 
+// Email + phone alone don't fill the bar width on phones, so the social
+// icons wrap to a second line instead of sitting inline — reads as broken,
+// and the extra height it adds beyond what --header-top-height measured a
+// moment earlier lets the fixed-position navbar/hamburger render underneath
+// it. Drop them below 576px; email/phone stay a single clean line.
+@media all and (max-width: 575px) {
+    .header-top-right {
+        display: none;
+    }
+}
+
 // Compact the strip — smaller padding/icons, and email/phone collapse to a
 // single inline line (icon + value) instead of a stacked "label above
 // value" block, which is what was eating the extra height.
