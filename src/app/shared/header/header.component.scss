@@ -116,6 +116,17 @@ button.btn-close {
     }
 }
 
+// Mobile: drop the whole email/phone/social strip — only the floating navbar
+// stays. --header-top-height self-adjusts to 0 (ResizeObserver reads
+// offsetHeight, which is 0 for a display:none element), so .main-navigation's
+// `top` falls through to the mobile override further below instead of
+// leaving a leftover gap sized for the now-hidden bar.
+@media all and (max-width: 991px) {
+    .header-top {
+        display: none;
+    }
+}
+
 // Compact the strip — smaller padding/icons, and email/phone collapse to a
 // single inline line (icon + value) instead of a stacked "label above
 // value" block, which is what was eating the extra height.
@@ -299,6 +310,12 @@ button.btn-close {
     }
     .navbar .mobile-menu-right .nav-right-link {
         color: #fff;
+    }
+    // header-top is hidden at this breakpoint (see above), so
+    // --header-top-height is 0 and the fixed navbar would otherwise sit
+    // flush against the top edge of the viewport. Give it real breathing room.
+    .main-navigation {
+        top: 14px;
     }
 }
 

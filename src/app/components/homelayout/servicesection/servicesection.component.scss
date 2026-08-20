@@ -1,6 +1,14 @@
 .service-content p {
   min-height: 190px;
 }
+// Reserve the box before the CMS photo loads — fixes CLS (image had no
+// intrinsic size pre-load) and gives .skel-img's shimmer a real area to
+// animate in instead of a collapsed 0-height element.
+.service-img img {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  width: 100%;
+}
  .services-btn{
  margin-top: 50px;
  }

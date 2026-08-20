@@ -1,10 +1,12 @@
 <section class="slidersec">
 <owl-carousel-o [options]="customOptions">
-  <ng-template carouselSlide *ngFor="let slide of banner?.slides">
+  <ng-template carouselSlide *ngFor="let slide of banner?.slides; let i = index">
     <div class="slide">
-       <div class="hero-single" [style.background-image]="'url(' + slide.backgroundImage + ')'">
-
-                </div>
+       <div class="hero-single">
+          <img [src]="slide.backgroundImage" alt="" class="hero-bg-img skel-img"
+               [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+               [attr.fetchpriority]="i === 0 ? 'high' : 'auto'" />
+       </div>
     </div>
   </ng-template>
 </owl-carousel-o>

@@ -39,7 +39,12 @@ export class HomeContentService {
   getBanner(): Observable<HomeBanner> {
     return this.fetch<any>('home-banner', { 'populate[slides][populate]': 'backgroundImage' }).pipe(map(data => ({
       ...data,
-      slides: (data.slides ?? []).map((s: any) => ({ backgroundImage: this.strapi.mediaUrl(s.backgroundImage?.url) }))
+      // Slides whose media relation is missing/unpublished in Strapi resolve
+      // to an empty URL — drop them instead of rendering a blank/broken
+      // carousel slide with no image.
+      slides: (data.slides ?? [])
+        .map((s: any) => ({ backgroundImage: this.strapi.mediaUrl(s.backgroundImage?.url) }))
+        .filter((s: { backgroundImage: string }) => !!s.backgroundImage)
     })));
   }
 

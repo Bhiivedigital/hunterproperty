@@ -32,7 +32,8 @@ export class SeoService {
     const ogTitle = input.seo?.ogTitle || title;
     const ogDescription = input.seo?.ogDescription || description;
     const ogImage = input.seo?.ogImage || input.image || DEFAULT_OG_IMAGE;
-    const canonical = input.seo?.canonicalUrl || `${SITE_URL}${input.path}`;
+    const normalizedPath = input.path.endsWith('/') ? input.path : `${input.path}/`;
+    const canonical = input.seo?.canonicalUrl || `${SITE_URL}${normalizedPath}`;
     const noIndex = input.seo?.noIndex ?? input.noIndex ?? false;
 
     this.titleService.setTitle(title);

@@ -68,9 +68,11 @@ Table of contents
 
 /*====================
 1. Google fonts
+   Loaded from index.html via <link rel="stylesheet"> + preconnect instead of
+   an @import buried in this bundled stylesheet — an @import here only starts
+   fetching after the whole bundle downloads and parses, adding a full extra
+   round trip before fonts even begin loading.
 ======================*/
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 
 /*====================

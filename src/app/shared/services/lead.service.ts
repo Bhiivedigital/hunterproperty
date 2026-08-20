@@ -9,7 +9,7 @@ export interface LeadPayload {
   message?: string;
   service?: string;
   location?: string;
-  sourceForm: 'contactus' | 'requestquote' | 'pricing' | 'hero-lead-form' | 'lead-popup';
+  sourceForm: 'contactus' | 'requestquote' | 'pricing' | 'hero-lead-form' | 'lead-popup' | 'content-page';
 }
 
 @Injectable({

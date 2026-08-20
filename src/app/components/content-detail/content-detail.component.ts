@@ -6,11 +6,12 @@ import { ServiceContentService } from '../../shared/services/service-content.ser
 import { ServiceContentPage, ServiceContentPageSummary } from '../../shared/models/service-content.model';
 import { SeoService } from '../../shared/services/seo.service';
 import { StructuredDataService } from '../../shared/services/structured-data.service';
+import { HeroLeadFormComponent } from '../homelayout/hero-lead-form/hero-lead-form.component';
 
 @Component({
   selector: 'app-content-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, HeroLeadFormComponent],
   templateUrl: './content-detail.component.html',
   styleUrl: './content-detail.component.scss'
 })

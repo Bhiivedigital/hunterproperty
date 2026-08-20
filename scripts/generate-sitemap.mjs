@@ -91,9 +91,10 @@ async function collectCmsUrls() {
 
 function toXml(urls) {
   const entries = urls.map(u => {
+    const path = u.path.endsWith('/') ? u.path : `${u.path}/`;
     const lastmod = u.lastmod ? `\n    <lastmod>${u.lastmod.substring(0, 10)}</lastmod>` : '';
     return `  <url>
-    <loc>${SITE_URL}${u.path}</loc>${lastmod}
+    <loc>${SITE_URL}${path}</loc>${lastmod}
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
   </url>`;

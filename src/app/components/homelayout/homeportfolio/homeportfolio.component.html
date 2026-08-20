@@ -1,6 +1,6 @@
  <!-- portfolio area -->
         <div class="portfolio-area pt-80 pb-120">
-            <div class="pa-bg" style="background-image: url(assets/img/portfolio/bg.jpg);"></div>
+            <div class="pa-bg" style="background-image: url(assets/img/portfolio/bg.webp);"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 mx-auto">
@@ -16,7 +16,7 @@
                             <ng-template carouselSlide *ngFor="let image of images">
                                 <div class="portfolio-item">
                             <div class="portfolio-img">
-                                <img class="img-fluid" [src]="image" alt="" loading="lazy">
+                                <img class="img-fluid skel-img" [src]="image" alt="" loading="lazy">
                                 <a class="popup-img portfolio-link" [href]="image"> <i class="far fa-plus"></i></a>
                             </div>
                         </div>
