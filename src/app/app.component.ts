@@ -82,7 +82,13 @@ export class AppComponent {
     };
 
     const track = (img: HTMLImageElement) => {
-      if (img.complete) return;
+      // loading="lazy" images below the fold are deliberately not fetched by
+      // the browser until they near the viewport — waiting on them here
+      // meant "settled" was never reached naturally on any page with
+      // off-screen images, so every load silently rode the 8s safety-cap
+      // timeout below instead of dismissing as soon as the visible content
+      // was actually ready.
+      if (img.loading === 'lazy' || img.complete) return;
       pending.add(img);
       const settle = () => {
         pending.delete(img);
