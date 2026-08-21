@@ -17,8 +17,12 @@
 
         <div class="col-lg-8">
           <article class="content-page">
-            <div class="content-page-img" *ngIf="page.coverImage">
-              <img class="img-fluid w-100" [src]="page.coverImage" [alt]="page.title" loading="lazy">
+            <div class="content-page-img" *ngIf="page.coverImage?.url">
+              <img class="img-fluid w-100" [src]="page.coverImage!.url"
+                   [srcset]="page.coverImage!.url | cldSrcset:'card'"
+                   [attr.sizes]="'card' | cldSizes"
+                   [attr.width]="page.coverImage!.width || null" [attr.height]="page.coverImage!.height || null"
+                   [alt]="page.title" loading="lazy" decoding="async">
             </div>
 
             <div class="content-page-meta" *ngIf="page.updatedAt">
@@ -62,8 +66,10 @@
             <div class="widget" *ngIf="related.length">
               <h4 class="widget-title">Related Guides</h4>
               <div class="related-guide-item" *ngFor="let item of related">
-                <div class="related-guide-img" *ngIf="item.coverImage">
-                  <img [src]="item.coverImage" [alt]="item.title" loading="lazy">
+                <div class="related-guide-img" *ngIf="item.coverImage?.url">
+                  <img [src]="item.coverImage!.url"
+                       [attr.width]="item.coverImage!.width || null" [attr.height]="item.coverImage!.height || null"
+                       [alt]="item.title" loading="lazy" decoding="async">
                 </div>
                 <div class="related-guide-info">
                   <h6><a [routerLink]="['/' + page.category.slug, item.slug]">{{ item.title }}</a></h6>

@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HomeContentService } from '../../../shared/services/home-content.service';
 import { HomeSkills } from '../../../shared/models/home-content.model';
+import { CldSrcsetPipe, CldSizesPipe } from '../../../shared/pipes/cloudinary.pipe';
 
 @Component({
   selector: 'app-ourskills',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './ourskills.component.html',
   styleUrl: './ourskills.component.scss'
 })

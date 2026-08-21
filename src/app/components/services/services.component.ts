@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HomeContentService } from '../../shared/services/home-content.service';
 import { ServiceCard } from '../../shared/models/home-content.model';
+import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe';
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './services.component.html',
   styleUrl: './services.component.scss'
 })

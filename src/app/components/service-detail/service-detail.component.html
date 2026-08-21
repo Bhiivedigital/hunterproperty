@@ -16,7 +16,11 @@
       <div class="row g-5 align-items-center">
         <div class="col-lg-6">
           <div class="service-single-img">
-            <img class="img-fluid w-100" [src]="service.image" [alt]="service.title" style="border-radius: 15px;" loading="lazy">
+            <img class="img-fluid w-100" [src]="service.image.url"
+                 [srcset]="service.image.url | cldSrcset:'content'"
+                 [attr.sizes]="'content' | cldSizes"
+                 [attr.width]="service.image.width || null" [attr.height]="service.image.height || null"
+                 [alt]="service.title" style="border-radius: 15px;" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="col-lg-6">

@@ -2,17 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { HomeContentService } from '../../../shared/services/home-content.service';
+import { CmsImage } from '../../../shared/models/cms-image.model';
+import { CldSrcsetPipe, CldSizesPipe } from '../../../shared/pipes/cloudinary.pipe';
 
 @Component({
   selector: 'app-homeportfolio',
   standalone: true,
-  imports: [CommonModule, CarouselModule],
+  imports: [CommonModule, CarouselModule, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './homeportfolio.component.html',
   styleUrl: './homeportfolio.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomeportfolioComponent implements OnInit {
-  images: string[] = [];
+  images: CmsImage[] = [];
 
   constructor(private homeContentService: HomeContentService) {}
 

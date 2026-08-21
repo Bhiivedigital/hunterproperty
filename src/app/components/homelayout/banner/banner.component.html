@@ -3,9 +3,15 @@
   <ng-template carouselSlide *ngFor="let slide of banner?.slides; let i = index">
     <div class="slide">
        <div class="hero-single">
-          <img [src]="slide.backgroundImage" alt="" class="hero-bg-img skel-img"
+          <img [src]="slide.backgroundImage.url"
+               [srcset]="slide.backgroundImage.url | cldSrcset:'hero'"
+               [attr.sizes]="'hero' | cldSizes"
+               [attr.width]="slide.backgroundImage.width || null"
+               [attr.height]="slide.backgroundImage.height || null"
+               alt="" class="hero-bg-img skel-img"
                [attr.loading]="i === 0 ? 'eager' : 'lazy'"
-               [attr.fetchpriority]="i === 0 ? 'high' : 'auto'" />
+               [attr.fetchpriority]="i === 0 ? 'high' : 'auto'"
+               decoding="async" />
        </div>
     </div>
   </ng-template>

@@ -28,8 +28,12 @@
         <div class="col-md-6 col-lg-4" *ngFor="let item of pages">
           <div class="blog-item blog-item-clickable wow fadeInUp">
             <a class="blog-item-stretched-link" [routerLink]="['/' + category.slug, item.slug]" [attr.aria-label]="item.title"></a>
-            <div class="blog-item-img" *ngIf="item.coverImage">
-              <img [src]="item.coverImage" [alt]="item.title" loading="lazy">
+            <div class="blog-item-img" *ngIf="item.coverImage?.url">
+              <img [src]="item.coverImage!.url"
+                   [srcset]="item.coverImage!.url | cldSrcset:'card'"
+                   [attr.sizes]="'card' | cldSizes"
+                   [attr.width]="item.coverImage!.width || null" [attr.height]="item.coverImage!.height || null"
+                   [alt]="item.title" loading="lazy" decoding="async">
             </div>
             <div class="blog-item-info">
               <h4 class="blog-title">

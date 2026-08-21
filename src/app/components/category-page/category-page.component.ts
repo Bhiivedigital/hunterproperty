@@ -5,13 +5,14 @@ import { ServiceContentService } from '../../shared/services/service-content.ser
 import { ServiceContentCategory, ServiceContentPageSummary } from '../../shared/models/service-content.model';
 import { SeoService } from '../../shared/services/seo.service';
 import { StructuredDataService } from '../../shared/services/structured-data.service';
+import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe';
 
 const PAGE_SIZE = 9;
 
 @Component({
   selector: 'app-category-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './category-page.component.html',
   styleUrl: './category-page.component.scss'
 })
@@ -72,7 +73,7 @@ export class CategoryPageComponent implements OnInit {
         path: `/${category.slug}`,
         title: `${category.name} Guides | Hunter Property`,
         description: category.description || `${category.name} guides and resources from Hunter Property.`,
-        image: category.image,
+        image: category.image?.url,
         seo: category.seo
       });
       this.structuredData.setBreadcrumb([

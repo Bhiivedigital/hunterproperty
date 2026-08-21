@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HomeContentService } from '../../../shared/services/home-content.service';
 import { HomeTeam } from '../../../shared/models/home-content.model';
+import { CldSrcsetPipe, CldSizesPipe } from '../../../shared/pipes/cloudinary.pipe';
 
 @Component({
   selector: 'app-team',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './team.component.html',
   styleUrl: './team.component.scss'
 })

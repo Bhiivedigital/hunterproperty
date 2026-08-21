@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { StrapiService } from './strapi.service';
 import {
   AboutPage,
@@ -28,12 +28,22 @@ export class HomeContentService {
 
   constructor(private strapi: StrapiService) {}
 
+  // These singletons rarely change during a session, and the homepage alone
+  // fires 13 of them in parallel on every load/navigation — cache each
+  // endpoint+params combination for the app's lifetime so repeat visits to
+  // the same page (or navigating back to it) don't re-fetch from Strapi.
+  private requestCache = new Map<string, Observable<any>>();
+
   private fetch<T>(endpoint: string, params: Record<string, string> = { populate: '*' }): Observable<T> {
-    return this.strapi.getSingle<T>(endpoint, params).pipe(map(res => res.data));
+    const key = endpoint + JSON.stringify(params);
+    if (!this.requestCache.has(key)) {
+      this.requestCache.set(key, this.strapi.getSingle<T>(endpoint, params).pipe(map(res => res.data), shareReplay(1)));
+    }
+    return this.requestCache.get(key)!;
   }
 
   private icon<T extends { icon?: any }>(item: T): T {
-    return { ...item, icon: this.strapi.mediaUrl(item.icon?.url) };
+    return { ...item, icon: this.strapi.mediaUrl(item.icon?.url, 'icon') };
   }
 
   getBanner(): Observable<HomeBanner> {
@@ -43,16 +53,16 @@ export class HomeContentService {
       // to an empty URL — drop them instead of rendering a blank/broken
       // carousel slide with no image.
       slides: (data.slides ?? [])
-        .map((s: any) => ({ backgroundImage: this.strapi.mediaUrl(s.backgroundImage?.url) }))
-        .filter((s: { backgroundImage: string }) => !!s.backgroundImage)
+        .map((s: any) => ({ backgroundImage: this.strapi.mediaObj(s.backgroundImage, 'hero') }))
+        .filter((s: { backgroundImage: { url: string } }) => !!s.backgroundImage.url)
     })));
   }
 
   getAbout(): Observable<HomeAbout> {
     return this.fetch<any>('home-about').pipe(map(data => ({
       ...data,
-      image1: this.strapi.mediaUrl(data.image1?.url),
-      image2: this.strapi.mediaUrl(data.image2?.url)
+      image1: this.strapi.mediaObj(data.image1, 'content'),
+      image2: this.strapi.mediaObj(data.image2, 'content')
     })));
   }
 
@@ -71,8 +81,8 @@ export class HomeContentService {
       ...data,
       items: (data.items ?? []).map((i: any) => ({
         ...i,
-        image: this.strapi.mediaUrl(i.image?.url),
-        icon: this.strapi.mediaUrl(i.icon?.url)
+        image: this.strapi.mediaObj(i.image, 'card'),
+        icon: this.strapi.mediaUrl(i.icon?.url, 'icon')
       }))
     })));
   }
@@ -80,7 +90,7 @@ export class HomeContentService {
   getSkills(): Observable<HomeSkills> {
     return this.fetch<any>('home-skills').pipe(map(data => ({
       ...data,
-      image: this.strapi.mediaUrl(data.image?.url)
+      image: this.strapi.mediaObj(data.image, 'content')
     })));
   }
 
@@ -94,7 +104,7 @@ export class HomeContentService {
   getTeam(): Observable<HomeTeam> {
     return this.fetch<any>('home-team', { 'populate[members][populate]': 'photo' }).pipe(map(data => ({
       ...data,
-      members: (data.members ?? []).map((m: any) => ({ ...m, photo: this.strapi.mediaUrl(m.photo?.url) }))
+      members: (data.members ?? []).map((m: any) => ({ ...m, photo: this.strapi.mediaObj(m.photo, 'thumbnail') }))
     })));
   }
 
@@ -107,10 +117,10 @@ export class HomeContentService {
       'populate[items][populate]': 'icon'
     }).pipe(map(data => ({
       ...data,
-      image1: this.strapi.mediaUrl(data.image1?.url),
-      image2: this.strapi.mediaUrl(data.image2?.url),
-      videoBgImage: this.strapi.mediaUrl(data.videoBgImage?.url),
-      galleryImages: this.strapi.mediaUrls(data.galleryImages),
+      image1: this.strapi.mediaObj(data.image1, 'content'),
+      image2: this.strapi.mediaObj(data.image2, 'content'),
+      videoBgImage: this.strapi.mediaObj(data.videoBgImage, 'hero'),
+      galleryImages: this.strapi.mediaObjs(data.galleryImages, 'thumbnail'),
       items: (data.items ?? []).map((i: any) => this.icon(i))
     })));
   }
@@ -125,14 +135,14 @@ export class HomeContentService {
   getHomePortfolio(): Observable<HomePortfolio> {
     return this.fetch<any>('home-portfolio').pipe(map(data => ({
       ...data,
-      images: this.strapi.mediaUrls(data.images)
+      images: this.strapi.mediaObjs(data.images, 'card')
     })));
   }
 
   getLogoSlider(): Observable<HomeLogoSlider> {
     return this.fetch<any>('home-logo-slider').pipe(map(data => ({
       ...data,
-      logos: this.strapi.mediaUrls(data.logos)
+      logos: this.strapi.mediaUrls(data.logos, 'thumbnail')
     })));
   }
 
@@ -143,7 +153,7 @@ export class HomeContentService {
   getTestimonials(): Observable<HomeTestimonials> {
     return this.fetch<any>('home-testimonials', { 'populate[items][populate]': 'authorImage' }).pipe(map(data => ({
       ...data,
-      items: (data.items ?? []).map((i: any) => ({ ...i, authorImage: this.strapi.mediaUrl(i.authorImage?.url) }))
+      items: (data.items ?? []).map((i: any) => ({ ...i, authorImage: this.strapi.mediaObj(i.authorImage, 'thumbnail') }))
     })));
   }
 
@@ -152,13 +162,20 @@ export class HomeContentService {
   }
 
   getServicesPage(): Observable<ServicesPage> {
-    return this.fetch<ServicesPage>('services-page');
+    return this.fetch<any>('services-page').pipe(map(data => ({
+      ...data,
+      items: (data.items ?? []).map((i: any) => ({
+        ...i,
+        image: this.strapi.mediaObj(i.image, 'card'),
+        icon: this.strapi.mediaUrl(i.icon?.url, 'icon')
+      }))
+    })));
   }
 
   getPortfolioPage(): Observable<PortfolioPage> {
     return this.fetch<any>('portfolio-page').pipe(map(data => ({
       ...data,
-      images: this.strapi.mediaUrls(data.images)
+      images: this.strapi.mediaObjs(data.images, 'card')
     })));
   }
 }
