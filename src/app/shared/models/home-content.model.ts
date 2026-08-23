@@ -1,3 +1,5 @@
+import { CmsImage } from './cms-image.model';
+
 export interface IconTextItem {
   icon: string;
   title: string;
@@ -17,13 +19,13 @@ export interface SkillBar {
 }
 
 export interface TeamMember {
-  photo: string;
+  photo: CmsImage;
   name: string;
   role: string;
 }
 
 export interface ServiceCard {
-  image: string;
+  image: CmsImage;
   icon: string;
   title: string;
   text: string;
@@ -39,7 +41,7 @@ export interface TestimonialItem {
   quote: string;
   authorName: string;
   authorRole: string;
-  authorImage: string;
+  authorImage: CmsImage;
   rating: number;
 }
 
@@ -50,7 +52,7 @@ export interface HomeBanner {
   heroTitleAfter: string;
   trustBadgeTitle: string;
   trustBadgeSubtitle: string;
-  slides: { backgroundImage: string }[];
+  slides: { backgroundImage: CmsImage }[];
 }
 
 export interface HomeAbout {
@@ -59,8 +61,8 @@ export interface HomeAbout {
   paragraphs: string;
   experienceYears: string;
   experienceLabel: string;
-  image1: string;
-  image2: string;
+  image1: CmsImage;
+  image2: CmsImage;
 }
 
 export interface HomeFeatures {
@@ -77,7 +79,7 @@ export interface HomeSkills {
   tagline: string;
   titleHtml: string;
   text: string;
-  image: string;
+  image: CmsImage;
   skills: SkillBar[];
 }
 
@@ -96,14 +98,14 @@ export interface HomeWhyChooseUs {
   titleHtml: string;
   text: string;
   items: IconTextItem[];
-  image1: string;
-  image2: string;
+  image1: CmsImage;
+  image2: CmsImage;
   videoTagline: string;
   videoTitleHtml: string;
   videoText: string;
-  videoBgImage: string;
+  videoBgImage: CmsImage;
   videoCtaText: string;
-  galleryImages: string[];
+  galleryImages: CmsImage[];
 }
 
 export interface HomeWorkingProcess {
@@ -113,7 +115,7 @@ export interface HomeWorkingProcess {
 }
 
 export interface HomePortfolio {
-  images: string[];
+  images: CmsImage[];
 }
 
 export interface HomeLogoSlider {
@@ -149,5 +151,5 @@ export interface ServicesPage {
 export interface PortfolioPage {
   tagline: string;
   titleHtml: string;
-  images: string[];
+  images: CmsImage[];
 }

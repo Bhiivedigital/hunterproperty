@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.contentService.getMenuCategories().subscribe(categories => this.menuCategories = categories);
   }
 
-  private get isDesktop(): boolean {
+  get isDesktop(): boolean {
     return window.innerWidth >= DESKTOP_BREAKPOINT;
   }
 
@@ -51,6 +51,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   closeMegaMenuMobile(): void {
     this.megaMenuOpen = false;
+    this.closeOffcanvas();
+  }
+
+  private closeOffcanvas(): void {
+    const offcanvasNavbar = document.getElementById('offcanvasNavbar');
+    if (!offcanvasNavbar) return;
+    const instance = bootstrap.Offcanvas.getInstance(offcanvasNavbar) || new bootstrap.Offcanvas(offcanvasNavbar);
+    instance.hide();
   }
 
   @HostListener('window:scroll', [])

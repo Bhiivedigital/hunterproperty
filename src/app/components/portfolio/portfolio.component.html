@@ -1,4 +1,4 @@
-  <div class="site-breadcrumb" style="background: url(../../../assets/img/portfolio/04.jpg)">
+  <div class="site-breadcrumb" style="background: url(../../../assets/img/portfolio/04.webp)">
             <div class="container">
                 <h2 class="breadcrumb-title">Portfolio</h2>
                 <ul class="breadcrumb-menu">
@@ -24,8 +24,12 @@
                     <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let image of images">
                         <div class="portfolio-item">
                             <div class="portfolio-img">
-                                <img class="img-fluid" [src]="image" alt="" loading="lazy">
-                                <a class="popup-img portfolio-link" [href]="image"> <i class="far fa-plus"></i></a>
+                                <img class="img-fluid" [src]="image.url"
+                                     [srcset]="image.url | cldSrcset:'card'"
+                                     [attr.sizes]="'card' | cldSizes"
+                                     [attr.width]="image.width || null" [attr.height]="image.height || null"
+                                     alt="" loading="lazy" decoding="async">
+                                <a class="popup-img portfolio-link" [href]="image.url"> <i class="far fa-plus"></i></a>
                             </div>
                         </div>
                     </div>

@@ -5,7 +5,23 @@
 @import "../src/assets/css/animate.min.css";
 @import "../src/assets/css/magnific-popup.min.css";
 @import "../src/assets/css/nice-select.min.css";
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+// YouTube-style shimmer placeholder — a gray gradient that slides across the
+// image's own box. CMS images are fetched async so there's often a visible
+// gap between "section rendered" and "photo decoded"; without this the box
+// is just blank/white. The image itself paints opaquely on top once loaded,
+// so no JS load-listener or fade is needed — the shimmer is simply covered.
+// object-fit:cover images only: a non-covering image would leave shimmer
+// showing through the uncovered edges.
+.skel-img {
+    background: linear-gradient(100deg, rgba(0, 0, 0, .06) 30%, rgba(0, 0, 0, .12) 50%, rgba(0, 0, 0, .06) 70%);
+    background-size: 200% 100%;
+    animation: skel-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes skel-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
 
 
 .owl-carousel.owl-theme.owl-loaded.owl-responsive.owl-drag {
@@ -370,4 +386,12 @@ button.accordion-button.collapsed {
    50px (a no-op), so it's effectively unscaled all the way to 360px */
 @media screen and (max-width: 767px) {
     .pricing-amount strong { font-size: 34px; }
+}
+
+/* .header-top is now position:fixed (header.component.scss) so it no longer
+   pushes page content down on its own — reserve that space here instead.
+   --header-top-height is measured live in header.component.ts and is 0 when
+   .header-top is hidden below 576px. */
+.main {
+    padding-top: var(--header-top-height, 0px);
 }

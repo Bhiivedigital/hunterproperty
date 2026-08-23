@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import emailjs from '@emailjs/browser';
-import { LeadService } from '../../../shared/services/lead.service';
+import { LeadPayload, LeadService } from '../../../shared/services/lead.service';
 
 @Component({
   selector: 'app-hero-lead-form',
@@ -12,6 +12,9 @@ import { LeadService } from '../../../shared/services/lead.service';
   styleUrl: './hero-lead-form.component.scss'
 })
 export class HeroLeadFormComponent implements OnInit {
+  @Input() heading = 'Take the First Step Toward Your Dream Home';
+  @Input() sourceForm: LeadPayload['sourceForm'] = 'hero-lead-form';
+
   form!: FormGroup;
   submitted = false;
   sending = false;
@@ -50,7 +53,7 @@ export class HeroLeadFormComponent implements OnInit {
       phone,
       message: `Pincode: ${pincode}`,
       location: pincode,
-      sourceForm: 'hero-lead-form'
+      sourceForm: this.sourceForm
     }).subscribe({ error: err => console.error('Strapi lead capture failed', err) });
 
     try {

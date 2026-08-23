@@ -5,11 +5,12 @@ import { HomeContentService } from '../../shared/services/home-content.service';
 import { ServiceCard } from '../../shared/models/home-content.model';
 import { SeoService } from '../../shared/services/seo.service';
 import { StructuredDataService } from '../../shared/services/structured-data.service';
+import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe';
 
 @Component({
   selector: 'app-service-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './service-detail.component.html',
   styleUrl: './service-detail.component.scss'
 })

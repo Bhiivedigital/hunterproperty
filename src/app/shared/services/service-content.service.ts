@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import {
   MenuCategory,
   PagedResult,
@@ -9,7 +9,7 @@ import {
   ServiceContentPage,
   ServiceContentPageSummary
 } from '../models/service-content.model';
-import { StrapiService } from './strapi.service';
+import { StrapiCollectionResponse, StrapiService } from './strapi.service';
 
 const CATEGORY_ENDPOINT = 'service-content-categories';
 const PAGE_ENDPOINT = 'service-content-pages';
@@ -20,6 +20,19 @@ const PAGE_ENDPOINT = 'service-content-pages';
 export class ServiceContentService {
 
   constructor(private strapi: StrapiService) {}
+
+  // Same rationale as HomeContentService.fetch — categories/menu/featured
+  // guides are requested repeatedly (header mega-menu, every category page,
+  // the homepage) and rarely change; cache per endpoint+params combination.
+  private collectionCache = new Map<string, Observable<StrapiCollectionResponse<any>>>();
+
+  private fetchCollection<T>(endpoint: string, params: Record<string, string>): Observable<StrapiCollectionResponse<T>> {
+    const key = endpoint + JSON.stringify(params);
+    if (!this.collectionCache.has(key)) {
+      this.collectionCache.set(key, this.strapi.getCollection<T>(endpoint, params).pipe(shareReplay(1)));
+    }
+    return this.collectionCache.get(key)!;
+  }
 
   /** Categories + a curated set of their menu-flagged content pages, in a single request, for the header mega-menu. */
   getMenuCategories(): Observable<MenuCategory[]> {
@@ -35,7 +48,7 @@ export class ServiceContentService {
       'populate[contentPages][fields][0]': 'title',
       'populate[contentPages][fields][1]': 'slug'
     };
-    return this.strapi.getCollection<any>(CATEGORY_ENDPOINT, params)
+    return this.fetchCollection<any>(CATEGORY_ENDPOINT, params)
       .pipe(map(res => res.data.map(c => ({
         ...this.toCategory(c),
         menuItems: (c.contentPages ?? []).map((p: any) => this.toPageSummary(p))
@@ -47,7 +60,7 @@ export class ServiceContentService {
       sort: 'menuOrder:asc',
       'populate[image]': 'true'
     };
-    return this.strapi.getCollection<any>(CATEGORY_ENDPOINT, params)
+    return this.fetchCollection<any>(CATEGORY_ENDPOINT, params)
       .pipe(map(res => res.data.map(c => this.toCategory(c))));
   }
 
@@ -57,7 +70,7 @@ export class ServiceContentService {
       'populate[image]': 'true',
       'populate[seo][populate][0]': 'ogImage'
     };
-    return this.strapi.getCollection<any>(CATEGORY_ENDPOINT, params)
+    return this.fetchCollection<any>(CATEGORY_ENDPOINT, params)
       .pipe(map(res => res.data[0] ? this.toCategory(res.data[0]) : undefined));
   }
 
@@ -72,7 +85,7 @@ export class ServiceContentService {
       'fields[2]': 'excerpt',
       'populate[coverImage]': 'true'
     };
-    return this.strapi.getCollection<any>(PAGE_ENDPOINT, params).pipe(map(res => {
+    return this.fetchCollection<any>(PAGE_ENDPOINT, params).pipe(map(res => {
       const pagination = (res.meta as any)?.pagination ?? { page, pageCount: 1, total: res.data.length };
       return {
         items: res.data.map(p => this.toPageSummary(p)),
@@ -91,7 +104,7 @@ export class ServiceContentService {
       'populate[coverImage]': 'true',
       'populate[seo][populate][0]': 'ogImage'
     };
-    return this.strapi.getCollection<any>(PAGE_ENDPOINT, params)
+    return this.fetchCollection<any>(PAGE_ENDPOINT, params)
       .pipe(map(res => res.data[0] ? this.toPage(res.data[0]) : undefined));
   }
 
@@ -106,7 +119,7 @@ export class ServiceContentService {
       'fields[2]': 'excerpt',
       'populate[coverImage]': 'true'
     };
-    return this.strapi.getCollection<any>(PAGE_ENDPOINT, params)
+    return this.fetchCollection<any>(PAGE_ENDPOINT, params)
       .pipe(map(res => res.data.map(p => this.toPageSummary(p))));
   }
 
@@ -118,7 +131,7 @@ export class ServiceContentService {
       'populate[category]': 'true',
       'populate[coverImage]': 'true'
     };
-    return this.strapi.getCollection<any>(PAGE_ENDPOINT, params)
+    return this.fetchCollection<any>(PAGE_ENDPOINT, params)
       .pipe(map(res => res.data.map(p => this.toPage(p))));
   }
 
@@ -130,7 +143,7 @@ export class ServiceContentService {
       canonicalUrl: s.canonicalUrl,
       ogTitle: s.ogTitle,
       ogDescription: s.ogDescription,
-      ogImage: this.strapi.mediaUrl(s.ogImage?.url),
+      ogImage: this.strapi.mediaUrl(s.ogImage?.url, 'content'),
       noIndex: !!s.noIndex
     };
   }
@@ -141,7 +154,7 @@ export class ServiceContentService {
       slug: c.slug,
       name: c.name,
       description: c.description,
-      image: this.strapi.mediaUrl(c.image?.url),
+      image: this.strapi.mediaObj(c.image, 'card'),
       icon: c.icon,
       menuOrder: c.menuOrder ?? 0,
       seo: this.toSeo(c.seo)
@@ -154,7 +167,7 @@ export class ServiceContentService {
       slug: p.slug,
       title: p.title,
       excerpt: p.excerpt,
-      coverImage: this.strapi.mediaUrl(p.coverImage?.url)
+      coverImage: this.strapi.mediaObj(p.coverImage, 'card')
     };
   }
 

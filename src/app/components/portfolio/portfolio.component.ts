@@ -2,18 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HomeContentService } from '../../shared/services/home-content.service';
+import { CmsImage } from '../../shared/models/cms-image.model';
+import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe';
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './portfolio.component.html',
   styleUrl: './portfolio.component.scss'
 })
 export class PortfolioComponent implements OnInit {
   tagline?: string;
   titleHtml?: SafeHtml;
-  images: string[] = [];
+  images: CmsImage[] = [];
 
   constructor(private homeContentService: HomeContentService, private sanitizer: DomSanitizer) {}
 

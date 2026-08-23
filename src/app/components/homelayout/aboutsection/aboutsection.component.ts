@@ -4,11 +4,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HomeContentService } from '../../../shared/services/home-content.service';
 import { HomeAbout } from '../../../shared/models/home-content.model';
+import { CldSrcsetPipe, CldSizesPipe } from '../../../shared/pipes/cloudinary.pipe';
 
 @Component({
   selector: 'app-aboutsection',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './aboutsection.component.html',
   styleUrl: './aboutsection.component.scss'
 })

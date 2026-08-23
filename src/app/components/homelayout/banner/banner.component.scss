@@ -2,6 +2,21 @@ section.slidersec {
     position: relative;
 }
 
+// .hero-single used to carry the photo as a CSS background-image — invisible
+// to both the LCP heuristics (no fetchpriority hint, not preload-scannable)
+// and to app.component.ts's preloader (it only tracks real <img> elements,
+// so the heaviest image on the page loaded silently behind an already-hidden
+// preloader). A real <img>, absolutely positioned behind the existing
+// gradient overlay (::before, z-index:-1 in style.css), fixes both.
+.hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
 .heroslider-container {
     position: absolute;
     top: 50%;

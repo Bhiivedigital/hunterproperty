@@ -14,8 +14,12 @@
                 <div class="blog-item blog-item-clickable wow fadeInUp" data-wow-delay=".25s">
                     <a class="blog-item-stretched-link" [routerLink]="['/' + guide.category.slug, guide.slug]"
                         [attr.aria-label]="guide.title"></a>
-                    <div class="blog-item-img" *ngIf="guide.coverImage">
-                        <img [src]="guide.coverImage" [alt]="guide.title" loading="lazy">
+                    <div class="blog-item-img" *ngIf="guide.coverImage?.url">
+                        <img class="skel-img" [src]="guide.coverImage!.url"
+                             [srcset]="guide.coverImage!.url | cldSrcset:'card'"
+                             [attr.sizes]="'card' | cldSizes"
+                             [attr.width]="guide.coverImage!.width || null" [attr.height]="guide.coverImage!.height || null"
+                             [alt]="guide.title" loading="lazy" decoding="async">
                     </div>
                     <div class="blog-item-info">
                         <div class="blog-item-meta">

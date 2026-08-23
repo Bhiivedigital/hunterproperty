@@ -15,6 +15,11 @@ export class StructuredDataService {
 
   constructor(@Inject(DOCUMENT) private doc: Document) {}
 
+  private absoluteUrl(path: string): string {
+    const normalized = path.endsWith('/') ? path : `${path}/`;
+    return `${SITE_URL}${normalized}`;
+  }
+
   setBreadcrumb(items: BreadcrumbItem[]): void {
     this.setJsonLd('breadcrumb', {
       '@context': 'https://schema.org',
@@ -23,7 +28,7 @@ export class StructuredDataService {
         '@type': 'ListItem',
         position: index + 1,
         name: item.name,
-        item: `${SITE_URL}${item.url}`
+        item: this.absoluteUrl(item.url)
       }))
     });
   }
@@ -37,7 +42,7 @@ export class StructuredDataService {
       image: input.image ? [input.image] : undefined,
       datePublished: input.datePublished,
       dateModified: input.dateModified || input.datePublished,
-      mainEntityOfPage: `${SITE_URL}${input.url}`,
+      mainEntityOfPage: this.absoluteUrl(input.url),
       publisher: { '@type': 'Organization', name: 'Hunter Property', url: SITE_URL }
     });
   }
@@ -48,7 +53,7 @@ export class StructuredDataService {
       '@type': 'Service',
       name: input.name,
       description: input.description,
-      url: `${SITE_URL}${input.url}`,
+      url: this.absoluteUrl(input.url),
       areaServed: input.areaServed || 'Chennai, Tamil Nadu',
       provider: { '@type': 'Organization', name: 'Hunter Property', url: SITE_URL }
     });

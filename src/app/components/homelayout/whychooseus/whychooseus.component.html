@@ -25,9 +25,15 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="choose-img wow fadeInRight" data-wow-delay=".25s">
-                            <img class="img-1" [src]="data?.image1" alt="" loading="lazy">
-                            <img class="img-2" [src]="data?.image2" alt="" loading="lazy">
+                        <div class="choose-img wow fadeInRight" data-wow-delay=".25s" *ngIf="data as d">
+                            <img class="img-1" [src]="d.image1.url"
+                                 [srcset]="d.image1.url | cldSrcset:'content'" [attr.sizes]="'content' | cldSizes"
+                                 [attr.width]="d.image1.width || null" [attr.height]="d.image1.height || null"
+                                 alt="" loading="lazy" decoding="async">
+                            <img class="img-2" [src]="d.image2.url"
+                                 [srcset]="d.image2.url | cldSrcset:'content'" [attr.sizes]="'content' | cldSizes"
+                                 [attr.width]="d.image2.width || null" [attr.height]="d.image2.height || null"
+                                 alt="" loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>

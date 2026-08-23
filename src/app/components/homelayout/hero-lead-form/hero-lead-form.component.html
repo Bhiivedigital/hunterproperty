@@ -1,7 +1,7 @@
 <div class="hero-quote-card" data-animation="fadeInUp" data-delay=".5s">
-  <img src="assets/img/illustration/support-agent.png" alt="" class="hq-illustration" />
+  <img src="assets/img/illustration/support-agent.webp" alt="" class="hq-illustration" />
   <ng-container *ngIf="!sendSucceeded">
-    <h3>Take the First Step Toward Your Dream Home</h3>
+    <h3>{{ heading }}</h3>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="hq-field">

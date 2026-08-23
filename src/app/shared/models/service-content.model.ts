@@ -1,3 +1,5 @@
+import { CmsImage } from './cms-image.model';
+
 export interface Seo {
   metaTitle?: string;
   metaDescription?: string;
@@ -13,7 +15,7 @@ export interface ServiceContentCategory {
   slug: string;
   name: string;
   description?: string;
-  image?: string;
+  image?: CmsImage;
   icon?: string;
   menuOrder: number;
   seo?: Seo;
@@ -24,7 +26,7 @@ export interface ServiceContentPageSummary {
   slug: string;
   title: string;
   excerpt?: string;
-  coverImage?: string;
+  coverImage?: CmsImage;
 }
 
 export interface ServiceContentPage extends ServiceContentPageSummary {

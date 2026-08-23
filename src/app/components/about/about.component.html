@@ -1,4 +1,4 @@
-<div class="site-breadcrumb" style="background: url(../../../assets/img/portfolio/02.jpg)">
+<div class="site-breadcrumb" style="background: url(../../../assets/img/portfolio/02.webp)">
 
 <div class="container heroslider-abt">
     <div class="row align-items-center">
@@ -37,7 +37,9 @@
                                    <div class="testimonial-item">
                                 <div class="testimonial-content">
                                     <div class="testimonial-author-img">
-                                        <img [src]="item.authorImage" alt="" loading="lazy">
+                                        <img [src]="item.authorImage.url"
+                                             [attr.width]="item.authorImage.width || null" [attr.height]="item.authorImage.height || null"
+                                             alt="" loading="lazy" decoding="async">
                                     </div>
                                     <div class="testimonial-author-info">
                                         <h4>{{ item.authorName }}</h4>

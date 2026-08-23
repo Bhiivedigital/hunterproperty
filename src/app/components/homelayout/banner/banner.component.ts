@@ -5,12 +5,13 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { HeroLeadFormComponent } from '../hero-lead-form/hero-lead-form.component';
 import { HomeContentService } from '../../../shared/services/home-content.service';
 import { HomeBanner } from '../../../shared/models/home-content.model';
+import { CldSrcsetPipe, CldSizesPipe } from '../../../shared/pipes/cloudinary.pipe';
 
 
 @Component({
   selector: 'app-banner',
   standalone: true,
-  imports: [CommonModule, CarouselModule, RouterLink, RouterLinkActive, HeroLeadFormComponent],
+  imports: [CommonModule, CarouselModule, RouterLink, RouterLinkActive, HeroLeadFormComponent, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './banner.component.html',
   styleUrl: './banner.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
