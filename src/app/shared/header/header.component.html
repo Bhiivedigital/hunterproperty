@@ -77,7 +77,7 @@
                                 <li class="nav-item"><a class="nav-link" [routerLink]="'/about'" [routerLinkActive]="'active'">About</a></li>
                                  <li class="nav-item mega-menu" [class.menu-open]="megaMenuOpen"
                                      (mouseenter)="openMegaMenuDesktop()" (mouseleave)="closeMegaMenuDesktop()">
-                                     <a class="nav-link" [routerLink]="'/services'" [routerLinkActive]="'active'"
+                                     <a class="nav-link" [routerLink]="isDesktop ? '/services' : null" [routerLinkActive]="'active'"
                                          (click)="toggleMegaMenuMobile($event)">
                                          Services
                                          <i class="fas fa-chevron-down mega-menu-caret" *ngIf="menuCategories.length"></i>

@@ -16,6 +16,34 @@
 
 .content-page-body {
   line-height: 1.8;
+
+  table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 15px;
+  }
+
+  th,
+  td {
+    border: 1px solid var(--border-color, #e5e5e5);
+    padding: 10px 15px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--smoke-color, #f6f6f6);
+    color: var(--color-dark);
+    font-weight: 600;
+  }
+
+  tr:nth-child(even) td {
+    background: var(--smoke-color, #f9f9f9);
+  }
 }
 
 .content-page-tags {

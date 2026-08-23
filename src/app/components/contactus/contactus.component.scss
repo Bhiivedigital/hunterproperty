@@ -11,7 +11,7 @@
   gap: 15px;
   padding: 30px 20px;
   position: relative;
-  margin-bottom: 25px;
+  height: 100%;
   border-radius: 50px;
   background:var(--theme-bg-light);
   transition: var(--transition);
@@ -77,6 +77,10 @@
 }
 
 @media screen and (max-width: 767px) {
+  .contact-info {
+    border-radius: 30px;
+    padding: 25px 15px;
+  }
   .contact-info .icon {
     font-size: 26px;
     width: 55px;
@@ -88,6 +92,18 @@
   }
   .contact-form {
     padding: 20px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .contact-info {
+    padding: 20px 12px;
+  }
+  .contact-info .content h5 {
+    font-size: 17px;
+  }
+  .contact-info .content p {
+    font-size: 14px;
   }
 }
 

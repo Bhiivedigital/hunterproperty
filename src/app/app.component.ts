@@ -4,6 +4,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { LeadPopupComponent } from './shared/lead-popup/lead-popup.component';
 import { CommonModule, Location } from '@angular/common';
+import { LoadingService } from './shared/services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -26,14 +27,44 @@ export class AppComponent {
   isLoading = true;
   private initialLoadDone = false;
 
-  constructor(private router: Router, private location: Location) {
-    this.watchImagesUntilSettled(() => {
+  constructor(private router: Router, private location: Location, private loadingService: LoadingService) {
+    // Dismissing the preloader needs both signals: the CMS HTTP calls that
+    // populate each section (13 in parallel on the homepage — see
+    // HomeContentService) have all resolved, AND the images those sections
+    // render have settled. Either one alone races: HTTP-only would dismiss
+    // while late images are still popping in; image-quiet-only (the old
+    // behaviour) fires as soon as the DOM goes quiet for 400ms, which is
+    // trivially true while requests are still in flight and nothing has
+    // rendered yet — that's what let the preloader vanish mid-fetch.
+    let sawRequest = false;
+    let httpSettled = false;
+    let imagesSettled = false;
+    let settled = false;
+
+    const maybeSettle = () => {
+      if (settled || !httpSettled || !imagesSettled) return;
+      settled = true;
       this.initialLoadDone = true;
       this.isLoading = false;
+    };
+
+    this.loadingService.pending$.subscribe(count => {
+      if (count > 0) sawRequest = true;
+      if (sawRequest && count === 0) {
+        httpSettled = true;
+        maybeSettle();
+      }
     });
+
+    this.watchImagesUntilSettled(() => {
+      imagesSettled = true;
+      maybeSettle();
+    });
+
     // Safety cap — a broken/hung image request, or CMS data that never
     // arrives, shouldn't block the whole site indefinitely.
     setTimeout(() => {
+      settled = true;
       this.initialLoadDone = true;
       this.isLoading = false;
     }, 8000);
