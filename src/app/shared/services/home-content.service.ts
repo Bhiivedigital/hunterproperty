@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { StrapiService } from './strapi.service';
 import {
@@ -47,15 +47,31 @@ export class HomeContentService {
   }
 
   getBanner(): Observable<HomeBanner> {
-    return this.fetch<any>('home-banner', { 'populate[slides][populate]': 'backgroundImage' }).pipe(map(data => ({
-      ...data,
-      // Slides whose media relation is missing/unpublished in Strapi resolve
-      // to an empty URL — drop them instead of rendering a blank/broken
-      // carousel slide with no image.
-      slides: (data.slides ?? [])
-        .map((s: any) => ({ backgroundImage: this.strapi.mediaObj(s.backgroundImage, 'hero') }))
-        .filter((s: { backgroundImage: { url: string } }) => !!s.backgroundImage.url)
-    })));
+    const params = { 'populate[slides][populate]': 'backgroundImage' };
+    const key = 'home-banner' + JSON.stringify(params);
+    if (!this.requestCache.has(key)) {
+      // index.html fires this same request (with a matching prefetched-image
+      // preload) before Angular even finishes bootstrapping, so the LCP hero
+      // image isn't stuck waiting for app boot + this HTTP round-trip in
+      // series. Reuse that in-flight/settled fetch here instead of issuing a
+      // second identical request.
+      const prefetch = (typeof window !== 'undefined' ? (window as any).__heroBannerFetch : undefined) as
+        Promise<{ data: any }> | undefined;
+      const raw$: Observable<any> = prefetch
+        ? from(prefetch).pipe(map(res => res?.data))
+        : this.strapi.getSingle<any>('home-banner', params).pipe(map(res => res.data));
+
+      this.requestCache.set(key, raw$.pipe(map(data => ({
+        ...data,
+        // Slides whose media relation is missing/unpublished in Strapi resolve
+        // to an empty URL — drop them instead of rendering a blank/broken
+        // carousel slide with no image.
+        slides: (data?.slides ?? [])
+          .map((s: any) => ({ backgroundImage: this.strapi.mediaObj(s.backgroundImage, 'hero') }))
+          .filter((s: { backgroundImage: { url: string } }) => !!s.backgroundImage.url)
+      })), shareReplay(1)));
+    }
+    return this.requestCache.get(key)!;
   }
 
   getAbout(): Observable<HomeAbout> {

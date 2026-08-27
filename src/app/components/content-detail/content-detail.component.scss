@@ -17,32 +17,39 @@
 .content-page-body {
   line-height: 1.8;
 
-  table {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: auto;
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 15px;
-  }
+  // content is raw HTML injected via [innerHTML] (Strapi rich text), not
+  // template markup Angular compiles itself — it never gets the emulated
+  // encapsulation's _ngcontent attribute, so plain scoped selectors here
+  // (e.g. ".content-page-body table") silently never match it. ::ng-deep
+  // strips the attribute requirement off the descendant side of the selector.
+  ::ng-deep {
+    table {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 15px;
+    }
 
-  th,
-  td {
-    border: 1px solid var(--border-color, #e5e5e5);
-    padding: 10px 15px;
-    text-align: left;
-    vertical-align: top;
-  }
+    th,
+    td {
+      border: 1px solid var(--border-color, #e5e5e5);
+      padding: 10px 15px;
+      text-align: left;
+      vertical-align: top;
+    }
 
-  th {
-    background: var(--smoke-color, #f6f6f6);
-    color: var(--color-dark);
-    font-weight: 600;
-  }
+    th {
+      background: var(--smoke-color, #f6f6f6);
+      color: var(--color-dark);
+      font-weight: 600;
+    }
 
-  tr:nth-child(even) td {
-    background: var(--smoke-color, #f9f9f9);
+    tr:nth-child(even) td {
+      background: var(--smoke-color, #f9f9f9);
+    }
   }
 }
 

@@ -1,5 +1,18 @@
+// Reserves the hero's final height (matches .hero-single in style.css)
+// before Strapi's async banner call resolves. owl-carousel-o renders no
+// .hero-single at all until banner.slides populates, and .heroslider-container
+// is absolutely positioned (contributes no height of its own) — without this,
+// the section sits at ~0px then jumps to a full viewport once data arrives,
+// which is the single largest layout shift on the page.
 section.slidersec {
     position: relative;
+    min-height: 100vh;
+}
+
+@media (max-width: 991px) {
+    section.slidersec {
+        min-height: 1000px;
+    }
 }
 
 // .hero-single used to carry the photo as a CSS background-image — invisible

@@ -24,7 +24,7 @@ The CMS side is actually in good shape (Cloudinary-backed, responsive formats en
 | Frontend | Angular 18, CSR only (no SSR/Universal) | `src/main.ts` uses plain `bootstrapApplication` |
 | CMS | Strapi 5.52.0 | `cms/` |
 | Media storage | **Cloudinary** (not local disk) | `cms/config/plugins.ts:34-52` |
-| Strapi hosting | Render.com (`hunterproperty.onrender.com`) | `src/environments/environment.prod.ts`, `src/index.html:26` |
+| Strapi hosting | Render.com (`cms.hunterproperty.in`) | `src/environments/environment.prod.ts`, `src/index.html:26` |
 | Frontend hosting | Hostinger shared hosting (Apache) | inferred from `hunterproperty-hostinger-deploy-*.zip`, `public/.htaccess` |
 | Carousel library | `ngx-owl-carousel-o` | renders all slides into DOM upfront, not virtualized |
 
@@ -120,7 +120,7 @@ This is the logic behind the recent commits *"Skip lazy-loaded images in preload
 Blog/guide detail pages render Strapi's WYSIWYG rich-text field via `[innerHTML]` (`content-detail.component.html:30`). Any `<img>` tags embedded in that rich text bypass all of the above entirely — no `loading="lazy"`, no size control, whatever the content editor pasted in. **Fix:** post-process the rich-text HTML (before sanitizing) to inject `loading="lazy"` / `decoding="async"` on embedded `<img>` tags.
 
 ### 3.8 `index.html` connection hints
-- Preconnects to `fonts.googleapis.com` / `fonts.gstatic.com` (good) and to `https://hunterproperty.onrender.com` (the Strapi API itself — good).
+- Preconnects to `fonts.googleapis.com` / `fonts.gstatic.com` (good) and to `https://cms.hunterproperty.in` (the Strapi API itself — good).
 - **Missing:** no preconnect to `res.cloudinary.com`, which is where actual image bytes are served from (confirmed via the CSP `img-src`/`media-src` allowlist in `cms/config/middlewares.ts:13-14`). **Fix:** add `<link rel="preconnect" href="https://res.cloudinary.com" crossorigin>` — saves a DNS+TLS round trip on every CMS image fetch.
 - No `preload` hint for the LCP hero image is possible in principle, since its URL is only known after the Strapi API call resolves — a direct consequence of the CSR-only architecture (§1).
 
@@ -162,7 +162,7 @@ This is a runtime/database setting (Admin → Settings → Media Library), not v
 `cms/config/middlewares.ts:3-38` — standard Strapi v5 default stack (`logger`, `errors`, `security` with CSP override, `cors` restricted to `localhost:4200` / `hunterproperty.in`, `poweredBy`, `query`, `body`, `session`, `favicon`, `public`). No compression middleware configured (not unusual — would need to come from Render's edge or a reverse proxy if desired). No rate-limiting plugin installed. Neither is an image-specific issue, but both affect general API responsiveness, which the frontend's 13-call waterfall (§5.2) is fully exposed to.
 
 ### 4.5 Render hosting — verify tier (Critical if free tier)
-Strapi runs on `hunterproperty.onrender.com` (confirmed via `environment.prod.ts` and `index.html:26`). Render's free/hobby tier spins down after ~15 minutes idle and takes 30-60+ seconds to cold-start the next request — if this instance is on that tier, the **first content+image load after any idle period would appear to hang**, independent of any frontend optimization. Can't be confirmed from the repo — **verify the Render plan directly**, and if it's free tier, either upgrade or add a keep-alive ping.
+Strapi runs on `cms.hunterproperty.in` (confirmed via `environment.prod.ts` and `index.html:26`). Render's free/hobby tier spins down after ~15 minutes idle and takes 30-60+ seconds to cold-start the next request — if this instance is on that tier, the **first content+image load after any idle period would appear to hang**, independent of any frontend optimization. Can't be confirmed from the repo — **verify the Render plan directly**, and if it's free tier, either upgrade or add a keep-alive ping.
 
 ---
 
