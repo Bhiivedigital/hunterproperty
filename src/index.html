@@ -23,9 +23,63 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://hunterproperty.onrender.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cms.hunterproperty.in">
   <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+
+  <!-- Hero LCP fix: the hero <img src> only exists after Angular boots and
+       HomeContentService.getBanner() round-trips to Strapi — the browser's
+       preload scanner can't discover an image that isn't in the HTML yet.
+       Firing the same request here, before any Angular script has even
+       downloaded, lets it run in parallel with app bootstrap instead of
+       serialized after it, and lets the actual hero image start downloading
+       (via the injected preload link below) as soon as the API responds —
+       often before Angular itself has finished parsing. home-content.service.ts
+       picks this up via window.__heroBannerFetch instead of re-requesting it,
+       so there is no duplicate network call. Mirrors the Cloudinary transform
+       in image-optimization.service.ts (f_auto,q_auto,w_<width>,c_limit) so the
+       preloaded URL exactly matches what Angular ends up rendering. -->
+  <script>
+    (function () {
+      try {
+        var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+        var base = isLocal ? 'http://localhost:1337' : 'https://cms.hunterproperty.in';
+        var url = base + '/api/home-banner?populate[slides][populate]=backgroundImage';
+
+        var toAbsolute = function (u) { return u.indexOf('http') === 0 ? u : base + u; };
+        var optimize = function (u, width) {
+          var marker = '/image/upload/';
+          var idx = u.indexOf(marker);
+          if (idx === -1) return u;
+          var prefix = u.slice(0, idx + marker.length);
+          var rest = u.slice(idx + marker.length);
+          var segs = rest.split('/');
+          var transformRe = /^(f_|q_|w_|h_|c_|dpr_|fl_|g_|ar_|e_|l_|b_|bo_|co_|r_|so_|eo_|du_|vc_|ac_|x_|y_|z_|o_)/i;
+          var versionRe = /^v\d+$/;
+          var already = !versionRe.test(segs[0]) && transformRe.test(segs[0].split(',')[0]);
+          var tail = (already ? segs.slice(1) : segs).join('/');
+          return prefix + 'f_auto,q_auto,w_' + width + ',c_limit/' + tail;
+        };
+
+        window.__heroBannerFetch = fetch(url, { credentials: 'omit' })
+          .then(function (r) { return r.json(); })
+          .then(function (json) {
+            var slide = json && json.data && json.data.slides && json.data.slides[0];
+            var raw = slide && slide.backgroundImage && slide.backgroundImage.url;
+            if (raw) {
+              var link = document.createElement('link');
+              link.rel = 'preload';
+              link.as = 'image';
+              link.href = optimize(toAbsolute(raw), 1920);
+              link.setAttribute('fetchpriority', 'high');
+              document.head.appendChild(link);
+            }
+            return json;
+          })
+          .catch(function () { return null; });
+      } catch (e) {}
+    })();
+  </script>
 
   <!-- Google Tag Manager -->
  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y7GXWRE9XJ"></script>
@@ -42,18 +96,18 @@
  
   <app-root></app-root>
   
-    <script src="assets/js/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
-    <script src="assets/js/isotope.pkgd.min.js"></script>
-    <script src="assets/js/jquery.appear.min.js"></script>
-    <script src="assets/js/jquery.easing.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/counter-up.js"></script>
-    <script src="assets/js/jquery.nice-select.min.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <!-- bootstrap.bundle is already loaded via angular.json's `scripts` build
+         array (see scripts-*.js below) — a second copy here was pure duplicate
+         weight. imagesloaded/magnific-popup/isotope/jquery.appear/jquery.easing/
+         owl.carousel(JS)/counter-up/nice-select are unused: nothing in the
+         Angular app (grepped for their init calls / marker classes) invokes
+         them — owl-carousel-o is an Angular reimplementation that only reuses
+         Owl's CSS, not this jQuery plugin. Kept: jquery (main.js's dependency),
+         wow.min.js (vanilla JS, still drives the `wow fadeInLeft`-style
+         scroll animations), main.js itself. -->
+    <script src="assets/js/jquery-3.7.1.min.js" defer></script>
+    <script src="assets/js/wow.min.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
 </body>
 
 </html>
