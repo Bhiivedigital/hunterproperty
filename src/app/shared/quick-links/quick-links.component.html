@@ -1,0 +1,16 @@
+<section class="quick-links" [class.quick-links-plain]="variant === 'plain'" *ngIf="visibleItems.length">
+  <div class="container">
+
+    <h2 class="quick-links-title" *ngIf="title">{{ title }}</h2>
+
+    <ul class="quick-links-grid">
+      <li *ngFor="let item of visibleItems">
+        <a *ngIf="isInternal(item.url); else externalLink" [routerLink]="item.url">{{ item.label }}</a>
+        <ng-template #externalLink>
+          <a [href]="item.url" rel="noopener">{{ item.label }}</a>
+        </ng-template>
+      </li>
+    </ul>
+
+  </div>
+</section>

@@ -1,3 +1,41 @@
-.blog-item-clickable {
-  position: relative;
+.pillar-area {
+  padding: 80px 0;
+}
+
+.pillar-intro {
+  color: var(--body-text-color);
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+
+app-quick-links {
+  display: block;
+  margin: 40px 0;
+}
+
+.pillar-empty,
+.pillar-more {
+  margin-top: 20px;
+}
+
+.pillar-cta {
+  margin-top: 50px;
+
+  .widget {
+    background: var(--theme-bg-light, #f6f6f6);
+    padding: 40px 30px;
+    border-radius: 15px;
+  }
+
+  .widget-title {
+    color: var(--color-dark);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .pillar-area {
+    padding: 50px 0;
+  }
 }

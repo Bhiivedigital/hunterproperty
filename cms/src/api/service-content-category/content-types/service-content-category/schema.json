@@ -40,6 +40,11 @@
       "type": "boolean",
       "default": true
     },
+    "quickLinks": {
+      "type": "component",
+      "component": "blocks.quick-links",
+      "repeatable": false
+    },
     "seo": {
       "type": "component",
       "component": "shared.seo",

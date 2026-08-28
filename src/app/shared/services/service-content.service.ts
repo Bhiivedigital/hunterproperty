@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import {
   MenuCategory,
   PagedResult,
   Seo,
   ServiceContentCategory,
+  QuickLinks,
   ServiceContentPage,
   ServiceContentPageSummary
 } from '../models/service-content.model';
@@ -65,13 +66,24 @@ export class ServiceContentService {
   }
 
   getCategoryBySlug(slug: string): Observable<ServiceContentCategory | undefined> {
-    const params: Record<string, string> = {
+    const baseParams: Record<string, string> = {
       'filters[slug][$eq]': slug,
       'populate[image]': 'true',
       'populate[seo][populate][0]': 'ogImage'
     };
+    const params: Record<string, string> = {
+      ...baseParams,
+      'populate[quickLinks][populate][0]': 'items'
+    };
+    // Strapi rejects the whole query with a 400 ("Invalid key quickLinks") when
+    // the running CMS predates the category quickLinks field, so a front-end
+    // deploy that lands before the CMS one would blank every category page.
+    // Fall back to the same request without that populate.
     return this.fetchCollection<any>(CATEGORY_ENDPOINT, params)
-      .pipe(map(res => res.data[0] ? this.toCategory(res.data[0]) : undefined));
+      .pipe(
+        catchError(() => this.fetchCollection<any>(CATEGORY_ENDPOINT, baseParams)),
+        map(res => res.data[0] ? this.toCategory(res.data[0]) : undefined)
+      );
   }
 
   getContentPagesByCategory(categorySlug: string, page = 1, pageSize = 9): Observable<PagedResult<ServiceContentPageSummary>> {
@@ -102,6 +114,7 @@ export class ServiceContentService {
       'filters[slug][$eq]': contentSlug,
       'populate[category]': 'true',
       'populate[coverImage]': 'true',
+      'populate[quickLinks][populate][0]': 'items',
       'populate[seo][populate][0]': 'ogImage'
     };
     return this.fetchCollection<any>(PAGE_ENDPOINT, params)
@@ -148,6 +161,14 @@ export class ServiceContentService {
     };
   }
 
+  private toQuickLinks(q: any): QuickLinks | undefined {
+    const items = (q?.items ?? [])
+      .filter((i: any) => i?.label && i?.url)
+      .map((i: any) => ({ label: i.label, url: i.url }));
+    if (!items.length) return undefined;
+    return { mainTitle: q.mainTitle, items };
+  }
+
   private toCategory(c: any): ServiceContentCategory {
     return {
       id: c.id,
@@ -157,6 +178,7 @@ export class ServiceContentService {
       image: this.strapi.mediaObj(c.image, 'card'),
       icon: c.icon,
       menuOrder: c.menuOrder ?? 0,
+      quickLinks: this.toQuickLinks(c.quickLinks),
       seo: this.toSeo(c.seo)
     };
   }
@@ -178,6 +200,7 @@ export class ServiceContentService {
       category: this.toCategory(p.category),
       tags: p.tags ?? [],
       featured: !!p.featured,
+      quickLinks: this.toQuickLinks(p.quickLinks),
       updatedAt: p.updatedAt,
       publishedAt: p.publishedAt,
       seo: this.toSeo(p.seo)

@@ -1,24 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ServiceContentService } from '../../shared/services/service-content.service';
-import { ServiceContentCategory, ServiceContentPageSummary } from '../../shared/models/service-content.model';
+import { LinkItem, ServiceContentCategory, ServiceContentPageSummary } from '../../shared/models/service-content.model';
 import { SeoService } from '../../shared/services/seo.service';
 import { StructuredDataService } from '../../shared/services/structured-data.service';
-import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe';
+import { QuickLinksComponent } from '../../shared/quick-links/quick-links.component';
 
-const PAGE_SIZE = 9;
+// The category page is a pillar page: its job is to expose every child guide as
+// a crawlable internal link, not to sell each one with a card. Links are cheap
+// to render, so pull them in large batches rather than 9 at a time.
+const PAGE_SIZE = 100;
 
 @Component({
   selector: 'app-category-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, CldSrcsetPipe, CldSizesPipe],
+  imports: [CommonModule, RouterLink, QuickLinksComponent],
   templateUrl: './category-page.component.html',
   styleUrl: './category-page.component.scss'
 })
 export class CategoryPageComponent implements OnInit {
 
   category?: ServiceContentCategory;
+  categoryDescription?: SafeHtml;
   pages: ServiceContentPageSummary[] = [];
   page = 1;
   pageCount = 1;
@@ -29,6 +34,7 @@ export class CategoryPageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private contentService: ServiceContentService,
+    private sanitizer: DomSanitizer,
     private seo: SeoService,
     private structuredData: StructuredDataService
   ) {}
@@ -46,6 +52,13 @@ export class CategoryPageComponent implements OnInit {
 
   get hasMore(): boolean {
     return this.page < this.pageCount;
+  }
+
+  /** Child guides as plain links, for the shared quick-links grid. */
+  get pageLinks(): LinkItem[] {
+    if (!this.category) return [];
+    const slug = this.category.slug;
+    return this.pages.map(item => ({ label: item.title, url: `/${slug}/${item.slug}` }));
   }
 
   loadMore(): void {
@@ -68,6 +81,10 @@ export class CategoryPageComponent implements OnInit {
         return;
       }
       this.category = category;
+      // `description` is Strapi rich text (HTML), not a plain string.
+      this.categoryDescription = category.description
+        ? this.sanitizer.bypassSecurityTrustHtml(category.description)
+        : undefined;
 
       this.seo.setSeo({
         path: `/${category.slug}`,

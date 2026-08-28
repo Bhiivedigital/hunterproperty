@@ -83,4 +83,8 @@
     </div>
   </div>
 
+  <app-quick-links *ngIf="page.quickLinks"
+                   [title]="page.quickLinks.mainTitle"
+                   [items]="page.quickLinks.items"></app-quick-links>
+
 </ng-container>

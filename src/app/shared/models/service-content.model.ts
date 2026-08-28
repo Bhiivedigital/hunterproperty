@@ -10,6 +10,17 @@ export interface Seo {
   noIndex?: boolean;
 }
 
+export interface LinkItem {
+  label: string;
+  url: string;
+}
+
+/** `blocks.quick-links` — a titled grid of plain text links (SEO interlinking block). */
+export interface QuickLinks {
+  mainTitle?: string;
+  items: LinkItem[];
+}
+
 export interface ServiceContentCategory {
   id: number;
   slug: string;
@@ -18,6 +29,7 @@ export interface ServiceContentCategory {
   image?: CmsImage;
   icon?: string;
   menuOrder: number;
+  quickLinks?: QuickLinks;
   seo?: Seo;
 }
 
@@ -34,6 +46,7 @@ export interface ServiceContentPage extends ServiceContentPageSummary {
   category: ServiceContentCategory;
   tags: string[];
   featured: boolean;
+  quickLinks?: QuickLinks;
   updatedAt?: string;
   publishedAt?: string;
   seo?: Seo;
