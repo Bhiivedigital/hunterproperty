@@ -8,11 +8,12 @@ import { SeoService } from '../../shared/services/seo.service';
 import { StructuredDataService } from '../../shared/services/structured-data.service';
 import { HeroLeadFormComponent } from '../homelayout/hero-lead-form/hero-lead-form.component';
 import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe';
+import { QuickLinksComponent } from '../../shared/quick-links/quick-links.component';
 
 @Component({
   selector: 'app-content-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, HeroLeadFormComponent, CldSrcsetPipe, CldSizesPipe],
+  imports: [CommonModule, RouterLink, HeroLeadFormComponent, CldSrcsetPipe, CldSizesPipe, QuickLinksComponent],
   templateUrl: './content-detail.component.html',
   styleUrl: './content-detail.component.scss'
 })

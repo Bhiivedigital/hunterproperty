@@ -1,0 +1,78 @@
+.quick-links {
+  background: var(--theme-bg-light, #f6f6f6);
+  padding: 60px 0;
+
+  &.quick-links-plain {
+    background: transparent;
+    padding: 0;
+  }
+}
+
+.quick-links-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 35px;
+}
+
+.quick-links-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  // auto-fill keeps every tile on a shared column rhythm no matter how many
+  // items the editor adds, so a 20-link block and a 1800-link block read the
+  // same instead of the last row stretching.
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+
+  li {
+    display: flex;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--border-info-color, rgba(0, 0, 0, .08));
+    border-radius: 8px;
+    background: var(--color-white, #fff);
+    color: var(--color-dark);
+    font-size: 15px;
+    line-height: 1.5;
+    text-decoration: none;
+    transition: var(--transition2, all .3s ease-in-out);
+
+    &:hover,
+    &:focus-visible {
+      background: var(--theme-color);
+      border-color: var(--theme-color);
+      color: var(--color-white, #fff);
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .quick-links {
+    padding: 40px 0;
+  }
+
+  .quick-links-title {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+
+  .quick-links-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    a {
+      padding: 12px 15px;
+      font-size: 14px;
+    }
+  }
+}

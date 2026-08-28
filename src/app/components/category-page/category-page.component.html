@@ -10,55 +10,40 @@
     </div>
   </div>
 
-  <div class="blog-area py-120">
-    <div class="container">
+  <div class="pillar-area">
 
+    <div class="container">
       <div class="row">
-        <div class="col-lg-8 mx-auto text-center">
+        <div class="col-lg-10 mx-auto text-center">
           <div class="site-heading text-center">
             <span class="site-title-tagline"><i [class]="category.icon || 'far fa-helmet-safety'"></i> Guides</span>
             <h1 class="site-title">{{ category.name }} <span>Guides</span></h1>
             <div class="heading-divider"></div>
           </div>
-          <p *ngIf="category.description">{{ category.description }}</p>
+          <div class="pillar-intro" *ngIf="categoryDescription" [innerHTML]="categoryDescription"></div>
         </div>
       </div>
+    </div>
 
-      <div class="row g-4 mt-2">
-        <div class="col-md-6 col-lg-4" *ngFor="let item of pages">
-          <div class="blog-item blog-item-clickable wow fadeInUp">
-            <a class="blog-item-stretched-link" [routerLink]="['/' + category.slug, item.slug]" [attr.aria-label]="item.title"></a>
-            <div class="blog-item-img" *ngIf="item.coverImage?.url">
-              <img [src]="item.coverImage!.url"
-                   [srcset]="item.coverImage!.url | cldSrcset:'card'"
-                   [attr.sizes]="'card' | cldSizes"
-                   [attr.width]="item.coverImage!.width || null" [attr.height]="item.coverImage!.height || null"
-                   [alt]="item.title" loading="lazy" decoding="async">
-            </div>
-            <div class="blog-item-info">
-              <h4 class="blog-title">
-                <a [routerLink]="['/' + category.slug, item.slug]">{{ item.title }}</a>
-              </h4>
-              <p [innerHTML]="item.excerpt"></p>
-              <a class="theme-btn" [routerLink]="['/' + category.slug, item.slug]">Read Guide<i class="fas fa-arrow-right"></i></a>
-            </div>
-          </div>
-        </div>
+    <!-- Editor-curated links from the CMS, above the auto-generated child list. -->
+    <app-quick-links *ngIf="category.quickLinks"
+                     [title]="category.quickLinks.mainTitle"
+                     [items]="category.quickLinks.items"></app-quick-links>
 
-        <div class="col-12" *ngIf="pages.length === 0">
-          <p class="text-center">More {{ category.name }} guides are on the way.</p>
-        </div>
+    <app-quick-links [title]="'Related ' + category.name + ' Pages'" [items]="pageLinks"></app-quick-links>
+
+    <div class="container">
+      <p class="text-center pillar-empty" *ngIf="pages.length === 0">
+        More {{ category.name }} guides are on the way.
+      </p>
+
+      <div class="text-center pillar-more" *ngIf="hasMore">
+        <button type="button" class="theme-btn" (click)="loadMore()" [disabled]="loadingMore">
+          {{ loadingMore ? 'Loading…' : 'Load More' }}<i class="fas fa-arrow-right"></i>
+        </button>
       </div>
 
-      <div class="row" *ngIf="hasMore">
-        <div class="col-12 text-center mt-4">
-          <button type="button" class="theme-btn" (click)="loadMore()" [disabled]="loadingMore">
-            {{ loadingMore ? 'Loading…' : 'Load More' }}<i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="row mt-5">
+      <div class="row pillar-cta">
         <div class="col-lg-8 mx-auto text-center">
           <div class="widget">
             <h4 class="widget-title">Ready to talk to our {{ category.name }} team?</h4>
@@ -70,8 +55,8 @@
           </div>
         </div>
       </div>
-
     </div>
+
   </div>
 
 </ng-container>
