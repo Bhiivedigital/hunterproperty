@@ -276,7 +276,7 @@ async function seedContent(strapi: Core.Strapi) {
         data: {
           slug,
           ...rest,
-          seo: { metaTitle: `${category.name} Guides | Hunter Property`, metaDescription: category.description },
+          seo: { metaTitle: `${category.name} Services | Hunter Property`, metaDescription: category.description },
         },
       });
       categoryDocIds[slug] = created.documentId;

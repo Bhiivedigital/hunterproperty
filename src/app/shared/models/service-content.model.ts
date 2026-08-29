@@ -1,4 +1,5 @@
 import { CmsImage } from './cms-image.model';
+import { ContentBlock, ContentBlocksPosition } from './pillar-page.model';
 
 export interface Seo {
   metaTitle?: string;
@@ -33,6 +34,13 @@ export interface ServiceContentCategory {
   seo?: Seo;
 }
 
+/**
+ * Where the cover image sits on a content page. `hidden` keeps the image on
+ * the record — it still feeds the social/OG tags and the card in listings —
+ * while leaving it out of the article body.
+ */
+export type CoverImagePosition = 'top' | 'below-title' | 'below-content' | 'hidden';
+
 export interface ServiceContentPageSummary {
   id: number;
   slug: string;
@@ -46,6 +54,15 @@ export interface ServiceContentPage extends ServiceContentPageSummary {
   category: ServiceContentCategory;
   tags: string[];
   featured: boolean;
+  /** Narrow-viewport swap for the cover image, when the editor uploaded one. */
+  mobileImage?: CmsImage;
+  /** A gallery an editor can run above the article, ahead of the copy. */
+  topLevelImages: CmsImage[];
+  coverImagePosition: CoverImagePosition;
+  /** The same dynamic zone pillar pages use, so images, banners, accordions
+   *  and FAQs can be placed anywhere below the body copy. */
+  contentBlocks: ContentBlock[];
+  contentBlocksPosition: ContentBlocksPosition;
   quickLinks?: QuickLinks;
   updatedAt?: string;
   publishedAt?: string;

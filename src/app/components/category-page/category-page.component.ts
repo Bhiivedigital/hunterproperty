@@ -7,12 +7,13 @@ import { ServiceContentService } from '../../shared/services/service-content.ser
 import { PillarPageService } from '../../shared/services/pillar-page.service';
 import { RichTextService } from '../../shared/services/rich-text.service';
 import { LinkItem, ServiceContentCategory, ServiceContentPageSummary } from '../../shared/models/service-content.model';
-import { PillarPage } from '../../shared/models/pillar-page.model';
+import { FeaturedImagePosition, PillarPage } from '../../shared/models/pillar-page.model';
 import { SeoService } from '../../shared/services/seo.service';
 import { StructuredDataService } from '../../shared/services/structured-data.service';
 import { QuickLinksComponent } from '../../shared/quick-links/quick-links.component';
 import { ContentBlocksComponent } from '../../shared/content-blocks/content-blocks.component';
 import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe';
+import { HeroLeadFormComponent } from '../homelayout/hero-lead-form/hero-lead-form.component';
 
 // The category page is a pillar page: its job is to expose every child guide as
 // a crawlable internal link, not to sell each one with a card. Links are cheap
@@ -36,7 +37,15 @@ const PAGE_SIZE = 100;
 @Component({
   selector: 'app-category-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, QuickLinksComponent, ContentBlocksComponent, CldSrcsetPipe, CldSizesPipe],
+  imports: [
+    CommonModule,
+    RouterLink,
+    QuickLinksComponent,
+    ContentBlocksComponent,
+    HeroLeadFormComponent,
+    CldSrcsetPipe,
+    CldSizesPipe
+  ],
   templateUrl: './category-page.component.html',
   styleUrl: './category-page.component.scss'
 })
@@ -78,7 +87,7 @@ export class CategoryPageComponent implements OnInit {
   }
 
   get tagline(): string {
-    return this.pillar?.tagline || 'Guides';
+    return this.pillar?.tagline || 'Services';
   }
 
   /** The editor-curated link block: the pillar page's, or the legacy one still living on the category. */
@@ -91,11 +100,31 @@ export class CategoryPageComponent implements OnInit {
   }
 
   get childGuidesTitle(): string {
-    return this.pillar?.childGuidesTitle || `Related ${this.category?.name} Pages`;
+    return this.pillar?.childGuidesTitle || `Related ${this.category?.name} Services`;
   }
 
   get ctaHeading(): string {
     return this.pillar?.ctaHeading || `Ready to talk to our ${this.category?.name} team?`;
+  }
+
+  /** Editor's choice of whether the block zone opens the article or follows it. */
+  get blocksAboveContent(): boolean {
+    return this.pillar?.contentBlocksPosition === 'above-content';
+  }
+
+  get leadFormHeading(): string {
+    return this.category
+      ? `Get a Free ${this.category.name} Quote`
+      : 'Get a Free Quote';
+  }
+
+  /**
+   * Whether the featured image belongs in this slot. Editors choose the slot in
+   * the CMS, so the same image can lead the article or close it without a
+   * template change; a page with no featured image renders none of them.
+   */
+  isFeaturedAt(slot: FeaturedImagePosition): boolean {
+    return !!this.pillar?.featuredImage?.url && this.pillar.featuredImagePosition === slot;
   }
 
   get ctaText(): string {
@@ -164,12 +193,12 @@ export class CategoryPageComponent implements OnInit {
   private applySeo(category: ServiceContentCategory, pillar?: PillarPage): void {
     this.seo.setSeo({
       path: `/${category.slug}`,
-      title: `${category.name} Guides | Hunter Property`,
+      title: `${category.name} Services | Hunter Property`,
       // Both fields are rich text; a meta description has to be plain prose.
       description: this.richText.toPlainText(pillar?.intro)
         || this.richText.toPlainText(pillar?.content)
         || this.richText.toPlainText(category.description)
-        || `${category.name} guides and resources from Hunter Property.`,
+        || `${category.name} Services and resources from Hunter Property.`,
       image: pillar?.featuredImage?.url || pillar?.heroImage?.url || category.image?.url,
       seo: pillar?.seo ?? category.seo
     });

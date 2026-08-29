@@ -1,22 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, shareReplay } from 'rxjs/operators';
-import {
-  AccordionBlock,
-  BannerBlock,
-  ContentBlock,
-  ContentSectionBlock,
-  FaqItem,
-  FaqsBlock,
-  ImageBlock,
-  PillarPage,
-  QuickLinksBlock,
-  VideoBlock
-} from '../models/pillar-page.model';
+import { ContentBlocksPosition, FeaturedImagePosition, PillarPage } from '../models/pillar-page.model';
 import { QuickLinks, Seo } from '../models/service-content.model';
+import { ContentBlockMapperService } from './content-block-mapper.service';
 import { StrapiCollectionResponse, StrapiService } from './strapi.service';
 
 const PILLAR_ENDPOINT = 'pillar-pages';
+
+const FEATURED_IMAGE_POSITIONS: FeaturedImagePosition[] = ['top', 'below-intro', 'below-content'];
+const CONTENT_BLOCKS_POSITIONS: ContentBlocksPosition[] = ['below-content', 'above-content'];
 
 /**
  * Reads the Pillar Page collection — the standalone CMS record that holds a
@@ -31,7 +24,10 @@ const PILLAR_ENDPOINT = 'pillar-pages';
 @Injectable({ providedIn: 'root' })
 export class PillarPageService {
 
-  constructor(private strapi: StrapiService) {}
+  constructor(
+    private strapi: StrapiService,
+    private blocks: ContentBlockMapperService
+  ) {}
 
   private cache = new Map<string, Observable<StrapiCollectionResponse<any>>>();
 
@@ -65,7 +61,21 @@ export class PillarPageService {
       content: p.content,
       heroImage: this.strapi.mediaObj(p.heroImage, 'hero'),
       featuredImage: this.strapi.mediaObj(p.featuredImage, 'content'),
-      contentBlocks: (p.contentBlocks ?? []).map((b: any) => this.toBlock(b)).filter((b: ContentBlock | undefined): b is ContentBlock => !!b),
+      // A CMS that predates the field sends nothing back; the image belongs at
+      // the top of the article, which is where it was asked for, so that — not
+      // "wherever it used to land" — is the default.
+      featuredImagePosition: FEATURED_IMAGE_POSITIONS.includes(p.featuredImagePosition)
+        ? p.featuredImagePosition
+        : 'top',
+      contentBlocks: this.blocks.toBlocks(p.contentBlocks),
+      // Unset on a CMS that predates the field — which is every CMS this has
+      // shipped against so far, so this fallback is what editors actually see.
+      // An image block dropped at the end of a long page reads as an orphan
+      // banner under the copy, so lead with the zone instead: it opens the
+      // article, which is where an editor who added one image expects it.
+      contentBlocksPosition: CONTENT_BLOCKS_POSITIONS.includes(p.contentBlocksPosition)
+        ? p.contentBlocksPosition
+        : 'above-content',
       quickLinks: this.toQuickLinks(p.quickLinks),
       showChildGuides: p.showChildGuides !== false,
       childGuidesTitle: p.childGuidesTitle,
@@ -74,78 +84,6 @@ export class PillarPageService {
       updatedAt: p.updatedAt,
       seo: this.toSeo(p.seo)
     };
-  }
-
-  /**
-   * Dynamic-zone entries are keyed by `__component`. An unrecognised key means
-   * the CMS gained a block this build doesn't render yet — skip it rather than
-   * emitting an empty slot.
-   */
-  private toBlock(b: any): ContentBlock | undefined {
-    switch (b?.__component) {
-      case 'blocks.content-section':
-        return {
-          __component: 'blocks.content-section',
-          id: b.id,
-          title: b.title,
-          body: b.body,
-          image: this.strapi.mediaObj(b.image, 'content'),
-          imagePosition: b.imagePosition ?? 'right'
-        } as ContentSectionBlock;
-
-      case 'blocks.image-block':
-        return {
-          __component: 'blocks.image-block',
-          id: b.id,
-          image: this.strapi.mediaObj(b.image, b.width === 'full' ? 'hero' : 'content'),
-          altText: b.altText,
-          caption: b.caption,
-          width: b.width === 'full' ? 'full' : 'content'
-        } as ImageBlock;
-
-      case 'blocks.banner':
-        return {
-          __component: 'blocks.banner',
-          id: b.id,
-          title: b.title,
-          subtitle: b.subtitle,
-          image: this.strapi.mediaObj(b.image, 'hero'),
-          ctaText: b.ctaText,
-          ctaUrl: b.ctaUrl
-        } as BannerBlock;
-
-      case 'blocks.quick-links':
-        return {
-          __component: 'blocks.quick-links',
-          id: b.id,
-          mainTitle: b.mainTitle,
-          items: (b.items ?? []).filter((i: any) => i?.label && i?.url).map((i: any) => ({ label: i.label, url: i.url }))
-        } as QuickLinksBlock;
-
-      case 'blocks.accordion':
-        return { __component: 'blocks.accordion', id: b.id, title: b.title, items: this.toFaqItems(b.items) } as AccordionBlock;
-
-      case 'blocks.faqs':
-        return { __component: 'blocks.faqs', id: b.id, title: b.title, items: this.toFaqItems(b.items) } as FaqsBlock;
-
-      case 'blocks.video-section':
-        return {
-          __component: 'blocks.video-section',
-          id: b.id,
-          title: b.title,
-          videoUrl: b.videoUrl,
-          thumbnail: this.strapi.mediaObj(b.thumbnail, 'content')
-        } as VideoBlock;
-
-      default:
-        return undefined;
-    }
-  }
-
-  private toFaqItems(items: any): FaqItem[] {
-    return (items ?? [])
-      .filter((i: any) => i?.question)
-      .map((i: any) => ({ question: i.question, answer: i.answer ?? '' }));
   }
 
   private toQuickLinks(q: any): QuickLinks | undefined {

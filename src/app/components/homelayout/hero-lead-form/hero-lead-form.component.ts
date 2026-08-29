@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import emailjs from '@emailjs/browser';
 import { LeadPayload, LeadService } from '../../../shared/services/lead.service';
 
 @Component({
@@ -24,7 +23,6 @@ export class HeroLeadFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private leadService: LeadService) {}
 
   ngOnInit(): void {
-    emailjs.init('Ib8KzPUHhor6Az9D2');
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
@@ -48,27 +46,20 @@ export class HeroLeadFormComponent implements OnInit {
     this.sending = true;
     const { name, phone, pincode } = this.form.value;
 
-    this.leadService.submit({
+    const { stored, emailed } = await this.leadService.capture({
       fullName: name,
       phone,
-      message: `Pincode: ${pincode}`,
       location: pincode,
       sourceForm: this.sourceForm
-    }).subscribe({ error: err => console.error('Strapi lead capture failed', err) });
+    });
 
-    try {
-      await emailjs.send('service_37vso18', 'template_wo2b83h', {
-        fullName: name,
-        Phno: phone,
-        message: `Pincode: ${pincode}`
-      });
-      this.sending = false;
+    this.sending = false;
+
+    if (stored || emailed) {
       this.sendSucceeded = true;
       this.submitted = false;
       this.form.reset();
-    } catch (error) {
-      console.error('Hero form send failed:', error);
-      this.sending = false;
+    } else {
       this.sendFailed = true;
     }
   }

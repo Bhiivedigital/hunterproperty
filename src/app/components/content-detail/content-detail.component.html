@@ -13,16 +13,68 @@
 
   <div class="blog-area py-120">
     <div class="container">
-      <div class="row g-4">
 
-        <div class="col-lg-8">
+      <!-- Form and sidebar widgets are one column: from lg up they travel
+           together as a single sticky panel, so the widgets sit directly under
+           the form instead of being spread down the article by the grid. The
+           wrapper is display:contents on a phone, where the three panels still
+           interleave as form -> article -> widgets. -->
+      <div class="content-page-layout">
+
+        <div class="content-page-side" #sidePanel>
+
+          <div class="content-page-form">
+            <app-hero-lead-form heading="Get a Free Consultation for Your Project" sourceForm="content-page"></app-hero-lead-form>
+          </div>
+
+          <aside class="content-page-widgets">
+            <div class="widget">
+              <h4 class="widget-title">In {{ page.category.name }}</h4>
+              <!-- Rich text, so it needs rendering, not interpolation: printing it
+                   put raw <h2>/<p> tags on screen. Clamped because this is the
+                   category's short summary slot, not somewhere an article fits. -->
+              <div class="widget-description cms-rich-text" [innerHTML]="page.category.description | richText"></div>
+              <a class="theme-btn w-100 justify-content-center" [routerLink]="['/' + page.category.slug]">
+                View All {{ page.category.name }} Services<i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+
+            <div class="widget" *ngIf="related.length">
+              <h4 class="widget-title">Related Services</h4>
+              <div class="related-guide-item" *ngFor="let item of related">
+                <div class="related-guide-img" *ngIf="item.coverImage?.url">
+                  <img [src]="item.coverImage!.url"
+                       [attr.width]="item.coverImage!.width || null" [attr.height]="item.coverImage!.height || null"
+                       [alt]="item.title" loading="lazy" decoding="async">
+                </div>
+                <div class="related-guide-info">
+                  <h6><a [routerLink]="['/' + page.category.slug, item.slug]">{{ item.title }}</a></h6>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+
+        <div class="content-page-main">
           <article class="content-page">
-            <div class="content-page-img" *ngIf="page.coverImage?.url">
-              <img class="img-fluid w-100" [src]="page.coverImage!.url"
-                   [srcset]="page.coverImage!.url | cldSrcset:'card'"
-                   [attr.sizes]="'card' | cldSizes"
-                   [attr.width]="page.coverImage!.width || null" [attr.height]="page.coverImage!.height || null"
-                   [alt]="page.title" loading="lazy" decoding="async">
+
+            <!-- The same dynamic zone pillar pages use: an editor can place an
+                 image, banner, FAQ set or video, and choose whether the whole
+                 zone opens the article or closes it. -->
+            <app-content-blocks class="content-page-blocks" *ngIf="blocksAboveContent"
+                                [blocks]="page.contentBlocks"></app-content-blocks>
+
+            <ng-container *ngTemplateOutlet="cover; context: { $implicit: 'top' }"></ng-container>
+
+            <div class="content-page-gallery" *ngIf="page.topLevelImages.length">
+              <figure *ngFor="let img of page.topLevelImages">
+                <img class="img-fluid" [src]="img.url"
+                     [srcset]="img.url | cldSrcset:'card'"
+                     [attr.sizes]="'card' | cldSizes"
+                     [attr.width]="img.width || null" [attr.height]="img.height || null"
+                     [alt]="page.title" loading="lazy" decoding="async">
+              </figure>
             </div>
 
             <div class="content-page-meta" *ngIf="page.updatedAt">
@@ -31,7 +83,14 @@
 
             <h1 class="content-page-title">{{ page.title }}</h1>
 
-            <div class="content-page-body" [innerHTML]="pageContent"></div>
+            <ng-container *ngTemplateOutlet="cover; context: { $implicit: 'below-title' }"></ng-container>
+
+            <div class="content-page-body cms-rich-text" [innerHTML]="pageContent"></div>
+
+            <ng-container *ngTemplateOutlet="cover; context: { $implicit: 'below-content' }"></ng-container>
+
+            <app-content-blocks class="content-page-blocks" *ngIf="!blocksAboveContent"
+                                [blocks]="page.contentBlocks"></app-content-blocks>
 
             <div class="content-page-tags" *ngIf="page.tags?.length">
               <h5>Tags:</h5>
@@ -51,37 +110,6 @@
           </article>
         </div>
 
-        <div class="col-lg-4">
-          <div class="content-page-panel content-page-panel-sticky">
-            <app-hero-lead-form heading="Get a Free Consultation for Your Project" sourceForm="content-page"></app-hero-lead-form>
-
-            <div class="widget">
-              <h4 class="widget-title">In {{ page.category.name }}</h4>
-              <!-- Rich text, so it needs rendering, not interpolation: printing it
-                   put raw <h2>/<p> tags on screen. Clamped because this is the
-                   category's short summary slot, not somewhere an article fits. -->
-              <div class="widget-description cms-rich-text" [innerHTML]="page.category.description | richText"></div>
-              <a class="theme-btn w-100 justify-content-center" [routerLink]="['/' + page.category.slug]">
-                View All {{ page.category.name }} Guides<i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-
-            <div class="widget" *ngIf="related.length">
-              <h4 class="widget-title">Related Guides</h4>
-              <div class="related-guide-item" *ngFor="let item of related">
-                <div class="related-guide-img" *ngIf="item.coverImage?.url">
-                  <img [src]="item.coverImage!.url"
-                       [attr.width]="item.coverImage!.width || null" [attr.height]="item.coverImage!.height || null"
-                       [alt]="item.title" loading="lazy" decoding="async">
-                </div>
-                <div class="related-guide-info">
-                  <h6><a [routerLink]="['/' + page.category.slug, item.slug]">{{ item.title }}</a></h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
@@ -91,3 +119,21 @@
                    [items]="page.quickLinks.items"></app-quick-links>
 
 </ng-container>
+
+<!-- One markup block, three possible slots: the editor's coverImagePosition
+     decides which call renders it, and `hidden` renders none — the image still
+     feeds the OG tags and the listing card. -->
+<ng-template #cover let-slot>
+  <div class="content-page-img" *ngIf="isCoverAt(slot)">
+    <picture>
+      <!-- A separately uploaded mobile crop, when there is one: the landscape
+           cover loses its subject at phone widths. -->
+      <source *ngIf="page!.mobileImage?.url" media="(max-width: 767px)" [srcset]="page!.mobileImage!.url">
+      <img class="img-fluid w-100" [src]="page!.coverImage!.url"
+           [srcset]="page!.coverImage!.url | cldSrcset:'card'"
+           [attr.sizes]="'card' | cldSizes"
+           [attr.width]="page!.coverImage!.width || null" [attr.height]="page!.coverImage!.height || null"
+           [alt]="page!.title" loading="lazy" decoding="async">
+    </picture>
+  </div>
+</ng-template>

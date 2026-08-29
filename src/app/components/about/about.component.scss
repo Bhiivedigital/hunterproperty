@@ -8,7 +8,12 @@
 .ts-bg{
   background: var(--theme-color2);
 }
-::ng-deep .theme-btn{
+// A bare ::ng-deep (no :host in front of it) is emitted into the global
+// stylesheet, so this rule hid every .theme-btn on the site - including the
+// header's "Get a Quote" chip - from the moment the About page first
+// rendered, and kept it hidden on every page after it. Scope it to this
+// component's own subtree, which is all it was ever meant to cover.
+:host ::ng-deep .theme-btn {
   display: none;
 }
 

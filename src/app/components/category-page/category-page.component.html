@@ -20,36 +20,50 @@
             <span class="site-title-tagline"><i [class]="category.icon || 'far fa-helmet-safety'"></i> {{ tagline }}</span>
             <h1 class="site-title" *ngIf="pillar?.heading; else defaultHeading">{{ pillar!.heading }}</h1>
             <ng-template #defaultHeading>
-              <h1 class="site-title">{{ category.name }} <span>Guides</span></h1>
+              <h1 class="site-title">{{ category.name }} <span>Services</span></h1>
             </ng-template>
             <div class="heading-divider"></div>
           </div>
+        </div>
+      </div>
+
+      <!-- The enquiry form is first in the DOM so it is the first thing under
+           the heading on a phone, where the sidebar would otherwise sit at the
+           very bottom of a long article. From lg up the grid lifts it into the
+           right-hand column and the copy takes the wide one. -->
+      <div class="pillar-layout">
+
+        <aside class="pillar-aside">
+          <app-hero-lead-form [heading]="leadFormHeading" sourceForm="pillar-page"></app-hero-lead-form>
+        </aside>
+
+        <div class="pillar-main">
+
+          <!-- Placed above the copy, the block zone belongs to the article, so
+               it renders inside this column rather than full-bleed: an Image
+               Block set to lead the page then opens the article instead of
+               sitting under a heading of its own. -->
+          <app-content-blocks class="pillar-inline-blocks" *ngIf="blocksAboveContent"
+                              [blocks]="pillar?.contentBlocks || []"></app-content-blocks>
+
+          <ng-container *ngTemplateOutlet="featured; context: { $implicit: 'top' }"></ng-container>
+
           <div class="pillar-intro cms-rich-text" *ngIf="introHtml" [innerHTML]="introHtml"></div>
-        </div>
-      </div>
 
-      <div class="row" *ngIf="pillar?.featuredImage?.url">
-        <div class="col-lg-10 mx-auto">
-          <figure class="pillar-featured">
-            <img class="img-fluid" [src]="pillar!.featuredImage!.url"
-                 [srcset]="pillar!.featuredImage!.url | cldSrcset:'content'"
-                 [attr.sizes]="'content' | cldSizes"
-                 [attr.width]="pillar!.featuredImage!.width || null"
-                 [attr.height]="pillar!.featuredImage!.height || null"
-                 [alt]="pillar!.heading || category.name" decoding="async">
-          </figure>
-        </div>
-      </div>
+          <ng-container *ngTemplateOutlet="featured; context: { $implicit: 'below-intro' }"></ng-container>
 
-      <div class="row" *ngIf="contentHtml">
-        <div class="col-lg-10 mx-auto">
-          <div class="pillar-content cms-rich-text" [innerHTML]="contentHtml"></div>
+          <div class="pillar-content cms-rich-text" *ngIf="contentHtml" [innerHTML]="contentHtml"></div>
+
+          <ng-container *ngTemplateOutlet="featured; context: { $implicit: 'below-content' }"></ng-container>
+
         </div>
+
       </div>
     </div>
 
-    <!-- The pillar page's own body: sections, images, banners, accordions, FAQs. -->
-    <app-content-blocks [blocks]="pillar?.contentBlocks || []"></app-content-blocks>
+    <!-- The pillar page's own body: sections, images, banners, accordions, FAQs.
+         Below the copy they are page-level sections, so they run full width. -->
+    <app-content-blocks *ngIf="!blocksAboveContent" [blocks]="pillar?.contentBlocks || []"></app-content-blocks>
 
     <!-- Editor-curated links, above the auto-generated child list. -->
     <app-quick-links *ngIf="curatedLinks"
@@ -60,7 +74,7 @@
 
     <div class="container">
       <p class="text-center pillar-empty" *ngIf="showChildGuides && pages.length === 0">
-        More {{ category.name }} guides are on the way.
+        More {{ category.name }} Services are on the way.
       </p>
 
       <div class="text-center pillar-more" *ngIf="showChildGuides && hasMore">
@@ -86,3 +100,16 @@
   </div>
 
 </ng-container>
+
+<!-- One markup block, three possible slots: the editor's featuredImagePosition
+     decides which call renders it. -->
+<ng-template #featured let-slot>
+  <figure class="pillar-featured" *ngIf="isFeaturedAt(slot)">
+    <img class="img-fluid" [src]="pillar!.featuredImage!.url"
+         [srcset]="pillar!.featuredImage!.url | cldSrcset:'content'"
+         [attr.sizes]="'content' | cldSizes"
+         [attr.width]="pillar!.featuredImage!.width || null"
+         [attr.height]="pillar!.featuredImage!.height || null"
+         [alt]="pillar!.heading || category!.name" decoding="async">
+  </figure>
+</ng-template>

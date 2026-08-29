@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map, shareReplay } from 'rxjs/operators';
 import {
+  CoverImagePosition,
   MenuCategory,
   PagedResult,
   Seo,
@@ -10,17 +11,41 @@ import {
   ServiceContentPage,
   ServiceContentPageSummary
 } from '../models/service-content.model';
+import { ContentBlocksPosition } from '../models/pillar-page.model';
+import { ContentBlockMapperService } from './content-block-mapper.service';
 import { StrapiCollectionResponse, StrapiService } from './strapi.service';
+
+/**
+ * Every media field a content page's dynamic zone can hang an image off. A
+ * dynamic zone returns bare component data unless each component is named, so
+ * an Image Block an editor placed mid-article comes back with no `image` at
+ * all when this is missing — which is why those blocks rendered as nothing.
+ */
+const CONTENT_BLOCK_POPULATE: Record<string, string> = {
+  'populate[contentBlocks][on][blocks.content-section][populate][image]': 'true',
+  'populate[contentBlocks][on][blocks.image-block][populate][image]': 'true',
+  'populate[contentBlocks][on][blocks.banner][populate][image]': 'true',
+  'populate[contentBlocks][on][blocks.video-section][populate][thumbnail]': 'true',
+  'populate[contentBlocks][on][blocks.quick-links][populate][items]': 'true',
+  'populate[contentBlocks][on][blocks.accordion][populate][items]': 'true',
+  'populate[contentBlocks][on][blocks.faqs][populate][items]': 'true'
+};
 
 const CATEGORY_ENDPOINT = 'service-content-categories';
 const PAGE_ENDPOINT = 'service-content-pages';
+
+const COVER_IMAGE_POSITIONS: CoverImagePosition[] = ['top', 'below-title', 'below-content', 'hidden'];
+const CONTENT_BLOCKS_POSITIONS: ContentBlocksPosition[] = ['below-content', 'above-content'];
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceContentService {
 
-  constructor(private strapi: StrapiService) {}
+  constructor(
+    private strapi: StrapiService,
+    private blocks: ContentBlockMapperService
+  ) {}
 
   // Same rationale as HomeContentService.fetch — categories/menu/featured
   // guides are requested repeatedly (header mega-menu, every category page,
@@ -109,7 +134,7 @@ export class ServiceContentService {
   }
 
   getContentPageByCategoryAndSlug(categorySlug: string, contentSlug: string): Observable<ServiceContentPage | undefined> {
-    const params: Record<string, string> = {
+    const baseParams: Record<string, string> = {
       'filters[category][slug][$eq]': categorySlug,
       'filters[slug][$eq]': contentSlug,
       'populate[category]': 'true',
@@ -117,8 +142,22 @@ export class ServiceContentService {
       'populate[quickLinks][populate][0]': 'items',
       'populate[seo][populate][0]': 'ogImage'
     };
+    const params: Record<string, string> = {
+      ...baseParams,
+      'populate[image]': 'true',
+      'populate[mobileImage]': 'true',
+      'populate[topLevelImages]': 'true',
+      ...CONTENT_BLOCK_POPULATE
+    };
+    // Same guard as getCategoryBySlug: Strapi answers 400 for the whole query
+    // if the running CMS predates any key named here, which would blank the
+    // article rather than just its blocks. Retry with the fields that have
+    // always existed so a front-end deploy can land ahead of the CMS one.
     return this.fetchCollection<any>(PAGE_ENDPOINT, params)
-      .pipe(map(res => res.data[0] ? this.toPage(res.data[0]) : undefined));
+      .pipe(
+        catchError(() => this.fetchCollection<any>(PAGE_ENDPOINT, baseParams)),
+        map(res => res.data[0] ? this.toPage(res.data[0]) : undefined)
+      );
   }
 
   getRelatedContentPages(categorySlug: string, excludeSlug: string, limit = 3): Observable<ServiceContentPageSummary[]> {
@@ -194,8 +233,22 @@ export class ServiceContentService {
   }
 
   private toPage(p: any): ServiceContentPage {
+    const summary = this.toPageSummary(p);
     return {
-      ...this.toPageSummary(p),
+      ...summary,
+      // `image` is the second single-image field on the content type. Editors
+      // have been filling either one, so treat it as an alternative cover
+      // rather than leaving whichever they picked unrendered.
+      coverImage: summary.coverImage?.url ? summary.coverImage : this.strapi.mediaObj(p.image, 'card'),
+      mobileImage: this.strapi.mediaObj(p.mobileImage, 'card'),
+      topLevelImages: this.strapi.mediaObjs(p.topLevelImages, 'card'),
+      coverImagePosition: COVER_IMAGE_POSITIONS.includes(p.coverImagePosition) ? p.coverImagePosition : 'top',
+      contentBlocks: this.blocks.toBlocks(p.contentBlocks),
+      // Same default as the pillar page: with no position stored, the zone
+      // opens the article rather than trailing it.
+      contentBlocksPosition: CONTENT_BLOCKS_POSITIONS.includes(p.contentBlocksPosition)
+        ? p.contentBlocksPosition
+        : 'above-content',
       content: p.content,
       category: this.toCategory(p.category),
       tags: p.tags ?? [],

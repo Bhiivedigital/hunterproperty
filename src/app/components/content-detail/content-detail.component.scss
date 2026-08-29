@@ -1,6 +1,120 @@
+// One grid, two reading orders. On a phone the form comes straight after the
+// breadcrumb, then the article, then the sidebar widgets — the wrapper is
+// display:contents there, so its two children take part in the page grid
+// directly and `order` can interleave them around the article between them.
+// From lg up the wrapper becomes a real column again: form and widgets stack
+// inside it with one 30px gap and travel together as a single sticky panel.
+//
+// The panel has to be one element for that. As three separate grid items the
+// widgets were pinned to their own grid row, and the row had to grow to the
+// height of the article beside it — which is what spread the form and the
+// "In <category>" box a screen apart.
+.content-page-layout {
+  display: grid;
+  gap: 30px;
+}
+
+.content-page-side {
+  display: contents;
+}
+
+.content-page-form {
+  order: 1;
+}
+
+.content-page-main {
+  order: 2;
+}
+
+.content-page-widgets {
+  order: 3;
+}
+
+.content-page-form app-hero-lead-form {
+  display: block;
+}
+
+@media (min-width: 992px) {
+  .content-page-layout {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    align-items: start;
+    column-gap: 30px;
+    row-gap: 30px;
+  }
+
+  .content-page-main {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .content-page-side {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    grid-column: 2;
+    grid-row: 1;
+    // Pinned while the article scrolls past it, and never a scrollbox of its
+    // own — capping the height just clipped the last widget behind an inner
+    // scrollbar. A panel taller than the viewport instead gets a negative top
+    // measured in content-detail.component.ts, which lines its *bottom* up
+    // with the bottom of the screen: it rides up with the page far enough to
+    // bring the last widget into view, then stays put for the rest of the
+    // article. A panel that already fits keeps the header offset below.
+    position: sticky;
+    top: var(--content-side-top, 100px);
+  }
+}
+
 .content-page-img img {
   border-radius: 15px;
   margin-bottom: 25px;
+}
+
+// An editor-supplied set of images above the article. Two up on a phone, three
+// from tablet, so a page with one image doesn't get a full-bleed banner it
+// wasn't given as one.
+.content-page-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+
+  figure {
+    margin: 0;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  .content-page-gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+// The blocks component pads and wraps each block in its own .container; inside
+// the article column that would add a second gutter and a max-width of its
+// own, so unwind both.
+.content-page-blocks {
+  display: block;
+
+  ::ng-deep {
+    .cms-block {
+      padding: 30px 0 0;
+    }
+
+    .cms-block .container {
+      width: 100%;
+      max-width: none;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
 
 .content-page-meta {
@@ -100,17 +214,7 @@
   background: var(--smoke-color, #f6f6f6);
 }
 
-.content-page-panel-sticky {
-  position: sticky;
-  top: 100px;
-
-  app-hero-lead-form {
-    display: block;
-    margin-bottom: 30px;
-  }
-}
-
-.content-page-panel .widget {
+.content-page-widgets .widget {
   background: var(--theme-color-light, #f6f8fb);
   padding: 30px;
   margin-bottom: 30px;
@@ -121,7 +225,7 @@
   }
 }
 
-.content-page-panel .widget .widget-title {
+.content-page-widgets .widget .widget-title {
   padding-bottom: 10px;
   margin-bottom: 20px;
   position: relative;
