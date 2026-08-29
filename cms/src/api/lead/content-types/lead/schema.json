@@ -32,7 +32,7 @@
     },
     "sourceForm": {
       "type": "enumeration",
-      "enum": ["contactus", "requestquote", "pricing", "hero-lead-form", "lead-popup", "content-page"]
+      "enum": ["contactus", "requestquote", "pricing", "hero-lead-form", "lead-popup", "content-page", "pillar-page"]
     },
     "status": {
       "type": "enumeration",

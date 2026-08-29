@@ -30,7 +30,19 @@
     "coverImage": {
       "type": "media",
       "multiple": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "coverImagePosition": {
+      "type": "enumeration",
+      "enum": [
+        "top",
+        "below-title",
+        "below-content",
+        "hidden"
+      ],
+      "default": "top"
     },
     "category": {
       "type": "relation",
@@ -58,16 +70,45 @@
       "component": "shared.seo",
       "repeatable": false
     },
-    "breadcrumbs": { "type": "component", "component": "shared.link-item", "repeatable": true },
-    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
-    "mobileImage": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
-    "topLevelImages": { "type": "media", "multiple": true, "allowedTypes": ["images"] },
-    "getQuoteButtonText": { "type": "string" },
-    "quickLinks": { "type": "component", "component": "blocks.quick-links", "repeatable": false },
+    "breadcrumbs": {
+      "type": "component",
+      "component": "shared.link-item",
+      "repeatable": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "mobileImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "topLevelImages": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "getQuoteButtonText": {
+      "type": "string"
+    },
+    "quickLinks": {
+      "type": "component",
+      "component": "blocks.quick-links",
+      "repeatable": false
+    },
     "contentBlocks": {
       "type": "dynamiczone",
       "components": [
         "blocks.content-section",
+        "blocks.image-block",
         "blocks.banner",
         "blocks.quick-links",
         "blocks.accordion",
@@ -75,6 +116,14 @@
         "blocks.video-section",
         "blocks.scripts"
       ]
+    },
+    "contentBlocksPosition": {
+      "type": "enumeration",
+      "enum": [
+        "below-content",
+        "above-content"
+      ],
+      "default": "above-content"
     }
   }
 }

@@ -1,0 +1,125 @@
+<!-- ============================================================
+     Hunter Property — Website Lead notification
+     Paste this into: EmailJS -> Email Templates -> Content -> </> Edit as HTML
+     Variables used: fullName, Phno, email, location, service, message,
+                     sourceForm, pageUrl
+     ============================================================ -->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f1f1f1;margin:0;padding:24px 12px;font-family:Arial,Helvetica,sans-serif;">
+  <tr>
+    <td align="center">
+
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;max-width:600px;background-color:#ffffff;border-radius:10px;overflow:hidden;border:1px solid #e4e4e4;">
+
+        <!-- Header -->
+        <tr>
+          <td align="center" style="background-color:#0a2155;padding:26px 24px;">
+            <img src="https://www.hunterproperty.in/assets/img/logo/logo-light.png"
+                 alt="Hunter Property" width="190" height="62"
+                 style="display:block;border:0;outline:none;text-decoration:none;width:190px;height:62px;" />
+          </td>
+        </tr>
+
+        <!-- Orange rule -->
+        <tr><td style="background-color:#fc8c03;font-size:0;line-height:0;height:4px;">&nbsp;</td></tr>
+
+        <!-- Title -->
+        <tr>
+          <td style="padding:28px 32px 8px 32px;">
+            <p style="margin:0 0 6px 0;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#fc8c03;font-weight:bold;">
+              New Website Enquiry
+            </p>
+            <h1 style="margin:0;font-size:23px;line-height:30px;color:#0a2155;font-weight:bold;">
+              {{fullName}}
+            </h1>
+            <p style="margin:8px 0 0 0;font-size:14px;line-height:20px;color:#6b7280;">
+              Submitted via the <strong style="color:#0a2155;">{{sourceForm}}</strong> form on hunterproperty.in
+            </p>
+          </td>
+        </tr>
+
+        <!-- Call-now button -->
+        <tr>
+          <td style="padding:20px 32px 4px 32px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="background-color:#fc8c03;border-radius:6px;">
+                  <a href="tel:{{Phno}}"
+                     style="display:inline-block;padding:13px 30px;font-size:16px;font-weight:bold;color:#ffffff;text-decoration:none;">
+                    Call {{Phno}}
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Detail table -->
+        <tr>
+          <td style="padding:24px 32px 8px 32px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;">
+
+              <tr>
+                <td width="130" style="padding:11px 0;border-bottom:1px solid #eeeeee;font-size:13px;color:#8a94a6;text-transform:uppercase;letter-spacing:.5px;vertical-align:top;">Name</td>
+                <td style="padding:11px 0;border-bottom:1px solid #eeeeee;font-size:15px;color:#1a1a1a;font-weight:bold;">{{fullName}}</td>
+              </tr>
+              <tr>
+                <td style="padding:11px 0;border-bottom:1px solid #eeeeee;font-size:13px;color:#8a94a6;text-transform:uppercase;letter-spacing:.5px;vertical-align:top;">Phone</td>
+                <td style="padding:11px 0;border-bottom:1px solid #eeeeee;font-size:15px;color:#1a1a1a;font-weight:bold;">
+                  <a href="tel:{{Phno}}" style="color:#0a2155;text-decoration:none;">{{Phno}}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:11px 0;border-bottom:1px solid #eeeeee;font-size:13px;color:#8a94a6;text-transform:uppercase;letter-spacing:.5px;vertical-align:top;">Email</td>
+                <td style="padding:11px 0;border-bottom:1px solid #eeeeee;font-size:15px;color:#1a1a1a;">{{email}}</td>
+              </tr>
+              <tr>
+                <td style="padding:11px 0;border-bottom:1px solid #eeeeee;font-size:13px;color:#8a94a6;text-transform:uppercase;letter-spacing:.5px;vertical-align:top;">Location</td>
+                <td style="padding:11px 0;border-bottom:1px solid #eeeeee;font-size:15px;color:#1a1a1a;">{{location}}</td>
+              </tr>
+              <tr>
+                <td style="padding:11px 0;border-bottom:1px solid #eeeeee;font-size:13px;color:#8a94a6;text-transform:uppercase;letter-spacing:.5px;vertical-align:top;">Service</td>
+                <td style="padding:11px 0;border-bottom:1px solid #eeeeee;font-size:15px;color:#1a1a1a;">{{service}}</td>
+              </tr>
+              <tr>
+                <td style="padding:11px 0;font-size:13px;color:#8a94a6;text-transform:uppercase;letter-spacing:.5px;vertical-align:top;">Message</td>
+                <td style="padding:11px 0;font-size:15px;color:#1a1a1a;line-height:22px;">{{message}}</td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+
+        <!-- Source page -->
+        <tr>
+          <td style="padding:8px 32px 28px 32px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;background-color:#f7f8fa;border-left:3px solid #fc8c03;border-radius:4px;">
+              <tr>
+                <td style="padding:14px 16px;font-size:13px;line-height:19px;color:#6b7280;">
+                  Submitted from<br />
+                  <a href="{{pageUrl}}" style="color:#0a2155;text-decoration:underline;word-break:break-all;">{{pageUrl}}</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td align="center" style="background-color:#0a2155;padding:22px 24px;">
+            <p style="margin:0 0 6px 0;font-size:14px;color:#ffffff;font-weight:bold;">Hunter Property</p>
+            <p style="margin:0;font-size:12px;line-height:19px;color:#a9b4cc;">
+              Chennai&rsquo;s trusted construction partner<br />
+              <a href="https://www.hunterproperty.in" style="color:#fc8c03;text-decoration:none;">www.hunterproperty.in</a>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+
+      <p style="margin:16px 0 0 0;font-size:11px;color:#9aa0ab;">
+        Automated notification from the Hunter Property website.
+      </p>
+
+    </td>
+  </tr>
+</table>

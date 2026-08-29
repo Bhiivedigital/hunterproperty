@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hunter Property — 30 Day Work Report</title>
+<style>
+  :root {
+    --ink: #10203f;
+    --body: #3d4a63;
+    --muted: #6b7890;
+    --line: #e2e7f0;
+    --bg: #ffffff;
+    --panel: #f6f8fc;
+    --accent: #FC8C03;
+    --navy: #0A2155;
+    --good: #1a7f5a;
+    --warn: #a8620a;
+    --bad: #b3261e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--body);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px 90px; }
+
+  header.top {
+    border-bottom: 3px solid var(--accent);
+    padding: 46px 0 26px;
+    margin-bottom: 34px;
+  }
+  header.top .eyebrow {
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 10px;
+  }
+  header.top h1 { margin: 0 0 8px; font-size: 34px; line-height: 1.15; color: var(--ink); letter-spacing: -.02em; }
+  header.top .sub { color: var(--muted); font-size: 15px; }
+
+  h2 {
+    font-size: 23px; color: var(--ink); margin: 52px 0 6px;
+    padding-bottom: 9px; border-bottom: 1px solid var(--line); letter-spacing: -.01em;
+  }
+  h3 { font-size: 17px; color: var(--ink); margin: 30px 0 8px; }
+  h4 { font-size: 15px; color: var(--ink); margin: 22px 0 6px; }
+  p { margin: 0 0 14px; }
+  ul, ol { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 4px; padding: 1px 5px; color: var(--navy);
+  }
+  a { color: #1450b4; }
+
+  .lede {
+    background: var(--panel); border-left: 4px solid var(--accent);
+    padding: 18px 22px; border-radius: 0 8px 8px 0; margin-bottom: 8px;
+  }
+  .lede p:last-child { margin-bottom: 0; }
+
+  table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 14.5px; }
+  th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--panel); color: var(--ink); font-weight: 600; }
+  td.num { white-space: nowrap; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; }
+  .scroll { overflow-x: auto; }
+
+  .pill {
+    display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase; padding: 2px 9px; border-radius: 20px; white-space: nowrap;
+  }
+  .pill.done { background: #e3f5ec; color: var(--good); }
+  .pill.pending { background: #fdf0dd; color: var(--warn); }
+  .pill.bug { background: #fdeceb; color: var(--bad); }
+
+  figure { margin: 20px 0 26px; }
+  figure img {
+    width: 100%; height: auto; display: block;
+    border: 1px solid var(--line); border-radius: 8px;
+  }
+  figcaption { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .shots figure { margin: 0; }
+  .tall img { max-height: 560px; object-fit: cover; object-position: top; }
+  @media (max-width: 720px) { .shots { grid-template-columns: 1fr; } }
+
+  .timeline { border-left: 2px solid var(--line); margin: 20px 0 26px; padding-left: 0; list-style: none; }
+  .timeline li { position: relative; padding: 0 0 22px 26px; margin: 0; }
+  .timeline li::before {
+    content: ''; position: absolute; left: -7px; top: 7px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--accent); border: 2px solid #fff;
+  }
+  .timeline .date { font-size: 12.5px; font-weight: 700; color: var(--accent); letter-spacing: .04em; }
+  .timeline .what { color: var(--ink); font-weight: 600; }
+
+  .note {
+    border: 1px solid var(--line); border-radius: 8px;
+    padding: 16px 20px; margin: 20px 0; background: #fff;
+  }
+  .note.warn { border-color: #f0d09a; background: #fffbf4; }
+  .note.bad { border-color: #f2c4c0; background: #fff6f5; }
+  .note strong:first-child { color: var(--ink); }
+  .note p:last-child { margin-bottom: 0; }
+
+  footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Hunter Property · hunterproperty.in</div>
+  <h1>Development &amp; Deployment Report</h1>
+  <div class="sub">Work covering 11–29 August 2026 &middot; compiled 29 August 2026</div>
+</header>
+
+<div class="lede">
+  <p>Over this period the site moved from a static Angular template to a fully CMS-driven
+  website. A Strapi backend was built from scratch, media moved to Cloudinary, the CMS
+  moved off Render's free tier onto a dedicated VPS, and a Pillar Page content model was
+  added so category landing pages can be written like articles.</p>
+  <p><strong>21 code commits, 11 pull requests, 3 hosting changes.</strong> Every figure and
+  status in this report was verified directly against the live site, the live API or the
+  server on 29 August — nothing here is assumed.</p>
+</div>
+
+<h2>1. Where everything stands right now</h2>
+
+<div class="scroll">
+<table>
+  <tr><th>Component</th><th>Where it runs</th><th>State</th></tr>
+  <tr>
+    <td><strong>Website</strong></td>
+    <td>Hostinger (static Angular build)</td>
+    <td><span class="pill done">Live</span> serving <code>main-YBPEMJJG.js</code></td>
+  </tr>
+  <tr>
+    <td><strong>Strapi CMS</strong></td>
+    <td>VPS <code>93.127.167.102</code> → <code>cms.hunterproperty.in</code></td>
+    <td><span class="pill done">Live</span> pm2 <code>strapi</code>, commit <code>59e753e</code></td>
+  </tr>
+  <tr>
+    <td><strong>Database</strong></td>
+    <td>PostgreSQL on the same VPS</td>
+    <td><span class="pill done">Live</span> all pillar-page tables present</td>
+  </tr>
+  <tr>
+    <td><strong>Media / images</strong></td>
+    <td>Cloudinary CDN</td>
+    <td><span class="pill done">Live</span> transform URLs applied</td>
+  </tr>
+  <tr>
+    <td><strong>Service-page blocks, placement options, EmailJS leads</strong></td>
+    <td>Committed <code>16aed4c</code>, PR #11</td>
+    <td><span class="pill pending">Awaiting merge</span> then a VPS rebuild</td>
+  </tr>
+</table>
+</div>
+
+<p>A second Strapi instance, <strong>bhiive-cms</strong>, shares the same VPS on port 1338. It was
+left untouched throughout — verified before and after every restart (pid <code>18862</code>,
+restart count unchanged at 2, <code>cms.bhiive.com</code> responding 200).</p>
+
+<h2>2. Timeline</h2>
+
+<ul class="timeline">
+  <li>
+    <div class="date">11 AUGUST</div>
+    <div class="what">Baseline</div>
+    Three template branches merged into <code>hunterproperty_v1</code> (PRs #1–#3). Static
+    Angular site, all content hard-coded in templates.
+  </li>
+  <li>
+    <div class="date">16 AUGUST</div>
+    <div class="what">Strapi CMS introduced</div>
+    Strapi 5.52 backend added — 113 files, ~25,000 lines. Content types for the homepage,
+    about, services, portfolio, legal pages, guides and lead capture. Build artefacts and
+    caches removed from git tracking (332 files, −85,000 lines). Production build pointed at
+    <code>hunterproperty.onrender.com</code>.
+  </li>
+  <li>
+    <div class="date">17–18 AUGUST</div>
+    <div class="what">Render free tier problems</div>
+    Render's free tier spins down after ~15 minutes idle, cold-starting in 30–60s — the first
+    page load after a quiet period appeared to hang. A scheduled GitHub Action was added to
+    ping the instance awake, then removed a day later as the wrong fix.
+  </li>
+  <li>
+    <div class="date">19 AUGUST</div>
+    <div class="what">Media, mobile and hosting fixes — the busiest day</div>
+    Image fields moved into Strapi's Media Library and text fields upgraded to rich text (42
+    files). Uploads moved to Cloudinary for persistent storage, followed by a crash fix for a
+    missing <code>uploadStream</code> option. Mobile services menu simplified, lazy loading
+    added, 86 image assets optimised. SPA fallback <code>.htaccess</code> added for Hostinger.
+    Preloader rewritten to track real image loads instead of a fixed timeout.
+  </li>
+  <li>
+    <div class="date">20–23 AUGUST</div>
+    <div class="what">Performance</div>
+    CMS content types extended (91 files). Image handling and response caching added to
+    <code>ServiceContentService</code>. A loading service and HTTP interceptor introduced so
+    the UI reflects real request state.
+  </li>
+  <li>
+    <div class="date">27 AUGUST</div>
+    <div class="what">Off Render, onto the VPS</div>
+    Production API switched from <code>hunterproperty.onrender.com</code> to
+    <code>cms.hunterproperty.in</code> on the VPS — no more cold starts. Image formats and
+    <code>index.html</code> tuned for performance. A full image/Strapi performance audit was
+    written up (<code>IMAGE_STRAPI_PERFORMANCE_AUDIT.md</code>).
+  </li>
+  <li>
+    <div class="date">28 AUGUST</div>
+    <div class="what">Category pages become pillar pages</div>
+    Quick Links blocks rendered for the first time. Category pages switched from image cards
+    to crawlable text link grids, page size raised 9 → 100.
+  </li>
+  <li>
+    <div class="date">29 AUGUST</div>
+    <div class="what">Pillar Pages as their own content type, then bug fixes</div>
+    PR #9 and PR #10 — detailed in sections 3 and 4 below. Both deployed to the VPS and to
+    Hostinger the same day, and confirmed working in production. PR #11 raised in the evening
+    with the service-page block work described in section 8.
+  </li>
+</ul>
+
+<h2>3. Pillar Pages (PR #9)</h2>
+
+<p>Category landing pages could only ever show what the Service Content Category record held,
+and that content type carries a single <code>description</code> field. Anything longer — sections,
+an accordion, an image between two paragraphs — had nowhere to live, and editing the little that
+existed meant opening the taxonomy record every other page depends on.</p>
+
+<h3>What was added</h3>
+
+<p><strong>A new Pillar Page collection type</strong>, one record per category, linked by relation.
+It owns the landing page outright: tagline, H1 heading, intro, hero image, a dynamic zone of
+blocks, curated links, CTA copy and its own SEO component. Service Content Category was left
+exactly as it was, so the mega-menu, breadcrumbs and cards are unaffected — and a category with
+no pillar page still renders as before.</p>
+
+<p><strong>Blocks an editor can assemble:</strong> Content Section, Image Block, Banner, Quick
+Links, Accordion, FAQs, Video Section. Two new CMS components were created —
+<code>blocks.image-block</code> (image, alt text, caption, content/full width) and an
+<code>imagePosition</code> option on <code>blocks.content-section</code>.</p>
+
+<h3>Three separate fixes so images actually survive the trip</h3>
+
+<ol>
+  <li><strong>Server-side deep populate.</strong> Nested media inside a dynamic zone only comes
+  back if every component is named in the populate query — something the front end would have to
+  keep in lockstep with the schema, and which Strapi rejects with a 400 the moment the two drift
+  apart. The pillar-page controller now populates server-side, so images cannot go missing
+  because a caller forgot a key.</li>
+  <li><strong>Markdown images promoted to real images.</strong> Strapi's rich-text editor writes
+  markdown for anything inserted from the media library while typed content stays HTML. An
+  <code>[innerHTML]</code> binding rendered that markdown half as literal text — an editor dropped
+  in an image and saw <code>![](…jpg)</code> on the live site. A new rich-text service promotes it
+  to a real <code>&lt;img&gt;</code>, resolves upload paths against the CMS, applies the Cloudinary
+  width transform and lazy-loads it. Guide pages use the same service.</li>
+  <li><strong>Styling reach.</strong> Rich text is injected outside Angular's style encapsulation,
+  so constraining editor images to their column needed <code>::ng-deep</code> rules — without them
+  an upload renders at its natural width and overflows.</li>
+</ol>
+
+<h2>4. Bugs found and fixed (PR #10)</h2>
+
+<div class="note bad">
+  <p><strong>Blocks never rendered at all.</strong> An image placed in an Image Block did not
+  appear on the page. The cause was in the front end, not Strapi: <code>trackBlock</code> was
+  passed to <code>*ngFor</code> as a <code>trackBy</code> function, and Angular calls trackBy
+  functions <em>unbound</em>. The body referenced <code>this.blockKey(block)</code>, so it threw
+  <code>TypeError: this.blockKey is not a function</code> on every change-detection pass and the
+  entire loop rendered nothing.</p>
+  <p>This affected <strong>every</strong> block type, not just images — no block of any kind would
+  ever have appeared. It was diagnosed by driving a real browser over the DevTools Protocol against
+  the live site: the API response contained the block all along, the component element existed but
+  was empty, and the console was full of that error.</p>
+</div>
+
+<div class="note bad">
+  <p><strong>Raw HTML tags shown to visitors.</strong> The "In &lt;category&gt;" sidebar on guide
+  pages printed the category description using text interpolation. Because that field is rich
+  text, visitors saw literal <code>&lt;h2&gt;</code> and <code>&lt;p&gt;</code> tags on screen. It
+  now renders as HTML and is height-capped so an over-long description cannot push the rest of the
+  sidebar off screen.</p>
+</div>
+
+<div class="note">
+  <p><strong>Description and body copy were sharing one field.</strong> The category description
+  is what the mega-menu, cards and that sidebar display. The pillar page fell back to it whenever
+  its own intro was empty — which is how an entire article ended up inside a field meant for one
+  sentence. A pillar page now owns its copy: <code>intro</code> for the lead, a new
+  <code>content</code> field for the body. Only a category with no pillar page still falls back.</p>
+  <p>Also added <code>featuredImage</code>, rendered below the title in the flow of the page,
+  distinct from <code>heroImage</code> which sits behind the breadcrumb.</p>
+</div>
+
+<div class="note">
+  <p><strong>Body text was too light.</strong> Copy on pillar pages and inside blocks used
+  <code>--body-text-color</code> (<code>#757F95</code>), the muted grey the global <code>body</code>
+  rule sets. At article length it read as washed out. It now uses <code>--color-dark</code>
+  (<code>#0A2155</code>), confirmed live as <code>rgb(10, 33, 85)</code>.</p>
+</div>
+
+<h3>Verified in production</h3>
+<p>Checked against <code>hunterproperty.in</code> on 29 August after deployment: the image block
+section renders, its image loads at 762×507, intro colour is <code>rgb(10, 33, 85)</code>, and
+there are zero console errors.</p>
+
+<figure>
+  <img src="assets/05-imageblock-fixed.jpg" alt="Image block rendering on the pillar page">
+  <figcaption><strong>The fix, working.</strong> The Image Block an editor added in Strapi, now
+  rendering on the Home Construction pillar page. Before the trackBy fix this area was empty.</figcaption>
+</figure>
+
+<div class="shots">
+  <figure>
+    <img src="assets/03-sidebar-live.jpg" alt="Guide page sidebar rendering description as HTML">
+    <figcaption><strong>Sidebar, fixed.</strong> The category description renders as formatted
+    HTML and is height-capped. Previously this showed raw <code>&lt;h2&gt;</code> and
+    <code>&lt;p&gt;</code> tags as visible text.</figcaption>
+  </figure>
+  <figure>
+    <img src="assets/04-sidebar-newbuild.jpg" alt="Sidebar in the pending build">
+    <figcaption><strong>Same panel in the pending build,</strong> which also renames "Guides" to
+    "Services" and restructures the sidebar into a sticky panel.</figcaption>
+  </figure>
+</div>
+
+<h2>5. Interface &amp; front-end work in detail</h2>
+
+<p>Much of this landed inside larger commits, so it does not show up as its own line in the
+commit list. Grouped by what a visitor actually sees.</p>
+
+<h3>Navigation &amp; header</h3>
+<ul>
+  <li><strong>Services mega-menu driven by the CMS</strong> — categories and their menu-flagged
+  child pages are pulled in a single request and rendered as a multi-column grid, with a
+  "view all" link per column. Adding a category in Strapi adds it to the menu.</li>
+  <li><strong>Desktop and mobile behave differently on purpose</strong> — hover opens the panel on
+  desktop; on mobile it is tap-to-toggle, with separate open/close handlers for each.</li>
+  <li><strong>Mobile menu simplified</strong> (19 Aug) — category headings stopped being accordion
+  toggles and became direct links to the pillar page, and the long child lists are hidden below
+  <code>lg</code>. Two taps to reach a page became one.</li>
+  <li><strong>Header-top contact bar shown on mobile</strong> (19 Aug) — phone, email and hours
+  were desktop-only.</li>
+  <li><strong>Social icon row hidden on mobile</strong> (19 Aug) — it was wrapping onto a second
+  line and pushing the header taller.</li>
+  <li><strong>Sticky header on scroll</strong>, with the header's real height measured at runtime
+  so the page content is offset correctly instead of hiding under it.</li>
+  <li><strong>"Get A Quote" opens the lead popup</strong> rather than navigating away.</li>
+  <li><strong>Floating WhatsApp, call and back-to-top buttons.</strong></li>
+</ul>
+
+<h3>Homepage hero</h3>
+<ul>
+  <li><strong>Slides moved into the CMS</strong> — heading, copy, CTA and background image are all
+  editable; the carousel renders whatever Strapi returns.</li>
+  <li><strong>Responsive images</strong> (21 Aug) — each slide gained a Cloudinary
+  <code>srcset</code>/<code>sizes</code> and real <code>width</code>/<code>height</code>
+  attributes, so the browser picks an appropriately sized file and the layout stops shifting as
+  it loads.</li>
+  <li><strong>First slide prioritised</strong> — <code>fetchpriority="high"</code> on slide one,
+  <code>decoding="async"</code> on the rest.</li>
+  <li><strong>LCP preload injected at runtime</strong> (27 Aug) — the browser's preload scanner
+  cannot discover an image that is not in the HTML yet, and on a client-rendered app the hero URL
+  only exists after the API responds. A preload link is now injected the moment it does, matching
+  exactly what Angular goes on to render.</li>
+  <li>Accessible label added to the hero CTA.</li>
+</ul>
+
+<h3>Lead capture</h3>
+<ul>
+  <li><strong>Introduced 16 August</strong> alongside the CMS — a reusable hero lead form, a
+  popup, and a lead service writing to a Strapi <code>leads</code> collection.</li>
+  <li><strong>Six entry points</strong>, all sharing one service: the homepage hero form, the
+  "Get A Quote" popup, the pricing section, the request-a-quote section, the contact page, and the
+  sidebar on every guide/service page. Each tags its own source so enquiries can be attributed.</li>
+  <li><strong>Email delivery added 29 August</strong> (in the pending work) — a lead is now both
+  stored in Strapi and sent on by email through EmailJS using a shared template, so an enquiry no
+  longer sits unseen in the admin.</li>
+  <li>Consent checkbox on the forms.</li>
+</ul>
+
+<h3>Loading &amp; perceived speed</h3>
+<ul>
+  <li><strong>Preloader tied to real image loads</strong> (19 Aug) — it previously ran on a fixed
+  timeout, so it either hid content that was ready or vanished before the page was. It now watches
+  actual image loads, including images added later as CMS sections render, and
+  <strong>skips lazy-loaded images</strong> (20 Aug) which would otherwise never resolve and hold
+  the preloader open.</li>
+  <li><strong>Loading service and HTTP interceptor</strong> (23 Aug) — every request increments a
+  shared counter, so the UI reflects real network state.</li>
+  <li><strong>Response caching</strong> (21 Aug) — categories, menus and featured guides are
+  requested repeatedly across the header, homepage and every category page; they are now fetched
+  once and shared.</li>
+</ul>
+
+<h3>Page-level work</h3>
+<ul>
+  <li><strong>Every homepage section moved into the CMS</strong> — banner, about, features,
+  services, skills, stats, team, testimonials, FAQ, portfolio, logo slider and working process.</li>
+  <li><strong>About, services, service detail, portfolio and contact pages</strong> all converted
+  from hard-coded markup to CMS content.</li>
+  <li><strong>Legal pages</strong> (privacy policy, terms) made editable.</li>
+  <li><strong>Featured guides block</strong> on the homepage.</li>
+  <li><strong>SPA fallback</strong> <code>.htaccess</code> for Hostinger (19 Aug), so deep links
+  like <code>/home-construction/</code> resolve instead of 404ing.</li>
+  <li><strong>86 image assets optimised</strong> and WebP versions generated (19 Aug).</li>
+</ul>
+
+<h3>SEO</h3>
+<ul>
+  <li><strong>Per-route meta tags</strong> — title, description, canonical, Open Graph and Twitter
+  cards, driven by a shared SEO service and each page's CMS SEO component.</li>
+  <li><strong>Structured data</strong> — breadcrumb and article schema emitted per page.</li>
+  <li><strong>Build-time stamping</strong> — a static route table plus the CMS route list produce
+  a real HTML file per URL with its own self-referencing canonical, so each page has correct tags
+  before any JavaScript runs. 29 pages stamped in the current build.</li>
+  <li><strong>Generated sitemap</strong> — 27 URLs, built from the CMS rather than hand-maintained,
+  with <code>noIndex</code> pages excluded.</li>
+</ul>
+
+<h2>6. Live pages</h2>
+
+<div class="shots">
+  <figure class="tall">
+    <img src="assets/01-pillar-live.jpg" alt="Home Construction pillar page, live">
+    <figcaption><strong>Live now</strong> — Home Construction pillar page with dark body copy,
+    the hero image behind the breadcrumb and the image block rendering.</figcaption>
+  </figure>
+  <figure class="tall">
+    <img src="assets/02-pillar-newbuild.jpg" alt="Home Construction pillar page, pending build">
+    <figcaption><strong>Pending build</strong> — the same page from the build in this report's
+    zip, including the uncommitted work described in section 7.</figcaption>
+  </figure>
+</div>
+
+<div class="shots">
+  <figure class="tall">
+    <img src="assets/06-homepage.jpg" alt="Homepage">
+    <figcaption><strong>Homepage</strong> — fully CMS-driven: banner, about, services, skills,
+    stats, team, testimonials, FAQ and logo slider all read from Strapi.</figcaption>
+  </figure>
+  <figure class="tall">
+    <img src="assets/07-guide-newbuild.jpg" alt="Guide detail page">
+    <figcaption><strong>Guide detail page</strong> in the pending build — sticky lead form and
+    sidebar, content blocks, and the corrected description panel.</figcaption>
+  </figure>
+</div>
+
+<h2>7. Hosting &amp; infrastructure</h2>
+
+<h3>The move off Render</h3>
+<div class="scroll">
+<table>
+  <tr><th>Phase</th><th>Dates</th><th>Where the CMS ran</th><th>Problem</th></tr>
+  <tr>
+    <td>Render free tier</td><td>16–27 Aug</td>
+    <td><code>hunterproperty.onrender.com</code></td>
+    <td>Spun down after ~15 min idle; 30–60s cold start on the next visitor</td>
+  </tr>
+  <tr>
+    <td>Keep-alive workaround</td><td>17–18 Aug</td>
+    <td>Same, plus a scheduled GitHub Action pinging it</td>
+    <td>Treating the symptom; removed after a day</td>
+  </tr>
+  <tr>
+    <td>Dedicated VPS</td><td>27 Aug →</td>
+    <td><code>cms.hunterproperty.in</code> (93.127.167.102)</td>
+    <td>Resolved — always warm</td>
+  </tr>
+</table>
+</div>
+
+<h3>How the VPS is laid out</h3>
+<ul>
+  <li>Repository checked out at <code>/home/strapi/app</code>, tracking <code>hunterproperty_v1</code>.</li>
+  <li>Hunter Property Strapi runs from <code>/home/strapi/app/cms</code> on port 1337, pm2 process
+  <code>strapi</code> (id 0).</li>
+  <li><strong>bhiive-cms</strong> runs from <code>/home/strapi/bhiive-cms</code> on port 1338, pm2
+  id 1 — a completely separate application.</li>
+  <li>nginx terminates TLS for both <code>cms.hunterproperty.in</code> and <code>cms.bhiive.com</code>.</li>
+  <li>PostgreSQL on the same host; media on Cloudinary.</li>
+</ul>
+
+<h3>Deployments performed on 29 August</h3>
+<div class="scroll">
+<table>
+  <tr><th>#</th><th>What</th><th>Result</th></tr>
+  <tr>
+    <td class="num">1</td>
+    <td>Pull <code>9c967ae</code> (PR #9), <code>strapi build</code>, restart pm2 <code>strapi</code></td>
+    <td>Created <code>pillar_pages</code>, <code>pillar_pages_cmps</code>,
+    <code>components_blocks_image_blocks</code>; added <code>image_position</code> column; granted
+    public read. All additive.</td>
+  </tr>
+  <tr>
+    <td class="num">2</td>
+    <td>Pull <code>59e753e</code> (PR #10), rebuild, restart</td>
+    <td><code>content</code> and <code>featuredImage</code> fields live. Verified via the public API.</td>
+  </tr>
+  <tr>
+    <td class="num">3</td>
+    <td>Frontend zip uploaded to Hostinger</td>
+    <td><code>main-YBPEMJJG.js</code> live; block rendering and colour fixes confirmed in production.</td>
+  </tr>
+</table>
+</div>
+
+<p>Each restart targeted the <code>strapi</code> process by name — never <code>pm2 restart all</code>.
+bhiive was checked before and after each one and never changed.</p>
+
+<h2>8. Work committed but not yet deployed (PR #11)</h2>
+
+<div class="note warn">
+  <p><strong>This was not written as part of the sessions above.</strong> It was already sitting
+  uncommitted in the working tree, builds on top of commit <code>7234e53</code>, and compiles and
+  renders correctly against the live CMS. It has now been committed as <code>16aed4c</code> and
+  raised as PR #11 so the repository matches the build being deployed — but it has not been
+  reviewed, merged or deployed. It <em>is</em> included in the zip accompanying this report.</p>
+</div>
+
+<p><strong>24 modified files, 2 new files, roughly 800 changed lines.</strong> What it does:</p>
+
+<div class="scroll">
+<table>
+  <tr><th>Area</th><th>Change</th></tr>
+  <tr><td>Guide pages</td><td>Content blocks brought to guide/service pages, matching pillar pages</td></tr>
+  <tr><td>Layout</td><td>Lead form and sidebar widgets combined into one sticky panel that travels together</td></tr>
+  <tr><td>Cover images</td><td><code>coverImagePosition</code> — top, below-title, below-content, or hidden; plus a separate mobile crop and a top-level image gallery</td></tr>
+  <tr><td>Pillar pages</td><td><code>featuredImagePosition</code> and <code>contentBlocksPosition</code> so an editor chooses where each sits</td></tr>
+  <tr><td>Lead capture</td><td>Reworked lead service with an EmailJS template (<code>emailjs-lead-template.html</code>); lead popup, pricing, quote and contact forms all updated</td></tr>
+  <tr><td>New service</td><td><code>content-block-mapper.service.ts</code> — shared block mapping, shrinking <code>pillar-page.service.ts</code> by ~110 lines</td></tr>
+  <tr><td>Copy</td><td>"Guides" renamed to "Services" across the site and CMS seed data</td></tr>
+  <tr><td>Styling</td><td><code>styles.scss</code> +86 lines; about and featured-guides adjustments</td></tr>
+</table>
+</div>
+
+<p><strong>This includes CMS schema changes</strong> — <code>pillar-page</code>,
+<code>service-content-page</code> and <code>lead</code> — so deploying it requires a Strapi rebuild
+and restart on the VPS, not just a frontend upload.</p>
+
+<h2>9. Commit history (last 30 days)</h2>
+
+<div class="scroll">
+<table>
+  <tr><th>Date</th><th>Commit</th><th>Summary</th></tr>
+  <tr><td class="num">29 Aug</td><td class="num">7234e53</td><td>Fix pillar page block rendering; split description from content</td></tr>
+  <tr><td class="num">29 Aug</td><td class="num">785207e</td><td>Author pillar pages as their own CMS collection</td></tr>
+  <tr><td class="num">28 Aug</td><td class="num">1580830</td><td>Render Quick Links blocks; category pages become pillar pages</td></tr>
+  <tr><td class="num">27 Aug</td><td class="num">6110068</td><td>Image formats, environment URL → VPS, index.html performance</td></tr>
+  <tr><td class="num">23 Aug</td><td class="num">ffad097</td><td>Loading service and HTTP interceptor</td></tr>
+  <tr><td class="num">21 Aug</td><td class="num">05301c2</td><td>Image handling and caching in ServiceContentService</td></tr>
+  <tr><td class="num">20 Aug</td><td class="num">d66d983</td><td>CMS content types extended with new attributes and components</td></tr>
+  <tr><td class="num">20 Aug</td><td class="num">ea076f7</td><td>Skip lazy-loaded images in preloader tracking</td></tr>
+  <tr><td class="num">19 Aug</td><td class="num">917bff5</td><td>Hide header-top social row on mobile (was wrapping)</td></tr>
+  <tr><td class="num">19 Aug</td><td class="num">65ac94d</td><td>Show header-top contact bar on mobile; preloader tracks real images</td></tr>
+  <tr><td class="num">19 Aug</td><td class="num">cd19d23</td><td>Tie preloader to real page load instead of a fixed timeout</td></tr>
+  <tr><td class="num">19 Aug</td><td class="num">844f9b7</td><td>SPA fallback .htaccess for Hostinger</td></tr>
+  <tr><td class="num">19 Aug</td><td class="num">5bc637f</td><td>Mobile services menu, lazy loading, 86 image assets optimised</td></tr>
+  <tr><td class="num">19 Aug</td><td class="num">7bd34f5</td><td>Fix Cloudinary upload crash: missing uploadStream options</td></tr>
+  <tr><td class="num">19 Aug</td><td class="num">7ffd2e0</td><td>Move media uploads to Cloudinary</td></tr>
+  <tr><td class="num">19 Aug</td><td class="num">2ae0887</td><td>Image fields to Media Library; text fields to rich text</td></tr>
+  <tr><td class="num">18 Aug</td><td class="num">8f3c21c</td><td>Remove Strapi keep-awake workflow</td></tr>
+  <tr><td class="num">17 Aug</td><td class="num">3c3f117</td><td>Add Strapi keep-awake workflow</td></tr>
+  <tr><td class="num">16 Aug</td><td class="num">90113eb</td><td>Point production build at Render-hosted Strapi</td></tr>
+  <tr><td class="num">16 Aug</td><td class="num">8c2321e</td><td>Stop tracking build artefacts and cache</td></tr>
+  <tr><td class="num">16 Aug</td><td class="num">3c6f15b</td><td>Add Strapi CMS backend</td></tr>
+</table>
+</div>
+
+<h2>10. Open items</h2>
+
+<div class="note warn">
+  <p><strong>1. <code>robots.txt</code> has an invalid sitemap line.</strong> It currently reads
+  <code>Sitemap: www.hunterproperty.in/sitemap.xml</code>. The specification requires an absolute
+  URL, so search engines will ignore that line and the sitemap will not be discovered from
+  robots.txt. It needs <code>https://</code> in front. This has been flagged but deliberately left
+  unchanged, since it was a hand edit.</p>
+</div>
+
+<div class="note warn">
+  <p><strong>2. Category descriptions still hold full articles.</strong> The long copy currently
+  sits in each category's <code>description</code> field. It should be cut down to one or two
+  sentences and moved into the pillar page's <code>content</code> field. The sidebar cap stops it
+  breaking the layout in the meantime, but menus, cards and meta descriptions all read that field.</p>
+</div>
+
+<div class="note warn">
+  <p><strong>3. The uncommitted work in section 7 needs review</strong> before it is merged and
+  deployed — it carries CMS schema changes that require a VPS rebuild and restart.</p>
+</div>
+
+<footer>
+  Hunter Property development report · compiled 29 August 2026 · every status verified directly
+  against the live site, the live API and the VPS.
+</footer>
+
+</div>
+</body>
+</html>

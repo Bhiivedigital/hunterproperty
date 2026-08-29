@@ -9,6 +9,20 @@ import { LinkItem, QuickLinks, Seo } from './service-content.model';
  * breadcrumbs and cards.
  */
 
+/**
+ * Where the featured image sits relative to the article copy. Editors pick it
+ * per page in the CMS, so an image can lead the page or close it out without a
+ * code change.
+ */
+export type FeaturedImagePosition = 'top' | 'below-intro' | 'below-content';
+
+/**
+ * Whether the dynamic zone runs before or after the page's body copy. An Image
+ * Block could otherwise only ever land at the bottom of the page, however the
+ * editor ordered the zone, because the zone itself always followed `content`.
+ */
+export type ContentBlocksPosition = 'below-content' | 'above-content';
+
 export interface FaqItem {
   question: string;
   answer: string;
@@ -91,9 +105,11 @@ export interface PillarPage {
   content?: string;
   /** Banner behind the page title. */
   heroImage?: CmsImage;
-  /** Image rendered below the title, in the flow of the page. */
+  /** Image rendered in the flow of the page; `featuredImagePosition` places it. */
   featuredImage?: CmsImage;
+  featuredImagePosition: FeaturedImagePosition;
   contentBlocks: ContentBlock[];
+  contentBlocksPosition: ContentBlocksPosition;
   quickLinks?: QuickLinks;
   /** Whether to append the auto-generated grid of child guide links. */
   showChildGuides: boolean;

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 import { LeadService } from '../../../shared/services/lead.service';
 
 @Component({
@@ -17,7 +16,6 @@ export class RequestquoteComponent {
 
   constructor(private formBuilder: FormBuilder, private leadService: LeadService) {}
   ngOnInit(): void {
-    emailjs.init('Ib8KzPUHhor6Az9D2');
     this.form = this.formBuilder.group(
       {
         firstName: ['', Validators.required],
@@ -52,26 +50,18 @@ export class RequestquoteComponent {
       return;
     }
 
-    this.leadService.submit({
+    const { stored, emailed } = await this.leadService.capture({
       fullName: `${this.form.value.firstName} ${this.form.value.lastName}`.trim(),
       phone: this.form.value.phoneNo,
       message: this.form.value.message,
       sourceForm: 'requestquote'
-    }).subscribe({ error: err => console.error('Strapi lead capture failed', err) });
+    });
 
-    try {
-         let response = await emailjs.send("service_wrsfjtp","template_0uxx83q",{
-          firstName: this.form.value.firstName,
-          lastName: this.form.value.lastName,
-          phoneNo: this.form.value.phoneNo,
-          message: this.form.value.message
-          });
-      console.log("Email sent successfully!", response);
+    if (stored || emailed) {
       alert('Message sent successfully!');
       this.submitted = false;
       this.form.reset();
-    } catch (error) {
-      console.error("Email sending failed:", error);
+    } else {
       alert('Failed to send message. Please try again.');
     }
   }

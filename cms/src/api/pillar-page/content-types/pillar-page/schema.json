@@ -37,12 +37,25 @@
     "heroImage": {
       "type": "media",
       "multiple": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "featuredImage": {
       "type": "media",
       "multiple": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "featuredImagePosition": {
+      "type": "enumeration",
+      "enum": [
+        "top",
+        "below-intro",
+        "below-content"
+      ],
+      "default": "top"
     },
     "contentBlocks": {
       "type": "dynamiczone",
@@ -55,6 +68,14 @@
         "blocks.faqs",
         "blocks.video-section"
       ]
+    },
+    "contentBlocksPosition": {
+      "type": "enumeration",
+      "enum": [
+        "below-content",
+        "above-content"
+      ],
+      "default": "above-content"
     },
     "quickLinks": {
       "type": "component",

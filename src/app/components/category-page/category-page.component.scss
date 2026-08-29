@@ -2,6 +2,43 @@
   padding: 80px 0;
 }
 
+// One grid, two reading orders. The enquiry form is written first in the
+// markup so a phone gets it straight after the heading — the reference
+// behaviour, and the reason it isn't simply a Bootstrap sidebar column, which
+// would either bury the form under the whole article or push the article below
+// the fold. From lg up, explicit grid placement puts the copy in the wide
+// left column and the form top-right, with no gap between them.
+.pillar-layout {
+  display: grid;
+  gap: 30px;
+}
+
+.pillar-aside {
+  app-hero-lead-form {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) {
+  .pillar-layout {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    align-items: start;
+    column-gap: 30px;
+  }
+
+  .pillar-main {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .pillar-aside {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 100px;
+  }
+}
+
 // Body copy here is the page, not a caption under a heading, so it uses the
 // site's dark token rather than the muted --body-text-color grey the global
 // body rule sets. At article length that grey reads as washed out.
@@ -31,13 +68,17 @@
   }
 }
 
+.pillar-intro,
 .pillar-content {
-  margin-top: 10px;
   text-align: left;
 }
 
+.pillar-content {
+  margin-top: 10px;
+}
+
 .pillar-featured {
-  margin: 30px 0 10px;
+  margin: 0 0 25px;
 
   img {
     width: 100%;
@@ -53,6 +94,27 @@
 
 app-content-blocks {
   display: block;
+}
+
+// Inside the article column the blocks component's own .container would add a
+// second gutter and a max-width of its own, so unwind both. Only applies to
+// the "above-content" copy of the zone; the full-width one below the article
+// keeps the container it needs.
+.pillar-inline-blocks {
+  display: block;
+
+  ::ng-deep {
+    .cms-block {
+      padding: 0 0 25px;
+    }
+
+    .cms-block .container {
+      width: 100%;
+      max-width: none;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
 
 app-quick-links {

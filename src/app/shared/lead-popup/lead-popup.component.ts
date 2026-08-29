@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import emailjs from '@emailjs/browser';
 import { LeadPopupService } from './lead-popup.service';
 import { LeadService } from '../services/lead.service';
 
@@ -57,7 +56,6 @@ export class LeadPopupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    emailjs.init('Ib8KzPUHhor6Az9D2');
 
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
@@ -81,10 +79,12 @@ export class LeadPopupComponent implements OnInit {
     this.isVisible = true;
   }
 
+  /**
+   * Opening from the header button is an explicit user action, so it works on every
+   * route. Only the automatic timer/scroll trigger stays home-only, so visitors deep
+   * in the site aren't nagged by a popup they didn't ask for.
+   */
   openManually(): void {
-    if (!this.isHomeRoute) {
-      return;
-    }
     if (this.timerId) {
       clearTimeout(this.timerId);
     }
@@ -126,27 +126,20 @@ export class LeadPopupComponent implements OnInit {
     this.sending = true;
     const { name, phone, location, service } = this.form.value;
 
-    this.leadService.submit({
+    const { stored, emailed } = await this.leadService.capture({
       fullName: name,
       phone,
-      message: `Location: ${location} | Service: ${service}`,
       location,
       service,
       sourceForm: 'lead-popup'
-    }).subscribe({ error: err => console.error('Strapi lead capture failed', err) });
+    });
 
-    try {
-      await emailjs.send('service_37vso18', 'template_wo2b83h', {
-        fullName: name,
-        Phno: phone,
-        message: `Location: ${location} | Service: ${service}`
-      });
-      this.sending = false;
+    this.sending = false;
+
+    if (stored || emailed) {
       this.sendSucceeded = true;
       setTimeout(() => this.closePopup(), 4000);
-    } catch (error) {
-      console.error('Popup lead send failed:', error);
-      this.sending = false;
+    } else {
       this.sendFailed = true;
     }
   }

@@ -1,4 +1,4 @@
 User-agent: *
-Allow: /
-
-Sitemap: https://www.hunterproperty.in/sitemap.xml
+Disallow: 
+Disallow: /cgi-bin/
+Sitemap: www.hunterproperty.in/sitemap.xml
