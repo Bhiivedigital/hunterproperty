@@ -123,7 +123,7 @@
   website. A Strapi backend was built from scratch, media moved to Cloudinary, the CMS
   moved off Render's free tier onto a dedicated VPS, and a Pillar Page content model was
   added so category landing pages can be written like articles.</p>
-  <p><strong>21 code commits, 10 pull requests, 3 hosting changes.</strong> Every figure and
+  <p><strong>21 code commits, 11 pull requests, 3 hosting changes.</strong> Every figure and
   status in this report was verified directly against the live site, the live API or the
   server on 29 August — nothing here is assumed.</p>
 </div>
@@ -154,9 +154,9 @@
     <td><span class="pill done">Live</span> transform URLs applied</td>
   </tr>
   <tr>
-    <td><strong>Uncommitted work in the repo</strong></td>
-    <td>Local working tree</td>
-    <td><span class="pill pending">Not deployed</span> 24 files, ~800 lines</td>
+    <td><strong>Service-page blocks, placement options, EmailJS leads</strong></td>
+    <td>Committed <code>16aed4c</code>, PR #11</td>
+    <td><span class="pill pending">Awaiting merge</span> then a VPS rebuild</td>
   </tr>
 </table>
 </div>
@@ -222,7 +222,9 @@ restart count unchanged at 2, <code>cms.bhiive.com</code> responding 200).</p>
   <li>
     <div class="date">29 AUGUST</div>
     <div class="what">Pillar Pages as their own content type, then bug fixes</div>
-    PR #9 and PR #10 — detailed in sections 3 and 4 below.
+    PR #9 and PR #10 — detailed in sections 3 and 4 below. Both deployed to the VPS and to
+    Hostinger the same day, and confirmed working in production. PR #11 raised in the evening
+    with the service-page block work described in section 8.
   </li>
 </ul>
 
@@ -330,7 +332,101 @@ there are zero console errors.</p>
   </figure>
 </div>
 
-<h2>5. Live pages</h2>
+<h2>5. Interface &amp; front-end work in detail</h2>
+
+<p>Much of this landed inside larger commits, so it does not show up as its own line in the
+commit list. Grouped by what a visitor actually sees.</p>
+
+<h3>Navigation &amp; header</h3>
+<ul>
+  <li><strong>Services mega-menu driven by the CMS</strong> — categories and their menu-flagged
+  child pages are pulled in a single request and rendered as a multi-column grid, with a
+  "view all" link per column. Adding a category in Strapi adds it to the menu.</li>
+  <li><strong>Desktop and mobile behave differently on purpose</strong> — hover opens the panel on
+  desktop; on mobile it is tap-to-toggle, with separate open/close handlers for each.</li>
+  <li><strong>Mobile menu simplified</strong> (19 Aug) — category headings stopped being accordion
+  toggles and became direct links to the pillar page, and the long child lists are hidden below
+  <code>lg</code>. Two taps to reach a page became one.</li>
+  <li><strong>Header-top contact bar shown on mobile</strong> (19 Aug) — phone, email and hours
+  were desktop-only.</li>
+  <li><strong>Social icon row hidden on mobile</strong> (19 Aug) — it was wrapping onto a second
+  line and pushing the header taller.</li>
+  <li><strong>Sticky header on scroll</strong>, with the header's real height measured at runtime
+  so the page content is offset correctly instead of hiding under it.</li>
+  <li><strong>"Get A Quote" opens the lead popup</strong> rather than navigating away.</li>
+  <li><strong>Floating WhatsApp, call and back-to-top buttons.</strong></li>
+</ul>
+
+<h3>Homepage hero</h3>
+<ul>
+  <li><strong>Slides moved into the CMS</strong> — heading, copy, CTA and background image are all
+  editable; the carousel renders whatever Strapi returns.</li>
+  <li><strong>Responsive images</strong> (21 Aug) — each slide gained a Cloudinary
+  <code>srcset</code>/<code>sizes</code> and real <code>width</code>/<code>height</code>
+  attributes, so the browser picks an appropriately sized file and the layout stops shifting as
+  it loads.</li>
+  <li><strong>First slide prioritised</strong> — <code>fetchpriority="high"</code> on slide one,
+  <code>decoding="async"</code> on the rest.</li>
+  <li><strong>LCP preload injected at runtime</strong> (27 Aug) — the browser's preload scanner
+  cannot discover an image that is not in the HTML yet, and on a client-rendered app the hero URL
+  only exists after the API responds. A preload link is now injected the moment it does, matching
+  exactly what Angular goes on to render.</li>
+  <li>Accessible label added to the hero CTA.</li>
+</ul>
+
+<h3>Lead capture</h3>
+<ul>
+  <li><strong>Introduced 16 August</strong> alongside the CMS — a reusable hero lead form, a
+  popup, and a lead service writing to a Strapi <code>leads</code> collection.</li>
+  <li><strong>Six entry points</strong>, all sharing one service: the homepage hero form, the
+  "Get A Quote" popup, the pricing section, the request-a-quote section, the contact page, and the
+  sidebar on every guide/service page. Each tags its own source so enquiries can be attributed.</li>
+  <li><strong>Email delivery added 29 August</strong> (in the pending work) — a lead is now both
+  stored in Strapi and sent on by email through EmailJS using a shared template, so an enquiry no
+  longer sits unseen in the admin.</li>
+  <li>Consent checkbox on the forms.</li>
+</ul>
+
+<h3>Loading &amp; perceived speed</h3>
+<ul>
+  <li><strong>Preloader tied to real image loads</strong> (19 Aug) — it previously ran on a fixed
+  timeout, so it either hid content that was ready or vanished before the page was. It now watches
+  actual image loads, including images added later as CMS sections render, and
+  <strong>skips lazy-loaded images</strong> (20 Aug) which would otherwise never resolve and hold
+  the preloader open.</li>
+  <li><strong>Loading service and HTTP interceptor</strong> (23 Aug) — every request increments a
+  shared counter, so the UI reflects real network state.</li>
+  <li><strong>Response caching</strong> (21 Aug) — categories, menus and featured guides are
+  requested repeatedly across the header, homepage and every category page; they are now fetched
+  once and shared.</li>
+</ul>
+
+<h3>Page-level work</h3>
+<ul>
+  <li><strong>Every homepage section moved into the CMS</strong> — banner, about, features,
+  services, skills, stats, team, testimonials, FAQ, portfolio, logo slider and working process.</li>
+  <li><strong>About, services, service detail, portfolio and contact pages</strong> all converted
+  from hard-coded markup to CMS content.</li>
+  <li><strong>Legal pages</strong> (privacy policy, terms) made editable.</li>
+  <li><strong>Featured guides block</strong> on the homepage.</li>
+  <li><strong>SPA fallback</strong> <code>.htaccess</code> for Hostinger (19 Aug), so deep links
+  like <code>/home-construction/</code> resolve instead of 404ing.</li>
+  <li><strong>86 image assets optimised</strong> and WebP versions generated (19 Aug).</li>
+</ul>
+
+<h3>SEO</h3>
+<ul>
+  <li><strong>Per-route meta tags</strong> — title, description, canonical, Open Graph and Twitter
+  cards, driven by a shared SEO service and each page's CMS SEO component.</li>
+  <li><strong>Structured data</strong> — breadcrumb and article schema emitted per page.</li>
+  <li><strong>Build-time stamping</strong> — a static route table plus the CMS route list produce
+  a real HTML file per URL with its own self-referencing canonical, so each page has correct tags
+  before any JavaScript runs. 29 pages stamped in the current build.</li>
+  <li><strong>Generated sitemap</strong> — 27 URLs, built from the CMS rather than hand-maintained,
+  with <code>noIndex</code> pages excluded.</li>
+</ul>
+
+<h2>6. Live pages</h2>
 
 <div class="shots">
   <figure class="tall">
@@ -358,7 +454,7 @@ there are zero console errors.</p>
   </figure>
 </div>
 
-<h2>6. Hosting &amp; infrastructure</h2>
+<h2>7. Hosting &amp; infrastructure</h2>
 
 <h3>The move off Render</h3>
 <div class="scroll">
@@ -420,13 +516,14 @@ there are zero console errors.</p>
 <p>Each restart targeted the <code>strapi</code> process by name — never <code>pm2 restart all</code>.
 bhiive was checked before and after each one and never changed.</p>
 
-<h2>7. Uncommitted work now in the repository</h2>
+<h2>8. Work committed but not yet deployed (PR #11)</h2>
 
 <div class="note warn">
-  <p><strong>This was not written as part of the sessions above.</strong> It was already present in
-  the working tree, builds on top of commit <code>7234e53</code>, and compiles and renders correctly
-  — but it has never been committed or deployed. It is included in the build and zip accompanying
-  this report, and should be reviewed before merging.</p>
+  <p><strong>This was not written as part of the sessions above.</strong> It was already sitting
+  uncommitted in the working tree, builds on top of commit <code>7234e53</code>, and compiles and
+  renders correctly against the live CMS. It has now been committed as <code>16aed4c</code> and
+  raised as PR #11 so the repository matches the build being deployed — but it has not been
+  reviewed, merged or deployed. It <em>is</em> included in the zip accompanying this report.</p>
 </div>
 
 <p><strong>24 modified files, 2 new files, roughly 800 changed lines.</strong> What it does:</p>
@@ -449,7 +546,7 @@ bhiive was checked before and after each one and never changed.</p>
 <code>service-content-page</code> and <code>lead</code> — so deploying it requires a Strapi rebuild
 and restart on the VPS, not just a frontend upload.</p>
 
-<h2>8. Commit history (last 30 days)</h2>
+<h2>9. Commit history (last 30 days)</h2>
 
 <div class="scroll">
 <table>
@@ -478,7 +575,7 @@ and restart on the VPS, not just a frontend upload.</p>
 </table>
 </div>
 
-<h2>9. Open items</h2>
+<h2>10. Open items</h2>
 
 <div class="note warn">
   <p><strong>1. <code>robots.txt</code> has an invalid sitemap line.</strong> It currently reads
