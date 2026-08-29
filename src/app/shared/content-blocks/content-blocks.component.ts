@@ -51,9 +51,12 @@ export class ContentBlocksComponent {
     return `${block.__component}:${block.id}`;
   }
 
-  trackBlock(_index: number, block: ContentBlock): string {
-    return this.blockKey(block);
-  }
+  /**
+   * An arrow property, not a method: Angular invokes a trackBy function
+   * unbound, so a method body referencing `this` throws on every change
+   * detection pass and silently leaves the whole *ngFor empty.
+   */
+  trackBlock = (_index: number, block: ContentBlock): string => `${block.__component}:${block.id}`;
 
   // --- accordions ---------------------------------------------------------
 

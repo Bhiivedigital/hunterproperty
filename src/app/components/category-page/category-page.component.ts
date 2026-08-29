@@ -12,6 +12,7 @@ import { SeoService } from '../../shared/services/seo.service';
 import { StructuredDataService } from '../../shared/services/structured-data.service';
 import { QuickLinksComponent } from '../../shared/quick-links/quick-links.component';
 import { ContentBlocksComponent } from '../../shared/content-blocks/content-blocks.component';
+import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe';
 
 // The category page is a pillar page: its job is to expose every child guide as
 // a crawlable internal link, not to sell each one with a card. Links are cheap
@@ -35,7 +36,7 @@ const PAGE_SIZE = 100;
 @Component({
   selector: 'app-category-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, QuickLinksComponent, ContentBlocksComponent],
+  imports: [CommonModule, RouterLink, QuickLinksComponent, ContentBlocksComponent, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './category-page.component.html',
   styleUrl: './category-page.component.scss'
 })
@@ -44,6 +45,7 @@ export class CategoryPageComponent implements OnInit {
   category?: ServiceContentCategory;
   pillar?: PillarPage;
   introHtml?: SafeHtml;
+  contentHtml?: SafeHtml;
   pages: ServiceContentPageSummary[] = [];
   page = 1;
   pageCount = 1;
@@ -136,8 +138,15 @@ export class CategoryPageComponent implements OnInit {
       this.category = category;
       this.pillar = pillar;
 
-      // Both `intro` and `description` are Strapi rich text, not plain strings.
-      this.introHtml = this.richText.toSafeHtml(pillar?.intro || category.description);
+      // Once a pillar page exists it is the only source of body copy. The
+      // category description is a short summary for menus, cards and the guide
+      // sidebar — reusing it here is what put a whole article inside a field
+      // meant for one sentence. Only a category with no pillar page still
+      // falls back to it, so those pages keep rendering.
+      this.introHtml = pillar
+        ? this.richText.toSafeHtml(pillar.intro)
+        : this.richText.toSafeHtml(category.description);
+      this.contentHtml = this.richText.toSafeHtml(pillar?.content);
 
       this.applySeo(category, pillar);
 
@@ -158,9 +167,10 @@ export class CategoryPageComponent implements OnInit {
       title: `${category.name} Guides | Hunter Property`,
       // Both fields are rich text; a meta description has to be plain prose.
       description: this.richText.toPlainText(pillar?.intro)
+        || this.richText.toPlainText(pillar?.content)
         || this.richText.toPlainText(category.description)
         || `${category.name} guides and resources from Hunter Property.`,
-      image: pillar?.heroImage?.url || category.image?.url,
+      image: pillar?.featuredImage?.url || pillar?.heroImage?.url || category.image?.url,
       seo: pillar?.seo ?? category.seo
     });
     this.structuredData.setBreadcrumb([

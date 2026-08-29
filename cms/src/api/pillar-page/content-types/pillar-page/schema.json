@@ -31,7 +31,15 @@
     "intro": {
       "type": "richtext"
     },
+    "content": {
+      "type": "richtext"
+    },
     "heroImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "featuredImage": {
       "type": "media",
       "multiple": false,
       "allowedTypes": ["images"]

@@ -27,6 +27,25 @@
           <div class="pillar-intro cms-rich-text" *ngIf="introHtml" [innerHTML]="introHtml"></div>
         </div>
       </div>
+
+      <div class="row" *ngIf="pillar?.featuredImage?.url">
+        <div class="col-lg-10 mx-auto">
+          <figure class="pillar-featured">
+            <img class="img-fluid" [src]="pillar!.featuredImage!.url"
+                 [srcset]="pillar!.featuredImage!.url | cldSrcset:'content'"
+                 [attr.sizes]="'content' | cldSizes"
+                 [attr.width]="pillar!.featuredImage!.width || null"
+                 [attr.height]="pillar!.featuredImage!.height || null"
+                 [alt]="pillar!.heading || category.name" decoding="async">
+          </figure>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="contentHtml">
+        <div class="col-lg-10 mx-auto">
+          <div class="pillar-content cms-rich-text" [innerHTML]="contentHtml"></div>
+        </div>
+      </div>
     </div>
 
     <!-- The pillar page's own body: sections, images, banners, accordions, FAQs. -->

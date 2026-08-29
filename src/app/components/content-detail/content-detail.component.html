@@ -57,7 +57,10 @@
 
             <div class="widget">
               <h4 class="widget-title">In {{ page.category.name }}</h4>
-              <p>{{ page.category.description }}</p>
+              <!-- Rich text, so it needs rendering, not interpolation: printing it
+                   put raw <h2>/<p> tags on screen. Clamped because this is the
+                   category's short summary slot, not somewhere an article fits. -->
+              <div class="widget-description cms-rich-text" [innerHTML]="page.category.description | richText"></div>
               <a class="theme-btn w-100 justify-content-center" [routerLink]="['/' + page.category.slug]">
                 View All {{ page.category.name }} Guides<i class="fas fa-arrow-right"></i>
               </a>

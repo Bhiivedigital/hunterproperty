@@ -2,8 +2,12 @@
   padding: 80px 0;
 }
 
-.pillar-intro {
-  color: var(--body-text-color);
+// Body copy here is the page, not a caption under a heading, so it uses the
+// site's dark token rather than the muted --body-text-color grey the global
+// body rule sets. At article length that grey reads as washed out.
+.pillar-intro,
+.pillar-content {
+  color: var(--color-dark);
   line-height: 1.8;
   margin-bottom: 10px;
 
@@ -24,6 +28,21 @@
       font-size: 14px;
       color: var(--body-color);
     }
+  }
+}
+
+.pillar-content {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.pillar-featured {
+  margin: 30px 0 10px;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
   }
 }
 

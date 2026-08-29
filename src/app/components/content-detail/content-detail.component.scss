@@ -149,6 +149,34 @@
   }
 }
 
+// The category description is a short summary. If an editor leaves a long one
+// in there it must not push the rest of the sidebar off screen, so cap it.
+.widget-description {
+  margin-bottom: 20px;
+  max-height: 11em;
+  overflow: hidden;
+
+  ::ng-deep {
+    h1, h2, h3, h4, h5, h6 {
+      font-size: 16px;
+      color: var(--color-dark);
+      margin: 0 0 8px;
+    }
+
+    p {
+      margin: 0 0 8px;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    img {
+      display: none;
+    }
+  }
+}
+
 .related-guide-item {
   display: flex;
   gap: 12px;
