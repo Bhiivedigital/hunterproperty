@@ -85,8 +85,14 @@ export interface PillarPage {
   tagline?: string;
   /** H1 override. Falls back to the category name in the template. */
   heading?: string;
+  /** Short lead paragraph under the H1. */
   intro?: string;
+  /** The long body copy, kept apart from the category's short description. */
+  content?: string;
+  /** Banner behind the page title. */
   heroImage?: CmsImage;
+  /** Image rendered below the title, in the flow of the page. */
+  featuredImage?: CmsImage;
   contentBlocks: ContentBlock[];
   quickLinks?: QuickLinks;
   /** Whether to append the auto-generated grid of child guide links. */

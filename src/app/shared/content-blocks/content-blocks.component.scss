@@ -32,7 +32,9 @@
 // out the column on narrow screens.
 .cms-rich-text {
   line-height: 1.8;
-  color: var(--body-text-color);
+  // Dark, not the muted --body-text-color grey the global body rule sets:
+  // this is article-length copy, and that grey reads as washed out at length.
+  color: var(--color-dark);
 
   ::ng-deep {
     img {

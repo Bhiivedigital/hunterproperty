@@ -10,11 +10,12 @@ import { StructuredDataService } from '../../shared/services/structured-data.ser
 import { HeroLeadFormComponent } from '../homelayout/hero-lead-form/hero-lead-form.component';
 import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe';
 import { QuickLinksComponent } from '../../shared/quick-links/quick-links.component';
+import { RichTextPipe } from '../../shared/pipes/rich-text.pipe';
 
 @Component({
   selector: 'app-content-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, HeroLeadFormComponent, CldSrcsetPipe, CldSizesPipe, QuickLinksComponent],
+  imports: [CommonModule, RouterLink, HeroLeadFormComponent, CldSrcsetPipe, CldSizesPipe, QuickLinksComponent, RichTextPipe],
   templateUrl: './content-detail.component.html',
   styleUrl: './content-detail.component.scss'
 })

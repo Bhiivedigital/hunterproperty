@@ -13,6 +13,7 @@ import { factories } from '@strapi/strapi';
  */
 const DEEP_POPULATE = {
   heroImage: true,
+  featuredImage: true,
   category: { fields: ['name', 'slug', 'icon', 'description'] },
   quickLinks: { populate: { items: true } },
   seo: { populate: { ogImage: true } },
