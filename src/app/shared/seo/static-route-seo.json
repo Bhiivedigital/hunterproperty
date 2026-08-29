@@ -1,0 +1,68 @@
+{
+  "/": {
+    "title": "Hunter Property | Top Construction Company in Chennai for Homes & Offices",
+    "description": "Build your dream home with expert builders in Chennai. Custom designs, Vastu plans, and quality execution with daily progress reports.",
+    "sitemap": {
+      "changefreq": "weekly",
+      "priority": "1.0"
+    }
+  },
+  "/home": {
+    "title": "Hunter Property | Top Construction Company in Chennai for Homes & Offices",
+    "description": "Build your dream home with expert builders in Chennai. Custom designs, Vastu plans, and quality execution with daily progress reports.",
+    "canonical": "/"
+  },
+  "/about": {
+    "title": "About Hunter Property | Builders & Civil Contractors in Chennai",
+    "description": "Meet the team behind Hunter Property — Chennai builders delivering residential and commercial projects with transparent costing and daily progress reporting.",
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.6"
+    }
+  },
+  "/services": {
+    "title": "Construction Services in Chennai | Hunter Property",
+    "description": "End-to-end construction services in Chennai: home construction, interior design, renovation, property legal support and joint development projects.",
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.8"
+    }
+  },
+  "/portfolio": {
+    "title": "Our Projects | Completed Construction Work in Chennai | Hunter Property",
+    "description": "Browse completed homes, interiors and commercial projects delivered by Hunter Property across Chennai, with photos from real handovers.",
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.6"
+    }
+  },
+  "/contactus": {
+    "title": "Contact Hunter Property | Talk to Builders in Chennai",
+    "description": "Get a free consultation and quote for your construction or interior project in Chennai. Call, email or send us your requirement online.",
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
+  },
+  "/privacy-policy": {
+    "title": "Privacy Policy | Hunter Property",
+    "description": "How Hunter Property collects, uses and protects the personal information you share with us through this website.",
+    "sitemap": {
+      "changefreq": "yearly",
+      "priority": "0.2"
+    }
+  },
+  "/terms-and-conditions": {
+    "title": "Terms & Conditions | Hunter Property",
+    "description": "The terms that govern your use of the Hunter Property website and the services we offer.",
+    "sitemap": {
+      "changefreq": "yearly",
+      "priority": "0.2"
+    }
+  },
+  "/not-found": {
+    "title": "Page Not Found | Hunter Property",
+    "description": "The page you are looking for could not be found.",
+    "noIndex": true
+  }
+}

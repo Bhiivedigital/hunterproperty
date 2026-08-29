@@ -990,6 +990,61 @@ export interface ApiLegalPageLegalPage extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPillarPagePillarPage extends Struct.CollectionTypeSchema {
+  collectionName: 'pillar_pages';
+  info: {
+    description: 'The editorial body of a category pillar page at /:categorySlug. Edited here, separately from Service Content Category \u2014 that content type only carries the short description used in menus, cards and as a fallback intro.';
+    displayName: 'Pillar Page';
+    pluralName: 'pillar-pages';
+    singularName: 'pillar-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::service-content-category.service-content-category'
+    >;
+    childGuidesTitle: Schema.Attribute.String;
+    contentBlocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.content-section',
+        'blocks.image-block',
+        'blocks.banner',
+        'blocks.quick-links',
+        'blocks.accordion',
+        'blocks.faqs',
+        'blocks.video-section',
+      ]
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaHeading: Schema.Attribute.String;
+    ctaText: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+    heroImage: Schema.Attribute.Media<'images'>;
+    intro: Schema.Attribute.RichText;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::pillar-page.pillar-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    quickLinks: Schema.Attribute.Component<'blocks.quick-links', false>;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    showChildGuides: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    tagline: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPortfolioPagePortfolioPage extends Struct.SingleTypeSchema {
   collectionName: 'portfolio_page';
   info: {
@@ -1069,7 +1124,12 @@ export interface ApiServiceContentCategoryServiceContentCategory
       Schema.Attribute.Private;
     menuOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    pillarPage: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::pillar-page.pillar-page'
+    >;
     publishedAt: Schema.Attribute.DateTime;
+    quickLinks: Schema.Attribute.Component<'blocks.quick-links', false>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     showInMenu: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
@@ -1715,6 +1775,7 @@ declare module '@strapi/strapi' {
       'api::home-working-process.home-working-process': ApiHomeWorkingProcessHomeWorkingProcess;
       'api::lead.lead': ApiLeadLead;
       'api::legal-page.legal-page': ApiLegalPageLegalPage;
+      'api::pillar-page.pillar-page': ApiPillarPagePillarPage;
       'api::portfolio-page.portfolio-page': ApiPortfolioPagePortfolioPage;
       'api::service-content-category.service-content-category': ApiServiceContentCategoryServiceContentCategory;
       'api::service-content-page.service-content-page': ApiServiceContentPageServiceContentPage;

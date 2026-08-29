@@ -4,6 +4,11 @@
   "attributes": {
     "title": { "type": "string" },
     "body": { "type": "richtext" },
-    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "imagePosition": {
+      "type": "enumeration",
+      "enum": ["right", "left", "above", "below"],
+      "default": "right"
+    }
   }
 }

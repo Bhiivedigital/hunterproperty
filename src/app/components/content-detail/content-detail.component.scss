@@ -23,6 +23,22 @@
   // (e.g. ".content-page-body table") silently never match it. ::ng-deep
   // strips the attribute requirement off the descendant side of the selector.
   ::ng-deep {
+    // Editor-inserted images come back at their natural upload width; without
+    // this they overflow the article column on narrow screens.
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin: 20px 0;
+      display: block;
+    }
+
+    figcaption {
+      font-size: 14px;
+      color: var(--body-color);
+      margin-top: 8px;
+    }
+
     table {
       display: block;
       width: 100%;

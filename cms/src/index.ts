@@ -3,6 +3,7 @@ import type { Core } from '@strapi/strapi';
 const PUBLIC_PERMISSIONS: Record<string, string[]> = {
   'api::service-content-category.service-content-category': ['find', 'findOne'],
   'api::service-content-page.service-content-page': ['find', 'findOne'],
+  'api::pillar-page.pillar-page': ['find', 'findOne'],
   'api::legal-page.legal-page': ['find', 'findOne'],
   'api::lead.lead': ['create'],
   'api::home-banner.home-banner': ['find'],

@@ -1,0 +1,213 @@
+:host {
+  display: block;
+}
+
+.cms-block {
+  padding: 50px 0;
+
+  & + .cms-block {
+    padding-top: 0;
+  }
+}
+
+.cms-block-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 18px;
+}
+
+.cms-section-media img,
+.cms-image-block img,
+.cms-video-poster img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+}
+
+// Body copy arrives as raw HTML through [innerHTML], so it never receives the
+// emulated encapsulation attribute that scoped selectors match on — ::ng-deep
+// is what lets these rules reach it. Images are the reason this block exists:
+// an editor's upload comes back at its natural size and would otherwise blow
+// out the column on narrow screens.
+.cms-rich-text {
+  line-height: 1.8;
+  color: var(--body-text-color);
+
+  ::ng-deep {
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin: 20px 0;
+      display: block;
+    }
+
+    figure {
+      margin: 20px 0;
+    }
+
+    figcaption {
+      font-size: 14px;
+      color: var(--body-color);
+      margin-top: 8px;
+    }
+
+    h2, h3, h4 {
+      color: var(--color-dark);
+      margin: 25px 0 12px;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+
+    table {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 15px;
+    }
+
+    th, td {
+      border: 1px solid var(--border-color, #e5e5e5);
+      padding: 10px 15px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--smoke-color, #f6f6f6);
+      color: var(--color-dark);
+      font-weight: 600;
+    }
+  }
+}
+
+.cms-image-block {
+  figure {
+    margin: 0;
+  }
+
+  figcaption {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--body-color);
+    text-align: center;
+  }
+}
+
+.cms-banner {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  padding: 90px 0;
+  text-align: center;
+  color: #fff;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .55);
+  }
+
+  &.cms-banner-plain {
+    background: var(--theme-color, #f4801f);
+
+    &::before {
+      background: transparent;
+    }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  h2 {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: rgba(255, 255, 255, .9);
+    margin-bottom: 22px;
+  }
+}
+
+.cms-accordion {
+  .accordion-item {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .accordion-button {
+    font-weight: 600;
+
+    span {
+      margin-right: 10px;
+      color: var(--theme-color, #f4801f);
+    }
+  }
+}
+
+.cms-video-poster {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--smoke-color, #f6f6f6);
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.cms-video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--theme-color, #f4801f);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.cms-video-frame {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 15px;
+  overflow: hidden;
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .cms-block {
+    padding: 35px 0;
+  }
+
+  .cms-banner {
+    padding: 60px 0;
+  }
+}

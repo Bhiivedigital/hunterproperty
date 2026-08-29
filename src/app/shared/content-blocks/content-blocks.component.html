@@ -1,0 +1,125 @@
+<ng-container *ngFor="let block of visibleBlocks; trackBy: trackBlock">
+  <ng-container [ngSwitch]="block.__component">
+
+    <!-- Text with an optional supporting image; imagePosition decides the layout. -->
+    <section class="cms-block cms-section" *ngSwitchCase="'blocks.content-section'">
+      <div class="container">
+        <div class="row g-4 align-items-center"
+             [class.flex-row-reverse]="$any(block).imagePosition === 'left'"
+             [class.flex-column]="$any(block).imagePosition === 'above' || $any(block).imagePosition === 'below'"
+             [class.flex-column-reverse]="$any(block).imagePosition === 'above'">
+
+          <div [class.col-lg-6]="$any(block).image?.url && ($any(block).imagePosition === 'left' || $any(block).imagePosition === 'right')"
+               [class.col-12]="!$any(block).image?.url || $any(block).imagePosition === 'above' || $any(block).imagePosition === 'below'">
+            <h2 class="cms-block-title" *ngIf="$any(block).title">{{ $any(block).title }}</h2>
+            <div class="cms-rich-text" *ngIf="$any(block).body" [innerHTML]="$any(block).body | richText"></div>
+          </div>
+
+          <div class="cms-section-media"
+               *ngIf="$any(block).image?.url"
+               [class.col-lg-6]="$any(block).imagePosition === 'left' || $any(block).imagePosition === 'right'"
+               [class.col-12]="$any(block).imagePosition === 'above' || $any(block).imagePosition === 'below'">
+            <img class="img-fluid" [src]="$any(block).image.url"
+                 [srcset]="$any(block).image.url | cldSrcset:'content'"
+                 [attr.sizes]="'content' | cldSizes"
+                 [attr.width]="$any(block).image.width || null"
+                 [attr.height]="$any(block).image.height || null"
+                 [alt]="$any(block).title || ''" loading="lazy" decoding="async">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- A standalone image an editor drops between sections. -->
+    <section class="cms-block cms-image-block" *ngSwitchCase="'blocks.image-block'">
+      <div [class.container]="$any(block).width !== 'full'">
+        <figure *ngIf="$any(block).image?.url">
+          <img class="img-fluid" [src]="$any(block).image.url"
+               [srcset]="$any(block).image.url | cldSrcset:($any(block).width === 'full' ? 'hero' : 'content')"
+               [attr.sizes]="($any(block).width === 'full' ? 'hero' : 'content') | cldSizes"
+               [attr.width]="$any(block).image.width || null"
+               [attr.height]="$any(block).image.height || null"
+               [alt]="$any(block).altText || $any(block).caption || ''" loading="lazy" decoding="async">
+          <figcaption *ngIf="$any(block).caption">{{ $any(block).caption }}</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="cms-block cms-banner" *ngSwitchCase="'blocks.banner'"
+             [style.background-image]="$any(block).image?.url ? 'url(' + $any(block).image.url + ')' : null"
+             [class.cms-banner-plain]="!$any(block).image?.url">
+      <div class="container">
+        <h2 *ngIf="$any(block).title">{{ $any(block).title }}</h2>
+        <p *ngIf="$any(block).subtitle">{{ $any(block).subtitle }}</p>
+        <ng-container *ngIf="$any(block).ctaText && $any(block).ctaUrl">
+          <a class="theme-btn" *ngIf="isInternal($any(block).ctaUrl); else bannerExternal"
+             [routerLink]="$any(block).ctaUrl">{{ $any(block).ctaText }}<i class="fas fa-arrow-right"></i></a>
+          <ng-template #bannerExternal>
+            <a class="theme-btn" [href]="$any(block).ctaUrl" rel="noopener">{{ $any(block).ctaText }}<i class="fas fa-arrow-right"></i></a>
+          </ng-template>
+        </ng-container>
+      </div>
+    </section>
+
+    <app-quick-links *ngSwitchCase="'blocks.quick-links'"
+                     [title]="$any(block).mainTitle"
+                     [items]="$any(block).items"></app-quick-links>
+
+    <!-- Accordion and FAQs share a shape; only the heading icon differs. -->
+    <section class="cms-block cms-accordion" *ngSwitchCase="'blocks.accordion'">
+      <ng-container *ngTemplateOutlet="accordion; context: { $implicit: block, icon: 'far fa-plus' }"></ng-container>
+    </section>
+
+    <section class="cms-block cms-accordion" *ngSwitchCase="'blocks.faqs'">
+      <ng-container *ngTemplateOutlet="accordion; context: { $implicit: block, icon: 'far fa-question' }"></ng-container>
+    </section>
+
+    <section class="cms-block cms-video" *ngSwitchCase="'blocks.video-section'">
+      <div class="container">
+        <h2 class="cms-block-title text-center" *ngIf="$any(block).title">{{ $any(block).title }}</h2>
+
+        <div class="cms-video-frame" *ngIf="isPlaying(block); else videoPoster">
+          <iframe [src]="embedUrl(block)" [title]="$any(block).title || 'Video'"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen loading="lazy"></iframe>
+        </div>
+
+        <ng-template #videoPoster>
+          <button type="button" class="cms-video-poster" (click)="play($any(block))"
+                  [attr.aria-label]="'Play ' + ($any(block).title || 'video')">
+            <img *ngIf="$any(block).thumbnail?.url" class="img-fluid" [src]="$any(block).thumbnail.url"
+                 [srcset]="$any(block).thumbnail.url | cldSrcset:'content'"
+                 [attr.sizes]="'content' | cldSizes"
+                 [attr.width]="$any(block).thumbnail.width || null"
+                 [attr.height]="$any(block).thumbnail.height || null"
+                 [alt]="$any(block).title || ''" loading="lazy" decoding="async">
+            <span class="cms-video-play"><i class="fas fa-play"></i></span>
+          </button>
+        </ng-template>
+      </div>
+    </section>
+
+  </ng-container>
+</ng-container>
+
+<ng-template #accordion let-block let-icon="icon">
+  <div class="container">
+    <h2 class="cms-block-title text-center" *ngIf="block.title">{{ block.title }}</h2>
+    <div class="accordion">
+      <div class="accordion-item" *ngFor="let item of block.items; let i = index">
+        <h3 class="accordion-header">
+          <button class="accordion-button" type="button"
+                  [class.collapsed]="!isPanelOpen(block, i)"
+                  [attr.aria-expanded]="isPanelOpen(block, i)"
+                  (click)="togglePanel(block, i)">
+            <span><i [class]="icon"></i></span> {{ item.question }}
+          </button>
+        </h3>
+        <div class="accordion-collapse collapse" [class.show]="isPanelOpen(block, i)">
+          <div class="accordion-body cms-rich-text" [innerHTML]="item.answer | richText"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

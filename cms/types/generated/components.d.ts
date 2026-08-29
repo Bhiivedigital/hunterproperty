@@ -36,6 +36,10 @@ export interface BlocksContentSection extends Struct.ComponentSchema {
   attributes: {
     body: Schema.Attribute.RichText;
     image: Schema.Attribute.Media<'images'>;
+    imagePosition: Schema.Attribute.Enumeration<
+      ['right', 'left', 'above', 'below']
+    > &
+      Schema.Attribute.DefaultTo<'right'>;
     title: Schema.Attribute.String;
   };
 }
@@ -49,6 +53,21 @@ export interface BlocksFaqs extends Struct.ComponentSchema {
   attributes: {
     items: Schema.Attribute.Component<'shared.faq-item', true>;
     title: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksImageBlock extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_image_blocks';
+  info: {
+    displayName: 'Image Block';
+    icon: 'picture';
+  };
+  attributes: {
+    altText: Schema.Attribute.String;
+    caption: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    width: Schema.Attribute.Enumeration<['content', 'full']> &
+      Schema.Attribute.DefaultTo<'content'>;
   };
 }
 
@@ -230,6 +249,7 @@ declare module '@strapi/strapi' {
       'blocks.banner': BlocksBanner;
       'blocks.content-section': BlocksContentSection;
       'blocks.faqs': BlocksFaqs;
+      'blocks.image-block': BlocksImageBlock;
       'blocks.quick-links': BlocksQuickLinks;
       'blocks.scripts': BlocksScripts;
       'blocks.video-section': BlocksVideoSection;

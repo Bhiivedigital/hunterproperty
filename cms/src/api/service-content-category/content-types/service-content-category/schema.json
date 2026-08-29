@@ -45,6 +45,12 @@
       "component": "blocks.quick-links",
       "repeatable": false
     },
+    "pillarPage": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::pillar-page.pillar-page",
+      "mappedBy": "category"
+    },
     "seo": {
       "type": "component",
       "component": "shared.seo",

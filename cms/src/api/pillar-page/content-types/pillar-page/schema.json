@@ -1,0 +1,75 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pillar_pages",
+  "info": {
+    "singularName": "pillar-page",
+    "pluralName": "pillar-pages",
+    "displayName": "Pillar Page",
+    "description": "The editorial body of a category pillar page at /:categorySlug. Edited here, separately from Service Content Category — that content type only carries the short description used in menus, cards and as a fallback intro."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::service-content-category.service-content-category",
+      "inversedBy": "pillarPage"
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "intro": {
+      "type": "richtext"
+    },
+    "heroImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "contentBlocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.content-section",
+        "blocks.image-block",
+        "blocks.banner",
+        "blocks.quick-links",
+        "blocks.accordion",
+        "blocks.faqs",
+        "blocks.video-section"
+      ]
+    },
+    "quickLinks": {
+      "type": "component",
+      "component": "blocks.quick-links",
+      "repeatable": false
+    },
+    "showChildGuides": {
+      "type": "boolean",
+      "default": true
+    },
+    "childGuidesTitle": {
+      "type": "string"
+    },
+    "ctaHeading": {
+      "type": "string"
+    },
+    "ctaText": {
+      "type": "text"
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    }
+  }
+}
