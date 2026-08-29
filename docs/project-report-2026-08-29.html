@@ -267,7 +267,7 @@ Links, Accordion, FAQs, Video Section. Two new CMS components were created —
   an upload renders at its natural width and overflows.</li>
 </ol>
 
-<h2>4. Bugs found and fixed (PR #10)</h2>
+<h2>4. Bugs found and fixed</h2>
 
 <div class="note bad">
   <p><strong>Blocks never rendered at all.</strong> An image placed in an Image Block did not
@@ -306,6 +306,30 @@ Links, Accordion, FAQs, Video Section. Two new CMS components were created —
   rule sets. At article length it read as washed out. It now uses <code>--color-dark</code>
   (<code>#0A2155</code>), confirmed live as <code>rgb(10, 33, 85)</code>.</p>
 </div>
+
+<div class="note bad">
+  <p><strong>Mobile pillar pages fought back when you scrolled to the CTA.</strong> Scrolling down
+  a pillar page on a phone, the page repeatedly jerked back upwards as you neared "Ready to talk
+  to our &lt;category&gt; team", making the section effectively unreachable.</p>
+  <p>The child-guide link list was built by a getter that ran <code>.map()</code>, handing Angular
+  a brand-new object for every link on every change-detection pass. With no <code>trackBy</code>
+  on the loop, the differ treated every link as new and destroyed and rebuilt the entire list each
+  time. Scroll events run change detection, so this ran on <em>every scroll frame</em> — and the
+  resulting height flicker made Chrome's scroll anchoring drag the page backwards.</p>
+  <p>Measured on the live page with a phone viewport: <strong>588 DOM mutations</strong> during one
+  scroll (196 list items removed and re-added), and <strong>ten backward jumps of exactly
+  &minus;270px</strong>, leaving the page stuck at scrollY 4315 with the CTA at 4891 — unreachable.</p>
+  <p>Fixed by keying the list on the link itself rather than the object holding it, and by building
+  the array once when the page list changes instead of on every pass. After the fix, the same test
+  on the same page: <strong>0 mutations, 0 jumps</strong>, and the scroll runs straight past the CTA
+  to 5395.</p>
+</div>
+
+<figure>
+  <img src="assets/08-mobile-cta-fixed.jpg" alt="Pillar page CTA on a mobile viewport after the fix">
+  <figcaption><strong>The CTA on a 390px viewport after the fix</strong> — reachable, and the page
+  holds its scroll position.</figcaption>
+</figure>
 
 <h3>Verified in production</h3>
 <p>Checked against <code>hunterproperty.in</code> on 29 August after deployment: the image block

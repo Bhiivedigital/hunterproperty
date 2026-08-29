@@ -56,6 +56,8 @@ export class CategoryPageComponent implements OnInit {
   introHtml?: SafeHtml;
   contentHtml?: SafeHtml;
   pages: ServiceContentPageSummary[] = [];
+  /** Child guides as plain links, for the shared quick-links grid. */
+  pageLinks: LinkItem[] = [];
   page = 1;
   pageCount = 1;
   total = 0;
@@ -133,10 +135,16 @@ export class CategoryPageComponent implements OnInit {
   }
 
   /** Child guides as plain links, for the shared quick-links grid. */
-  get pageLinks(): LinkItem[] {
-    if (!this.category) return [];
-    const slug = this.category.slug;
-    return this.pages.map(item => ({ label: item.title, url: `/${slug}/${item.slug}` }));
+  /**
+   * Built once whenever the page list changes rather than derived in a getter.
+   * As a getter this allocated a new object per link on every change detection
+   * pass, and change detection runs on every scroll event.
+   */
+  private rebuildPageLinks(): void {
+    const slug = this.category?.slug;
+    this.pageLinks = slug
+      ? this.pages.map(item => ({ label: item.title, url: `/${slug}/${item.slug}` }))
+      : [];
   }
 
   loadMore(): void {
@@ -145,6 +153,7 @@ export class CategoryPageComponent implements OnInit {
     const nextPage = this.page + 1;
     this.contentService.getContentPagesByCategory(this.category.slug, nextPage, PAGE_SIZE).subscribe(result => {
       this.pages = [...this.pages, ...result.items];
+      this.rebuildPageLinks();
       this.page = result.page;
       this.pageCount = result.pageCount;
       this.total = result.total;
@@ -181,6 +190,7 @@ export class CategoryPageComponent implements OnInit {
 
       this.contentService.getContentPagesByCategory(category.slug, 1, PAGE_SIZE).subscribe(result => {
         this.pages = result.items;
+        this.rebuildPageLinks();
         this.page = result.page;
         this.pageCount = result.pageCount;
         this.total = result.total;

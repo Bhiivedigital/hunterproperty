@@ -4,7 +4,7 @@
     <h2 class="quick-links-title" *ngIf="title">{{ title }}</h2>
 
     <ul class="quick-links-grid">
-      <li *ngFor="let item of visibleItems">
+      <li *ngFor="let item of visibleItems; trackBy: trackLink">
         <a *ngIf="isInternal(item.url); else externalLink" [routerLink]="item.url">{{ item.label }}</a>
         <ng-template #externalLink>
           <a [href]="item.url" rel="noopener">{{ item.label }}</a>
