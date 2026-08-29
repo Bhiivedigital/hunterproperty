@@ -29,6 +29,19 @@ export class QuickLinksComponent {
   }
 
   /**
+   * Identity is the link itself, not the object holding it. Callers routinely
+   * build this list with .map() inside a getter, which hands Angular a fresh
+   * object per item on every change detection pass; without this the differ
+   * treats every link as new and rebuilds the whole list each time. Scroll
+   * events run change detection, so on a long page that churn ran on every
+   * frame and the resulting height flicker made Chrome's scroll anchoring
+   * drag the page backwards as you scrolled past it.
+   *
+   * An arrow property, not a method: Angular calls trackBy unbound.
+   */
+  trackLink = (_index: number, item: LinkItem): string => `${item.url}|${item.label}`;
+
+  /**
    * Site-relative URLs are routed client-side; anything with a scheme (or a
    * protocol-relative //host) is an outbound link and gets a plain href so the
    * router never tries to resolve it as an internal route.
