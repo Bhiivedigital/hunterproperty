@@ -1,6 +1,7 @@
 <ng-container *ngIf="category">
 
-  <div class="site-breadcrumb" style="background: url(../../../assets/img/portfolio/02.webp)">
+  <div class="site-breadcrumb"
+       [style.background-image]="pillar?.heroImage?.url ? 'url(' + pillar!.heroImage!.url + ')' : 'url(assets/img/portfolio/02.webp)'">
     <div class="container">
       <h2 class="breadcrumb-title">{{ category.name }}</h2>
       <ul class="breadcrumb-menu">
@@ -16,28 +17,34 @@
       <div class="row">
         <div class="col-lg-10 mx-auto text-center">
           <div class="site-heading text-center">
-            <span class="site-title-tagline"><i [class]="category.icon || 'far fa-helmet-safety'"></i> Guides</span>
-            <h1 class="site-title">{{ category.name }} <span>Guides</span></h1>
+            <span class="site-title-tagline"><i [class]="category.icon || 'far fa-helmet-safety'"></i> {{ tagline }}</span>
+            <h1 class="site-title" *ngIf="pillar?.heading; else defaultHeading">{{ pillar!.heading }}</h1>
+            <ng-template #defaultHeading>
+              <h1 class="site-title">{{ category.name }} <span>Guides</span></h1>
+            </ng-template>
             <div class="heading-divider"></div>
           </div>
-          <div class="pillar-intro" *ngIf="categoryDescription" [innerHTML]="categoryDescription"></div>
+          <div class="pillar-intro cms-rich-text" *ngIf="introHtml" [innerHTML]="introHtml"></div>
         </div>
       </div>
     </div>
 
-    <!-- Editor-curated links from the CMS, above the auto-generated child list. -->
-    <app-quick-links *ngIf="category.quickLinks"
-                     [title]="category.quickLinks.mainTitle"
-                     [items]="category.quickLinks.items"></app-quick-links>
+    <!-- The pillar page's own body: sections, images, banners, accordions, FAQs. -->
+    <app-content-blocks [blocks]="pillar?.contentBlocks || []"></app-content-blocks>
 
-    <app-quick-links [title]="'Related ' + category.name + ' Pages'" [items]="pageLinks"></app-quick-links>
+    <!-- Editor-curated links, above the auto-generated child list. -->
+    <app-quick-links *ngIf="curatedLinks"
+                     [title]="curatedLinks.mainTitle"
+                     [items]="curatedLinks.items"></app-quick-links>
+
+    <app-quick-links *ngIf="showChildGuides" [title]="childGuidesTitle" [items]="pageLinks"></app-quick-links>
 
     <div class="container">
-      <p class="text-center pillar-empty" *ngIf="pages.length === 0">
+      <p class="text-center pillar-empty" *ngIf="showChildGuides && pages.length === 0">
         More {{ category.name }} guides are on the way.
       </p>
 
-      <div class="text-center pillar-more" *ngIf="hasMore">
+      <div class="text-center pillar-more" *ngIf="showChildGuides && hasMore">
         <button type="button" class="theme-btn" (click)="loadMore()" [disabled]="loadingMore">
           {{ loadingMore ? 'Loading…' : 'Load More' }}<i class="fas fa-arrow-right"></i>
         </button>
@@ -46,8 +53,8 @@
       <div class="row pillar-cta">
         <div class="col-lg-8 mx-auto text-center">
           <div class="widget">
-            <h4 class="widget-title">Ready to talk to our {{ category.name }} team?</h4>
-            <p>Get a personalised quote, or see how we deliver {{ category.name | lowercase }} projects end-to-end.</p>
+            <h4 class="widget-title">{{ ctaHeading }}</h4>
+            <p>{{ ctaText }}</p>
             <div class="d-flex gap-3 justify-content-center flex-wrap">
               <a class="theme-btn" [routerLink]="['/services', category.slug]">See Our {{ category.name }} Service<i class="fas fa-arrow-right"></i></a>
               <a class="theme-btn" routerLink="/contactus">Contact Us<i class="fas fa-arrow-right"></i></a>

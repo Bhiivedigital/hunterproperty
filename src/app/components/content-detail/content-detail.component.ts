@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { SafeHtml } from '@angular/platform-browser';
 import { ServiceContentService } from '../../shared/services/service-content.service';
+import { RichTextService } from '../../shared/services/rich-text.service';
 import { ServiceContentPage, ServiceContentPageSummary } from '../../shared/models/service-content.model';
 import { SeoService } from '../../shared/services/seo.service';
 import { StructuredDataService } from '../../shared/services/structured-data.service';
@@ -27,7 +28,7 @@ export class ContentDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private contentService: ServiceContentService,
-    private sanitizer: DomSanitizer,
+    private richText: RichTextService,
     private seo: SeoService,
     private structuredData: StructuredDataService
   ) {}
@@ -51,7 +52,7 @@ export class ContentDetailComponent implements OnInit {
         return;
       }
       this.page = page;
-      this.pageContent = this.sanitizer.bypassSecurityTrustHtml(this.lazyLoadImages(page.content));
+      this.pageContent = this.richText.toSafeHtml(page.content);
 
       const path = `/${categorySlug}/${contentSlug}`;
       this.seo.setSeo({
@@ -59,6 +60,7 @@ export class ContentDetailComponent implements OnInit {
         title: `${page.title} | Hunter Property`,
         description: page.excerpt || page.title,
         image: page.coverImage?.url,
+        ogType: 'article',
         seo: page.seo
       });
       this.structuredData.setBreadcrumb([
@@ -78,14 +80,6 @@ export class ContentDetailComponent implements OnInit {
       this.contentService.getRelatedContentPages(categorySlug, contentSlug, 3).subscribe(related => this.related = related);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-  }
-
-  // Rich-text `content` comes straight from Strapi's WYSIWYG editor — any
-  // <img> an editor pastes in bypasses every optimization the rest of the
-  // pipeline applies. Tag them lazy/async here, before sanitizing, so they
-  // at least don't block rendering or fight the LCP image for bandwidth.
-  private lazyLoadImages(html: string): string {
-    return html.replace(/<img\b(?![^>]*\bloading=)([^>]*)>/gi, '<img loading="lazy" decoding="async"$1>');
   }
 
   private goToNotFound(): void {

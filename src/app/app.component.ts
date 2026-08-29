@@ -1,10 +1,11 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet, RoutesRecognized } from '@angular/router';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { LeadPopupComponent } from './shared/lead-popup/lead-popup.component';
 import { CommonModule, Location } from '@angular/common';
 import { LoadingService } from './shared/services/loading.service';
+import { SeoService } from './shared/services/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,7 @@ export class AppComponent {
   isLoading = true;
   private initialLoadDone = false;
 
-  constructor(private router: Router, private location: Location, private loadingService: LoadingService) {
+  constructor(private router: Router, private location: Location, private loadingService: LoadingService, private seo: SeoService) {
     // Dismissing the preloader needs both signals: the CMS HTTP calls that
     // populate each section (13 in parallel on the homepage — see
     // HomeContentService) have all resolved, AND the images those sections
@@ -72,6 +73,14 @@ export class AppComponent {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart && this.initialLoadDone) {
         this.isLoading = true;
+      }
+
+      // RoutesRecognized fires after redirects resolve but before the routed
+      // component is constructed, so a page that sets its own SEO in ngOnInit
+      // still wins — this only guarantees no page is ever left on index.html's
+      // homepage canonical.
+      if (event instanceof RoutesRecognized) {
+        this.seo.applyRouteDefaults(event.urlAfterRedirects);
       }
 
       if (event instanceof NavigationEnd) {

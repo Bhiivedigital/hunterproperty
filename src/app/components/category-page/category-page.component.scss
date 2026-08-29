@@ -6,6 +6,34 @@
   color: var(--body-text-color);
   line-height: 1.8;
   margin-bottom: 10px;
+
+  // The intro is CMS rich text injected via [innerHTML], so it never picks up
+  // the emulated encapsulation attribute a scoped selector matches on. Without
+  // ::ng-deep an editor's inline image renders at its natural upload width and
+  // overflows the column.
+  ::ng-deep {
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin: 20px auto;
+      display: block;
+    }
+
+    figcaption {
+      font-size: 14px;
+      color: var(--body-color);
+    }
+  }
+}
+
+.site-breadcrumb {
+  background-size: cover;
+  background-position: center;
+}
+
+app-content-blocks {
+  display: block;
 }
 
 app-quick-links {

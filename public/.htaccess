@@ -1,11 +1,51 @@
-# Angular SPA — hand any request that isn't a real file/folder to index.html
-# so the client-side router can take over (fixes 404 on refresh/deep-link).
+# Serve one canonical URL per page, then let the SPA handle the rest.
+DirectoryIndex index.html
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # --- Canonical host & scheme -------------------------------------------
+  # Every page's <link rel="canonical"> points at https://www.hunterproperty.in,
+  # so http:// and the bare apex must 301 there rather than serving a second
+  # copy of the site. The X-Forwarded-Proto check keeps this from looping when
+  # TLS is terminated at a proxy/CDN and Apache itself doesn't see HTTPS=on.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://www.hunterproperty.in%{REQUEST_URI} [R=301,L]
+
+  RewriteCond %{HTTP_HOST} !^www\.hunterproperty\.in$ [NC]
+  RewriteRule ^ https://www.hunterproperty.in%{REQUEST_URI} [R=301,L]
+
+  # /index.html is the homepage; only "/" should be reachable.
+  RewriteRule ^index\.html$ / [R=301,L]
+
+  # --- Trailing slash ------------------------------------------------------
+  # Canonicals and the sitemap all end in "/", so /interior-design must 301 to
+  # /interior-design/ instead of returning a second 200 for the same content.
+  # Explicit rather than relying on mod_dir's DirectorySlash, which can emit the
+  # wrong host/port behind a proxy.
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.*)$ /$1/ [R=301,L]
+
+  # --- Static, pre-stamped pages ------------------------------------------
+  # `npm run build` writes dist/.../<route>/index.html for every real page, each
+  # with its own title, description and self-referencing canonical (see
+  # scripts/generate-static-seo.mjs). Those are real directories, so this
+  # passthrough hands them to DirectoryIndex — crawlers get correct <head> tags
+  # in the raw HTML without waiting for Angular to boot.
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
+
+  # A request for a static file that isn't on disk must 404 — never fall through
+  # to index.html. Serving HTML with a 200 for a missing /sitemap.xml is what
+  # makes Search Console report "Sitemap is HTML" instead of a plain 404.
+  RewriteRule \.(xml|txt|json|map|css|js|ico|png|jpe?g|gif|svg|webp|avif|woff2?|ttf|eot|pdf|zip)$ - [L,R=404]
+
+  # Anything left is not a generated page: hand it to the SPA so the client-side
+  # router can render it (or show the noindex 404 page).
   RewriteRule . /index.html [L]
 </IfModule>
 
