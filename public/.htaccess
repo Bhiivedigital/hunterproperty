@@ -20,6 +20,17 @@ DirectoryIndex index.html
   # /index.html is the homepage; only "/" should be reachable.
   RewriteRule ^index\.html$ / [R=301,L]
 
+  # --- Retired per-service detail pages ------------------------------------
+  # /services/<slug> was a thin page repeating a service card's blurb; the real
+  # page for a service is its pillar page at /<slug>. Redirect here, not only in
+  # the Angular router, for two reasons: crawlers get a genuine 301 instead of a
+  # 200 followed by a client-side hop, and earlier deploys left pre-stamped
+  # dist/services/<slug>/index.html directories on disk which the static
+  # passthrough further down would otherwise keep serving — with their old
+  # self-referencing canonical. Placed above that passthrough so it wins.
+  # "/services/" itself is a real page and is excluded by requiring a segment.
+  RewriteRule ^services/([^/]+)/?$ /$1/ [R=301,L]
+
   # --- Trailing slash ------------------------------------------------------
   # Canonicals and the sitemap all end in "/", so /interior-design must 301 to
   # /interior-design/ instead of returning a second 200 for the same content.

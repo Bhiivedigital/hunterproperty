@@ -4,11 +4,12 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HomeContentService } from '../../../shared/services/home-content.service';
 import { HomeFaq, HomeTestimonials } from '../../../shared/models/home-content.model';
+import { RichTextPipe } from '../../../shared/pipes/rich-text.pipe';
 
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [CommonModule, CarouselModule],
+  imports: [CommonModule, CarouselModule, RichTextPipe],
   templateUrl: './faq.component.html',
   styleUrl: './faq.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]

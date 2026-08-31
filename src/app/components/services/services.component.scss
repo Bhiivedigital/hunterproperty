@@ -1,3 +1,8 @@
+// Same as the homepage grid: .service-item .count hangs below its card, so the
+// default g-4 gutter leaves the second row looking welded to the first.
+.service-area .row.g-4 {
+  --bs-gutter-y: 45px;
+}
 
 .service-item {
   position: relative;
@@ -61,7 +66,10 @@
   color: var(--theme-color);
 }
 
-.service-content p{
+// The blurb is a <div>, not a <p>: it holds CMS rich text, and a <ul> an editor
+// writes inside a <p> gets hoisted out of it by the HTML parser — landing
+// outside .cms-rich-text, where none of the list rules reach it.
+.service-content .service-text{
   color: var(--body-text-color);
   margin-top: 10px;
   margin-bottom: 30px;
@@ -114,6 +122,6 @@
 .service-area2 .service-title{
   font-size: 20px;
 }
-.service-content p {
+.service-content .service-text {
       min-height: 190px;
 }

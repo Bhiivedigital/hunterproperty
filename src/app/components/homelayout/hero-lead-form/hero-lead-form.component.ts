@@ -26,7 +26,7 @@ export class HeroLeadFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      pincode: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
+      location: ['', Validators.required],
       consent: [false, Validators.requiredTrue]
     });
   }
@@ -44,12 +44,12 @@ export class HeroLeadFormComponent implements OnInit {
     }
 
     this.sending = true;
-    const { name, phone, pincode } = this.form.value;
+    const { name, phone, location } = this.form.value;
 
     const { stored, emailed } = await this.leadService.capture({
       fullName: name,
       phone,
-      location: pincode,
+      location,
       sourceForm: this.sourceForm
     });
 

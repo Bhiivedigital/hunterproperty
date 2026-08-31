@@ -82,8 +82,7 @@ async function fetchAllPages(endpoint, params) {
 /**
  * Every CMS-backed route, with the title/description/canonical each page ends
  * up rendering. Titles mirror the components exactly (category-page,
- * content-detail, service-detail) so the stamped HTML and the hydrated DOM
- * agree.
+ * content-detail) so the stamped HTML and the hydrated DOM agree.
  */
 export async function collectCmsRoutes() {
   const routes = [];
@@ -125,27 +124,10 @@ export async function collectCmsRoutes() {
     });
   }
 
-  // /services/:slug resolves against the services-page single type's items —
-  // not the content categories — so read the titles and copy from there.
-  let serviceItems = [];
-  try {
-    const servicesPage = await fetchJson('services-page', { 'populate[items]': 'true' });
-    serviceItems = servicesPage?.data?.items ?? [];
-  } catch {
-    serviceItems = [];
-  }
-
-  for (const item of serviceItems) {
-    if (!item.slug) continue;
-    routes.push({
-      path: `/services/${item.slug}`,
-      changefreq: 'monthly',
-      priority: '0.7',
-      title: `${item.title} in Chennai | Hunter Property`,
-      description: item.text,
-      canonical: null
-    });
-  }
+  // /services/:slug is no longer a page — it redirects to the category's
+  // pillar page at /:slug, which is already emitted above. Listing a redirect
+  // in the sitemap tells search engines to index a URL that answers 301, so
+  // these routes are deliberately absent.
 
   const pages = await fetchAllPages('service-content-pages', {
     'populate[seo]': 'true',

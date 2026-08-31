@@ -6,3 +6,9 @@
   object-fit: cover;
   width: 100%;
 }
+
+// See .feature-text: a <div> so CMS lists in an excerpt survive the parser.
+.blog-excerpt {
+  color: var(--body-text-color);
+  margin-bottom: 1rem;
+}

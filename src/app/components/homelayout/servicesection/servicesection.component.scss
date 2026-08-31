@@ -1,4 +1,19 @@
-.service-content p {
+// The card's step number is positioned `bottom: -15px` at 70px type, so it
+// hangs below the card it belongs to. A plain g-4 gutter (24px) leaves under
+// 10px of real air between rows once that overhang is counted, which is why
+// the second row of cards looked welded to the first. Widen the row gutter to
+// clear the number as well as the card.
+.row.service-slider {
+  --bs-gutter-y: 45px;
+}
+
+// The blurb is a <div>, not a <p>: it holds CMS rich text, and a <ul> an editor
+// writes inside a <p> gets hoisted out of it by the HTML parser — landing
+// outside .cms-rich-text, where none of the list rules reach it. The theme's
+// `.service-content p` colour/margin is restated here for the same reason.
+.service-content .service-text {
+  color: var(--body-text-color);
+  margin: 0;
   min-height: 190px;
 }
 // Reserve the box before the CMS photo loads — fixes CLS (image had no

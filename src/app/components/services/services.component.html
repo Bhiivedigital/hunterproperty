@@ -30,23 +30,28 @@
                     <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let item of items; let i = index">
                         <div class="service-item">
                             <span class="count">{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>
-                            <div class="service-img">
+                            <div class="service-img" *ngIf="item.image?.url">
                                 <img [src]="item.image.url"
                                      [srcset]="item.image.url | cldSrcset:'card'"
                                      [attr.sizes]="'card' | cldSizes"
                                      [attr.width]="item.image.width || null" [attr.height]="item.image.height || null"
-                                     alt="" loading="lazy" decoding="async">
+                                     [alt]="item.title || ''" loading="lazy" decoding="async">
                             </div>
-                            <div class="service-icon">
-                                <img [src]="item.icon" alt="" loading="lazy">
+                            <!-- No icon in the CMS means no disc: the slot renders
+                                 as a bare orange circle otherwise, once per card. -->
+                            <div class="service-icon" *ngIf="item.icon">
+                                <img [src]="item.icon" [alt]="item.title || ''" loading="lazy">
                             </div>
                             <div class="service-content">
                             <h4 class="service-title">
-                               <a *ngIf="item.slug; else plainTitle" [routerLink]="['/services', item.slug]">{{ item.title }}</a>
+                               <a *ngIf="item.slug; else plainTitle" [routerLink]="['/', item.slug]">{{ item.title }}</a>
                                <ng-template #plainTitle>{{ item.title }}</ng-template>
                             </h4>
-                            <p class="service-text" [innerHTML]="item.text"></p>
-                            <a *ngIf="item.slug" class="theme-btn" [routerLink]="['/services', item.slug]">Learn More<i class="fas fa-arrow-right"></i></a>
+                            <div class="service-text cms-rich-text" [innerHTML]="item.text | richText"></div>
+                            <!-- Straight to the pillar page at /:slug. The card slugs match the
+                                 content-category slugs, and the pillar page is where the
+                                 real article lives. -->
+                            <a *ngIf="item.slug" class="theme-btn" [routerLink]="['/', item.slug]">Learn More<i class="fas fa-arrow-right"></i></a>
                         </div>
                         </div>
                     </div>

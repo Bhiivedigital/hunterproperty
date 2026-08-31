@@ -128,59 +128,16 @@
   margin-bottom: 20px;
 }
 
+// Images, tables, lists and headings inside the article body are styled once,
+// globally, by assets/css/cms-rich-text.scss — this element carries the
+// .cms-rich-text class that reaches them. They can't live here: the markup is
+// injected via [innerHTML] and never receives the emulated encapsulation's
+// _ngcontent attribute, so a scoped selector would need ::ng-deep, and the
+// copy that used to sit here had already drifted from the pillar page's (which
+// had no table rules at all). Only the typography this column chooses for
+// itself stays local.
 .content-page-body {
   line-height: 1.8;
-
-  // content is raw HTML injected via [innerHTML] (Strapi rich text), not
-  // template markup Angular compiles itself — it never gets the emulated
-  // encapsulation's _ngcontent attribute, so plain scoped selectors here
-  // (e.g. ".content-page-body table") silently never match it. ::ng-deep
-  // strips the attribute requirement off the descendant side of the selector.
-  ::ng-deep {
-    // Editor-inserted images come back at their natural upload width; without
-    // this they overflow the article column on narrow screens.
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      margin: 20px 0;
-      display: block;
-    }
-
-    figcaption {
-      font-size: 14px;
-      color: var(--body-color);
-      margin-top: 8px;
-    }
-
-    table {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      overflow-x: auto;
-      border-collapse: collapse;
-      margin: 25px 0;
-      font-size: 15px;
-    }
-
-    th,
-    td {
-      border: 1px solid var(--border-color, #e5e5e5);
-      padding: 10px 15px;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      background: var(--smoke-color, #f6f6f6);
-      color: var(--color-dark);
-      font-weight: 600;
-    }
-
-    tr:nth-child(even) td {
-      background: var(--smoke-color, #f9f9f9);
-    }
-  }
 }
 
 .content-page-tags {

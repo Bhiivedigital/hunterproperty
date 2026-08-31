@@ -18,7 +18,7 @@ const PRESETS: Record<ImagePurpose, ImagePreset> = {
   // Full-bleed hero/banner slides and section video backgrounds.
   hero: { width: 1920, srcsetWidths: [768, 1280, 1920], sizes: '100vw' },
   // Large single content images inside a half-width (col-lg-6) column:
-  // about, why-choose-us, skills, service-detail.
+  // about, why-choose-us, skills, pillar and content pages.
   content: { width: 1200, srcsetWidths: [600, 900, 1200], sizes: '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px' },
   // Grid cards: 3/4-column portfolio, service, category and guide cards.
   card: { width: 800, srcsetWidths: [400, 600, 800], sizes: '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' },

@@ -7,3 +7,9 @@
     aspect-ratio: 1 / 1;
   }
 }
+
+// See .feature-text: a <div> so CMS lists survive, with the theme's
+// `.choose-item-info p` colour restated for it.
+.choose-item-info .choose-text {
+  color: var(--body-text-color);
+}

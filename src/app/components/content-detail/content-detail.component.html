@@ -103,7 +103,7 @@
               <h4>Want this handled for you?</h4>
               <p>Talk to our {{ page.category.name | lowercase }} team about your project.</p>
               <div class="d-flex gap-3 flex-wrap">
-                <a class="theme-btn" [routerLink]="['/services', page.category.slug]">See {{ page.category.name }} Service<i class="fas fa-arrow-right"></i></a>
+                <a class="theme-btn" [routerLink]="['/', page.category.slug]">See {{ page.category.name }} Service<i class="fas fa-arrow-right"></i></a>
                 <a class="theme-btn" routerLink="/contactus">Contact Us<i class="fas fa-arrow-right"></i></a>
               </div>
             </div>

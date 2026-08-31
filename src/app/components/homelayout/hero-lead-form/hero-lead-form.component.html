@@ -9,17 +9,18 @@
         <span class="hq-err" *ngIf="submitted && f['name'].errors">Name is required</span>
       </div>
 
-      <div class="hq-row">
-        <div class="hq-field hq-phone">
+      <div class="hq-field">
+        <div class="hq-phone">
           <span class="hq-prefix">+91</span>
           <input type="tel" formControlName="phone" class="hq-ctrl" [class.error]="submitted && f['phone'].errors" placeholder="Mobile No" maxlength="10" />
         </div>
-        <div class="hq-field">
-          <input type="text" formControlName="pincode" class="hq-ctrl" [class.error]="submitted && f['pincode'].errors" placeholder="Pincode" maxlength="6" />
-        </div>
+        <span class="hq-err" *ngIf="submitted && f['phone'].errors">Enter a valid 10-digit number</span>
       </div>
-      <span class="hq-err" *ngIf="submitted && f['phone'].errors">Enter a valid 10-digit number</span>
-      <span class="hq-err" *ngIf="submitted && f['pincode'].errors">Enter a valid 6-digit pincode</span>
+
+      <div class="hq-field">
+        <input type="text" formControlName="location" class="hq-ctrl" [class.error]="submitted && f['location'].errors" placeholder="Plot / Site Location" maxlength="120" />
+        <span class="hq-err" *ngIf="submitted && f['location'].errors">Plot / site location is required</span>
+      </div>
 
       <button type="submit" class="hq-btn" [disabled]="sending || !f['consent'].value">
         {{ sending ? 'Sending…' : 'Get Free Estimate' }}

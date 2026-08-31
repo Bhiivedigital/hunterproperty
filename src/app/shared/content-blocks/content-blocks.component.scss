@@ -25,69 +25,15 @@
   border-radius: 15px;
 }
 
-// Body copy arrives as raw HTML through [innerHTML], so it never receives the
-// emulated encapsulation attribute that scoped selectors match on — ::ng-deep
-// is what lets these rules reach it. Images are the reason this block exists:
-// an editor's upload comes back at its natural size and would otherwise blow
-// out the column on narrow screens.
+// Everything structural inside a block's body — images, lists, tables,
+// headings — is styled once, globally, by assets/css/cms-rich-text.scss, which
+// the .cms-rich-text class on these elements reaches. Only the typography this
+// component chooses stays here.
 .cms-rich-text {
   line-height: 1.8;
   // Dark, not the muted --body-text-color grey the global body rule sets:
   // this is article-length copy, and that grey reads as washed out at length.
   color: var(--color-dark);
-
-  ::ng-deep {
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      margin: 20px 0;
-      display: block;
-    }
-
-    figure {
-      margin: 20px 0;
-    }
-
-    figcaption {
-      font-size: 14px;
-      color: var(--body-color);
-      margin-top: 8px;
-    }
-
-    h2, h3, h4 {
-      color: var(--color-dark);
-      margin: 25px 0 12px;
-    }
-
-    ul, ol {
-      padding-left: 20px;
-      margin-bottom: 15px;
-    }
-
-    table {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      overflow-x: auto;
-      border-collapse: collapse;
-      margin: 25px 0;
-      font-size: 15px;
-    }
-
-    th, td {
-      border: 1px solid var(--border-color, #e5e5e5);
-      padding: 10px 15px;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      background: var(--smoke-color, #f6f6f6);
-      color: var(--color-dark);
-      font-weight: 600;
-    }
-  }
 }
 
 .cms-image-block {
