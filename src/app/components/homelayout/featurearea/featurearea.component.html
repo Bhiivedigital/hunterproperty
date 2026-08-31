@@ -7,12 +7,12 @@
                             <div class="col-md-6 col-lg-4" *ngFor="let item of items; let i = index">
                                 <div class="feature-item">
                                     <span class="count">{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>
-                                    <div class="feature-icon">
-                                        <img [src]="item.icon" alt="" loading="lazy">
+                                    <div class="feature-icon" *ngIf="item.icon">
+                                        <img [src]="item.icon" [alt]="item.title || ''" loading="lazy">
                                     </div>
                                     <div class="feature-content">
                                         <h4>{{ item.title }}</h4>
-                                        <p [innerHTML]="item.text"></p>
+                                        <div class="feature-text cms-rich-text" [innerHTML]="item.text | richText"></div>
                                     </div>
                                 </div>
                             </div>

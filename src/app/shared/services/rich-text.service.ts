@@ -13,6 +13,7 @@ const MARKDOWN_IMAGE_RE = /!\[([^\]]*)\]\(\s*(<[^>]+>|[^\s)]+)(?:\s+"[^"]*")?\s*
 
 const IMG_TAG_RE = /<img\b[^>]*>/gi;
 const SRC_ATTR_RE = /\ssrc\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i;
+const TABLE_TAG_RE = /<\/?table\b[^>]*>/gi;
 
 @Injectable({ providedIn: 'root' })
 export class RichTextService {
@@ -57,7 +58,36 @@ export class RichTextService {
       return `<img src="${this.escapeAttr(src)}" alt="${this.escapeAttr(alt)}">`;
     });
 
-    return html.replace(IMG_TAG_RE, tag => this.rewriteImgTag(tag, purpose));
+    return this.wrapTables(html.replace(IMG_TAG_RE, tag => this.rewriteImgTag(tag, purpose)));
+  }
+
+  /**
+   * Wraps each top-level `<table>` in a horizontally scrollable div.
+   *
+   * A comparison table an editor writes in the CMS is routinely wider than the
+   * article column on a phone. The usual fix — `table { display: block;
+   * overflow-x: auto }` — costs the table its table layout: every column
+   * collapses to its own content and the borders stop lining up down the page.
+   * Moving the scroll onto a wrapper keeps `display: table` intact, so the
+   * table still renders as a table and the *wrapper* is what scrolls.
+   *
+   * Depth-tracked rather than a blind open/close replace, so a table nested
+   * inside a cell doesn't get a wrapper of its own — and doesn't close the
+   * outer wrapper early.
+   */
+  private wrapTables(html: string): string {
+    let depth = 0;
+    return html.replace(TABLE_TAG_RE, tag => {
+      if (tag[1] === '/') {
+        // A stray `</table>` with nothing open would otherwise emit a closing
+        // `</div>` that belongs to no wrapper.
+        if (depth === 0) return tag;
+        depth -= 1;
+        return depth === 0 ? `${tag}</div>` : tag;
+      }
+      depth += 1;
+      return depth === 1 ? `<div class="cms-table-scroll">${tag}` : tag;
+    });
   }
 
   private rewriteImgTag(tag: string, purpose: ImagePurpose): string {

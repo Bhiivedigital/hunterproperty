@@ -1,0 +1,8 @@
+// The blurb is a <div>, not a <p>: it holds CMS rich text, and a <ul> an editor
+// writes inside a <p> is hoisted out of it by the HTML parser, landing outside
+// .cms-rich-text where none of the list rules reach it. Restates the theme's
+// `.feature-content p` typography for the element that replaced it.
+.feature-content .feature-text {
+  color: var(--body-text-color);
+  margin-top: 10px;
+}

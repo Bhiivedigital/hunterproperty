@@ -6,11 +6,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HomeContentService } from '../../../shared/services/home-content.service';
 import { ServiceCard } from '../../../shared/models/home-content.model';
 import { CldSrcsetPipe, CldSizesPipe } from '../../../shared/pipes/cloudinary.pipe';
+import { RichTextPipe } from '../../../shared/pipes/rich-text.pipe';
 
 @Component({
   selector: 'app-servicesection',
   standalone: true,
-  imports: [CommonModule, CarouselModule, RouterLink, CldSrcsetPipe, CldSizesPipe],
+  imports: [CommonModule, CarouselModule, RouterLink, CldSrcsetPipe, CldSizesPipe, RichTextPipe],
   templateUrl: './servicesection.component.html',
   styleUrl: './servicesection.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]

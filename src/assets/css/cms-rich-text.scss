@@ -1,0 +1,273 @@
+/* ============================================================================
+   CMS rich text — one shared presentation for every Strapi-authored body.
+
+   Why global rather than a component stylesheet: this markup arrives through
+   [innerHTML], so it never receives the _ngcontent attribute Angular's emulated
+   encapsulation matches scoped selectors on. Every component that renders CMS
+   copy was otherwise re-declaring its own ::ng-deep block, and each one had
+   drifted — the pillar page had no table rules at all, and nothing anywhere
+   restored list markers. A global sheet reaches injected markup directly and
+   gives editors the same result on every page.
+
+   Add `class="cms-rich-text"` to the element carrying the [innerHTML] binding.
+
+   Deliberately structural only: no colour or line-height, so a card blurb keeps
+   the card's typography and an article keeps the article's. Contexts that want
+   article-length body colour set it themselves.
+   ========================================================================== */
+
+.cms-rich-text {
+
+    /* --- flow ------------------------------------------------------------ */
+
+    > :first-child {
+        margin-top: 0;
+    }
+
+    > :last-child {
+        margin-bottom: 0;
+    }
+
+    p {
+        margin: 0 0 16px;
+    }
+
+    /* The theme zeroes every heading margin globally (h1–h6 { margin: 0 }),
+       which runs an editor's sub-heading straight into the paragraph above it. */
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--color-dark);
+        margin: 30px 0 14px;
+        line-height: 1.35;
+    }
+
+    h1 { font-size: 32px; }
+    h2 { font-size: 28px; }
+    h3 { font-size: 22px; }
+    h4 { font-size: 19px; }
+    h5 { font-size: 17px; }
+    h6 { font-size: 16px; }
+
+    hr {
+        border: 0;
+        border-top: 1px solid var(--border-color, #e5e5e5);
+        margin: 30px 0;
+        opacity: 1;
+    }
+
+    a {
+        color: var(--theme-color, #f4801f);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+
+        &:hover {
+            color: var(--color-dark);
+        }
+    }
+
+    strong, b {
+        font-weight: 700;
+        color: var(--color-dark);
+    }
+
+    /* --- lists ----------------------------------------------------------- */
+
+    /* The theme's reset is `li { list-style: none }` plus `ul { padding: 0 }`,
+       so every bullet and every number an editor wrote was invisible site-wide.
+       Restoring it takes both halves: a marker type on the `li` (the reset
+       targets `li` directly, so a rule on `ul` alone loses), and left padding
+       on the list, or an `outside` marker renders past the column edge. */
+    ul, ol {
+        margin: 0 0 18px;
+        padding-left: 24px;
+    }
+
+    li {
+        display: list-item;
+        margin-bottom: 8px;
+
+        &::marker {
+            color: var(--theme-color, #f4801f);
+        }
+    }
+
+    /* Nested lists sit tight under their parent item rather than opening a
+       second paragraph gap. */
+    li > ul,
+    li > ol {
+        margin: 8px 0 0;
+    }
+
+    ul > li { list-style: disc; }
+    ul ul > li { list-style: circle; }
+    ul ul ul > li { list-style: square; }
+
+    ol > li { list-style: decimal; }
+    ol ol > li { list-style: lower-alpha; }
+    ol ol ol > li { list-style: lower-roman; }
+
+    /* An editor can still opt out per list, the way the theme's own link lists do. */
+    ul.list-unstyled > li,
+    ol.list-unstyled > li {
+        list-style: none;
+    }
+
+    dl {
+        margin: 0 0 18px;
+    }
+
+    dt {
+        font-weight: 700;
+        color: var(--color-dark);
+    }
+
+    dd {
+        margin: 0 0 12px 20px;
+    }
+
+    /* --- tables ---------------------------------------------------------- */
+
+    /* RichTextService wraps every table in .cms-table-scroll so the *wrapper*
+       scrolls on a narrow screen and the table itself keeps `display: table`.
+       The older approach — `table { display: block; overflow-x: auto }` — made
+       the table a block box, which drops column sizing: every column collapsed
+       to its content and the borders stopped lining up across rows. */
+    .cms-table-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 25px 0;
+        border-radius: 10px;
+        border: 1px solid var(--border-color, #e5e5e5);
+    }
+
+    .cms-table-scroll > table {
+        margin: 0;
+        border: 0;
+    }
+
+    table {
+        width: 100%;
+        /* Narrower than this and a three-column comparison table becomes one
+           word per line; below it the wrapper scrolls instead. */
+        min-width: 520px;
+        border-collapse: collapse;
+        font-size: 15px;
+        background: var(--color-white, #fff);
+    }
+
+    caption {
+        caption-side: bottom;
+        padding: 10px 0 0;
+        font-size: 14px;
+        color: var(--body-color);
+        text-align: left;
+    }
+
+    th, td {
+        border: 1px solid var(--border-color, #e5e5e5);
+        padding: 12px 16px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    /* Cells hold prose, so the list and paragraph rules above apply inside them
+       too — just without the block-level spacing that would balloon row height. */
+    th > :last-child,
+    td > :last-child {
+        margin-bottom: 0;
+    }
+
+    thead th,
+    th {
+        background: var(--theme-bg-light, #f6f6f6);
+        color: var(--color-dark);
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) td {
+        background: rgba(0, 0, 0, .02);
+    }
+
+    /* --- media ----------------------------------------------------------- */
+
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        margin: 20px 0;
+        display: block;
+    }
+
+    figure {
+        margin: 20px 0;
+    }
+
+    figure img {
+        margin: 0;
+    }
+
+    figcaption {
+        font-size: 14px;
+        color: var(--body-color);
+        margin-top: 8px;
+    }
+
+    iframe {
+        max-width: 100%;
+        border-radius: 12px;
+    }
+
+    /* --- quotes and code -------------------------------------------------- */
+
+    blockquote {
+        margin: 25px 0;
+        padding: 16px 22px;
+        border-left: 4px solid var(--theme-color, #f4801f);
+        background: var(--theme-bg-light, #f6f6f6);
+        border-radius: 0 10px 10px 0;
+
+        > :last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    code {
+        background: var(--theme-bg-light, #f6f6f6);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: .92em;
+    }
+
+    pre {
+        background: var(--theme-bg-light, #f6f6f6);
+        padding: 16px 18px;
+        border-radius: 10px;
+        overflow-x: auto;
+        margin: 20px 0;
+
+        code {
+            background: none;
+            padding: 0;
+        }
+    }
+}
+
+/* Article-length bodies: pillar pages, service content pages, legal pages and
+   CMS content blocks. Separated from the structural rules above so a card
+   blurb tagged .cms-rich-text keeps the card's own typography. */
+.cms-rich-article {
+    color: var(--color-dark);
+    line-height: 1.8;
+}
+
+@media (max-width: 767px) {
+    .cms-rich-text {
+        h1 { font-size: 26px; }
+        h2 { font-size: 23px; }
+        h3 { font-size: 20px; }
+
+        th, td {
+            padding: 10px 12px;
+        }
+    }
+}

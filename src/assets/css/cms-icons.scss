@@ -1,0 +1,49 @@
+/* ============================================================================
+   CMS-uploaded icons
+
+   Every icon slot in the theme paints the uploaded image pure white:
+
+       .service-icon img { filter: brightness(0) invert(1); }
+
+   That is right for the theme's own artwork — single-colour SVG line drawings
+   on a transparent background, sitting on the orange disc — and wrong for
+   anything else. An editor who uploads a finished full-colour icon (a PNG or
+   WebP with its own background, which is what an AI image generator produces)
+   gets every pixel of it, background included, flattened to solid white: on
+   the orange disc it reads as a blank white blob, and the icon looks like it
+   never uploaded at all.
+
+   So the filter is scoped to SVGs, which is exactly the set it was written
+   for, and a raster upload is shown as the editor made it — sized to fill the
+   disc, since a raster icon carries its own background and rounding it into
+   the slot looks deliberate rather than pasted on top.
+   ========================================================================== */
+
+.header-top-list .list-item .icon img,
+.about-item .icon img,
+.feature-icon img,
+.service-icon img,
+.process-item .icon img,
+.pricing-icon img,
+.choose-item-icon img {
+
+    &:not([src$=".svg"]) {
+        filter: none;
+        /* The theme pins each of these to a fixed px width, several with
+           !important, so filling the slot has to override that explicitly. */
+        width: 100% !important;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+}
+
+/* An icon slot with nothing in it is a bare orange disc — visible, meaningless
+   and, on a card grid, repeated once per card. Templates omit the slot when the
+   CMS has no icon; this covers any that still render one with an empty src. */
+.service-icon img[src=""],
+.feature-icon img[src=""],
+.process-item .icon img[src=""],
+.choose-item-icon img[src=""] {
+    display: none;
+}

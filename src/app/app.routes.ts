@@ -4,7 +4,6 @@ import { ContactusComponent } from './components/contactus/contactus.component';
 import { HomelayoutComponent } from './components/homelayout/homelayout.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { ServicesComponent } from './components/services/services.component';
-import { ServiceDetailComponent } from './components/service-detail/service-detail.component';
 import { CategoryPageComponent } from './components/category-page/category-page.component';
 import { ContentDetailComponent } from './components/content-detail/content-detail.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -20,7 +19,16 @@ export const routes: Routes = [
     {path:'about', component:AboutComponent},
     {path:'contactus', component:ContactusComponent},
     {path:'services', component:ServicesComponent},
-    {path:'services/:slug', component:ServiceDetailComponent},
+
+    // The per-service detail page is gone: a service's real page is its pillar
+    // page at /:slug, which carries the full article rather than the one-
+    // paragraph card blurb this route used to repeat. The route stays as a
+    // redirect so links already out in the world — Google's index, the old
+    // sitemap, anything shared — land on the pillar page instead of a 404.
+    // Card slugs on the Services Page single type match the content-category
+    // slugs one-for-one, so the substitution is direct.
+    {path:'services/:slug', redirectTo: ({ params }) => `/${params['slug']}`},
+
     {path:'portfolio', component:PortfolioComponent},
     {path:'privacy-policy', component:PrivacyPolicyComponent},
     {path:'terms-and-conditions', component:TermsConditionsComponent},

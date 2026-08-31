@@ -48,23 +48,13 @@
   line-height: 1.8;
   margin-bottom: 10px;
 
-  // The intro is CMS rich text injected via [innerHTML], so it never picks up
-  // the emulated encapsulation attribute a scoped selector matches on. Without
-  // ::ng-deep an editor's inline image renders at its natural upload width and
-  // overflows the column.
-  ::ng-deep {
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      margin: 20px auto;
-      display: block;
-    }
-
-    figcaption {
-      font-size: 14px;
-      color: var(--body-color);
-    }
+  // Images, lists, tables and headings in this copy are styled globally by
+  // assets/css/cms-rich-text.scss, via the .cms-rich-text class on these
+  // elements. This column previously carried a local ::ng-deep block that
+  // covered only images — which is why an editor's comparison table came out
+  // as borderless run-on text on every pillar page.
+  ::ng-deep img {
+    margin-inline: auto;
   }
 }
 

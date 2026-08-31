@@ -4,7 +4,7 @@
             <div class="col-lg-6 mx-auto">
                 <div class="site-heading text-center wow fadeInDown" data-wow-delay=".25s">
                     <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> Insights</span>
-                    <h2 class="site-title">Property & Construction <span>Guides</span></h2>
+                    <h2 class="site-title">Property & Construction <span>Services</span></h2>
                     <div class="heading-divider"></div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                         <h4 class="blog-title">
                             <a [routerLink]="['/' + guide.category.slug, guide.slug]">{{ guide.title }}</a>
                         </h4>
-                        <p [innerHTML]="guide.excerpt"></p>
+                        <div class="blog-excerpt cms-rich-text" [innerHTML]="guide.excerpt | richText"></div>
                         <a class="theme-btn" [routerLink]="['/' + guide.category.slug, guide.slug]">Read More<i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>

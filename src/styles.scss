@@ -5,6 +5,8 @@
 @import "../src/assets/css/animate.min.css";
 @import "../src/assets/css/magnific-popup.min.css";
 @import "../src/assets/css/nice-select.min.css";
+@import "../src/assets/css/cms-rich-text.scss";
+@import "../src/assets/css/cms-icons.scss";
 
 // YouTube-style shimmer placeholder — a gray gradient that slides across the
 // image's own box. CMS images are fetched async so there's often a visible
@@ -394,88 +396,4 @@ button.accordion-button.collapsed {
    .header-top is hidden below 576px. */
 .main {
     padding-top: var(--header-top-height, 0px);
-}
-/* ---------------------------------------------------------------------------
-   CMS rich text (Strapi body copy rendered through [innerHTML])
-
-   The theme resets `li { list-style: none }` globally so its nav/footer menus
-   render without markers. Editor-authored article copy is the one place that
-   reset is wrong: a <ul> written in the CMS came out as indented lines with no
-   bullets, and an <ol> lost its numbers entirely. These rules live here rather
-   than in a component's stylesheet because the markup arrives via [innerHTML]
-   and is shared by the pillar page, the content page and every CMS block, so a
-   scoped (emulated-encapsulation) selector would never match it.
-   --------------------------------------------------------------------------- */
-.cms-rich-text,
-.content-page-body,
-.pillar-intro,
-.pillar-content {
-    ul,
-    ol {
-        margin: 0 0 15px;
-        padding-left: 22px;
-    }
-
-    ul { list-style: disc outside; }
-    ol { list-style: decimal outside; }
-
-    ul ul { list-style: circle outside; }
-    ul ul ul { list-style: square outside; }
-    ol ol { list-style: lower-alpha outside; }
-    ol ol ol { list-style: lower-roman outside; }
-
-    /* `list-style` on the parent is not enough: the theme's reset targets the
-       `li` itself, and an element's own declaration beats an inherited one. */
-    li {
-        list-style: inherit;
-        margin-bottom: 8px;
-    }
-
-    li:last-child { margin-bottom: 0; }
-
-    li > ul,
-    li > ol {
-        margin-top: 8px;
-        margin-bottom: 0;
-    }
-
-    p { margin-bottom: 15px; }
-    p:last-child { margin-bottom: 0; }
-
-    /* The theme zeroes heading margins globally, which runs article headings
-       into the paragraph above them. */
-    h1, h2, h3, h4, h5, h6 {
-        margin: 28px 0 12px;
-        color: var(--color-dark);
-    }
-
-    h1:first-child, h2:first-child, h3:first-child,
-    h4:first-child, h5:first-child, h6:first-child { margin-top: 0; }
-
-    blockquote {
-        margin: 25px 0;
-        padding: 15px 20px;
-        border-left: 3px solid var(--theme-color);
-        background: var(--smoke-color, #f6f6f6);
-        font-style: italic;
-    }
-
-    a {
-        color: var(--theme-color);
-        text-decoration: underline;
-    }
-
-    strong, b { font-weight: 700; }
-
-    code {
-        background: var(--smoke-color, #f2f2f2);
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-size: .9em;
-    }
-
-    hr {
-        margin: 30px 0;
-        opacity: .15;
-    }
 }

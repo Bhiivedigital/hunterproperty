@@ -5,11 +5,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HomeContentService } from '../../../shared/services/home-content.service';
 import { HomeAbout } from '../../../shared/models/home-content.model';
 import { CldSrcsetPipe, CldSizesPipe } from '../../../shared/pipes/cloudinary.pipe';
+import { RichTextPipe } from '../../../shared/pipes/rich-text.pipe';
 
 @Component({
   selector: 'app-aboutsection',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, CldSrcsetPipe, CldSizesPipe],
+  imports: [CommonModule, RouterLink, RouterLinkActive, CldSrcsetPipe, CldSizesPipe, RichTextPipe],
   templateUrl: './aboutsection.component.html',
   styleUrl: './aboutsection.component.scss'
 })

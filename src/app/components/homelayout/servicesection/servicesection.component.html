@@ -11,25 +11,32 @@
                    
                     
                 </div>
-                <div class="row service-slider  mt-4 wow fadeInUp" data-wow-delay=".25s">
+                <!-- g-4, not just mt-4: a Bootstrap row's default vertical
+                     gutter is 0, so with five cards the second row sat flush
+                     against the bottom of the first and the two read as one
+                     tall card. The horizontal gutter was already there, which
+                     is why only the row seam looked wrong. -->
+                <div class="row service-slider g-4 mt-4 wow fadeInUp" data-wow-delay=".25s">
                     <div class="col-lg-4 col-12 col-sm-6 col-md-4" *ngFor="let item of items; let i = index">
                         <div class="service-item">
                         <span class="count">{{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}</span>
-                        <div class="service-img">
+                        <div class="service-img" *ngIf="item.image?.url">
                             <img class="skel-img" [src]="item.image.url"
                                  [srcset]="item.image.url | cldSrcset:'card'"
                                  [attr.sizes]="'card' | cldSizes"
                                  [attr.width]="item.image.width || null" [attr.height]="item.image.height || null"
                                  alt="" loading="lazy" decoding="async">
                         </div>
-                        <div class="service-icon">
-                            <img [src]="item.icon" alt="" loading="lazy">
+                        <!-- No icon in the CMS means no disc: the slot renders
+                             as a bare orange circle otherwise, once per card. -->
+                        <div class="service-icon" *ngIf="item.icon">
+                            <img [src]="item.icon" [alt]="item.title || ''" loading="lazy">
                         </div>
                         <div class="service-content">
                             <h4 class="service-title">
                                {{ item.title }}
                             </h4>
-                            <p class="service-text" [innerHTML]="item.text"></p>
+                            <div class="service-text cms-rich-text" [innerHTML]="item.text | richText"></div>
                         </div>
                     </div>
                      </div>

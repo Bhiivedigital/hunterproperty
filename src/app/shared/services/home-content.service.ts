@@ -178,7 +178,23 @@ export class HomeContentService {
   }
 
   getServicesPage(): Observable<ServicesPage> {
-    return this.fetch<any>('services-page').pipe(map(data => ({
+    // `populate=*` (this method's default) only reaches one level down: it
+    // returns the `items` component but not the media *inside* it, so every
+    // card came back with image: null, icon: null and the page rendered as
+    // bare orange circles with no photo. Nested relations have to be named —
+    // and they can't be named *alongside* `populate=*`, which Strapi resolves
+    // by dropping both the wildcard and half the nested keys, so every field
+    // this page reads is listed explicitly here instead.
+    return this.fetch<any>('services-page', {
+      'populate[items][populate][0]': 'image',
+      'populate[items][populate][1]': 'icon',
+      'populate[breadcrumbs]': 'true',
+      'populate[image]': 'true',
+      'populate[mobileImage]': 'true',
+      'populate[topLevelImages]': 'true',
+      'populate[quickLinks][populate][0]': 'items',
+      'populate[seo][populate][0]': 'ogImage'
+    }).pipe(map(data => ({
       ...data,
       items: (data.items ?? []).map((i: any) => ({
         ...i,

@@ -13,12 +13,12 @@
                             </div>
                             <div class="choose-content-wrap">
                                 <div class="choose-item" *ngFor="let item of data?.items">
-                                    <div class="choose-item-icon">
-                                        <img [src]="item.icon" alt="" loading="lazy">
+                                    <div class="choose-item-icon" *ngIf="item.icon">
+                                        <img [src]="item.icon" [alt]="item.title || ''" loading="lazy">
                                     </div>
                                     <div class="choose-item-info">
                                         <h4>{{ item.title }}</h4>
-                                        <p [innerHTML]="item.text"></p>
+                                        <div class="choose-text cms-rich-text" [innerHTML]="item.text | richText"></div>
                                     </div>
                                 </div>
                             </div>

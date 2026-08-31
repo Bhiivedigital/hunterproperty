@@ -9,8 +9,8 @@
                                 <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> {{ faq?.tagline }}</span>
                                 <h2 class="site-title my-3" [innerHTML]="faqTitleHtml"></h2>
                             </div>
-                            <p class="mb-3" [innerHTML]="faq?.introText1"></p>
-                            <p class="mb-4" [innerHTML]="faq?.introText2"></p>
+                            <div class="mb-3 cms-rich-text" [innerHTML]="faq?.introText1 | richText"></div>
+                            <div class="mb-4 cms-rich-text" [innerHTML]="faq?.introText2 | richText"></div>
                             <a href="contact.html" class="theme-btn mt-2">{{ faq?.ctaText }}</a>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                                     </button>
                                 </h2>
                                 <div [id]="'collapse' + i" class="accordion-collapse collapse" [class.show]="i === 0" [attr.aria-labelledby]="'heading' + i" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body" [innerHTML]="item.answer"></div>
+                                    <div class="accordion-body cms-rich-text" [innerHTML]="item.answer | richText"></div>
                                 </div>
                             </div>
                         </div>

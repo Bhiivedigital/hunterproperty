@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { HomeContentService } from '../../../shared/services/home-content.service';
 import { IconTextItem } from '../../../shared/models/home-content.model';
+import { RichTextPipe } from '../../../shared/pipes/rich-text.pipe';
 
 @Component({
   selector: 'app-featurearea',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RichTextPipe],
   templateUrl: './featurearea.component.html',
   styleUrl: './featurearea.component.scss'
 })
