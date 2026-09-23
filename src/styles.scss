@@ -397,3 +397,118 @@ button.accordion-button.collapsed {
 .main {
     padding-top: var(--header-top-height, 0px);
 }
+
+
+/* =========================================================
+   Counter cards (.counter-area) — icon alignment
+   ---------------------------------------------------------
+   style.css centres the icon glyph optically: an 80px circle
+   with `line-height: 70px` and `text-align: center`. That only
+   ever lined the <img> up by accident, and the mobile pass
+   above shrinks the circle to 55px WITHOUT touching the 70px
+   line-height — so on phones the icon was pushed below the
+   centre of its own circle and the whole card read as crooked.
+   Centre it geometrically instead, so it holds at every width,
+   and pin the number/label block to the same optical centre.
+   ========================================================= */
+.counter-item {
+    align-items: center;
+}
+.counter-item .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;      /* never squashed by a long label */
+    line-height: 1;
+    padding: 0;
+}
+.counter-item .icon img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    display: block;
+}
+.counter-item .content {
+    min-width: 0;        /* lets a long label wrap instead of widening the pill */
+}
+.counter-item .info {
+    align-items: baseline;
+}
+.counter-item .title {
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+/* The circle is 55px here (rule above), so the glyph has to come down with it. */
+@media screen and (max-width: 767px) {
+    .counter-item {
+        padding: 16px 15px;
+    }
+    .counter-item .icon img {
+        width: 32px;
+        height: 32px;
+    }
+    .counter-item .title {
+        font-size: 16px;
+    }
+}
+
+/* Tablet keeps the 80px circle but the pill gets narrow enough (2-up grid)
+   that the 50px number and an 18px label start to crowd it. */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .counter-item .icon {
+        width: 66px;
+        height: 66px;
+    }
+    .counter-item .icon img {
+        width: 40px;
+        height: 40px;
+    }
+    .counter-item .counter {
+        font-size: 40px;
+    }
+    .counter-item .unit {
+        font-size: 20px;
+    }
+    .counter-item .title {
+        font-size: 16px;
+    }
+}
+
+
+/* =========================================================
+   No horizontal scrolling, anywhere
+   ---------------------------------------------------------
+   Article (/:category/:slug) and pillar (/:category) pages were
+   scrolling sideways on phones and tablets. The specific causes
+   are fixed at source — the lead-form badge no longer overhangs
+   past the container gutter, the article/sidebar grid columns
+   can shrink below their content, and CMS copy breaks long
+   unbroken words — but those pages render editor-authored HTML,
+   so the next wide thing pasted into Strapi would bring it back.
+   This is the backstop.
+
+   `clip`, not `hidden`, and this is the important part: `hidden`
+   turns the element into a scroll container, which re-anchors
+   every `position: sticky` descendant (the article sidebar and
+   the pillar enquiry form both rely on it) and silently forces
+   `overflow-y` to `auto`. `clip` creates no scroll container, so
+   sticky and the page's own vertical scroll are untouched — it
+   only refuses to scroll on the x axis.
+   ========================================================= */
+html,
+body {
+    overflow-x: clip;
+}
+
+/* Nothing may be wider than its column to begin with. style.css already caps
+   `img`; embeds and media an editor pastes into Strapi carry their own
+   intrinsic width and were not covered. Tables are exempt in practice — the
+   `min-width: 520px` in cms-rich-text.scss wins over max-width by design, and
+   the .cms-table-scroll wrapper around it is what scrolls. */
+video,
+iframe,
+embed,
+object {
+    max-width: 100%;
+}

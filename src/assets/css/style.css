@@ -3929,10 +3929,44 @@ label {
   width: 8px;
   height: 8px;
 }
+/* The quote body used to be pinned to `height: 135px`. That is a *fixed pixel*
+   box holding text whose height is not fixed at all: on a phone with a larger
+   system font, Android/iOS text-size boosting, or a narrower column, the same
+   quote wraps onto more lines than 135px can hold and simply spills out of the
+   card — running underneath the author name and the card's own bottom edge.
+   That is why the section looked fine on one phone and collapsed on another.
+
+   Bound it in `em` instead, so the box grows with whatever font size the device
+   actually resolves, and clamp the copy to a whole number of lines so it can
+   never overflow no matter how long the review is. min == max keeps every card
+   in the carousel the same height, which is what the fixed value was for. */
 p.review-cnt {
-    height: 135px;
-    /* overflow: auto; */
     font-size: 16px;
+    line-height: 1.7;
+    /* 1.7em x 6 lines. em, not px: it tracks the resolved font size. */
+    min-height: calc(1.7em * 6);
+    max-height: calc(1.7em * 6);
+    margin-bottom: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
+    -webkit-box-orient: vertical;
+    /* A pasted URL or a long unbroken word must wrap, not widen the card. */
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+@media screen and (max-width: 575px) {
+    /* Narrower column, so the same quote needs more lines before it reads as
+       truncated mid-thought. */
+    p.review-cnt {
+        font-size: 15px;
+        min-height: calc(1.7em * 8);
+        max-height: calc(1.7em * 8);
+        -webkit-line-clamp: 8;
+        line-clamp: 8;
+    }
 }
 
 

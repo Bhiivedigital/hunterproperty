@@ -19,6 +19,15 @@
   }
 }
 
+// See the same note in content-detail.component.scss: without this a grid item
+// refuses to shrink below its widest child, so one wide table or long pasted
+// URL in the CMS copy widens the page and the phone gets a horizontal scroll.
+// The lg rule below uses minmax(0, …); this covers the single-column case.
+.pillar-main,
+.pillar-aside {
+  min-width: 0;
+}
+
 @media (min-width: 992px) {
   .pillar-layout {
     grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);

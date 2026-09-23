@@ -18,6 +18,13 @@
 
 .cms-rich-text {
 
+    /* A pasted URL, a hashtag chain or a long product code has no break
+       opportunity in it, so the browser lets it stick out of its column — and
+       on a phone that one word is what makes the whole page scroll sideways.
+       Break inside such a word rather than widening the layout around it. */
+    overflow-wrap: break-word;
+    word-break: break-word;
+
     /* --- flow ------------------------------------------------------------ */
 
     > :first-child {
