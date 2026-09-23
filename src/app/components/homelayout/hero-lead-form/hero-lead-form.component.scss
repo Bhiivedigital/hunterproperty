@@ -6,10 +6,20 @@
   box-shadow: 0 24px 60px rgba(9, 20, 48, .22);
 }
 
+// Decorative badge that deliberately breaks out of the card's top-right
+// corner. The overhang has to stay INSIDE the page gutter, though: on the
+// pillar and article pages this card is a grid item sitting directly in
+// .container, so its right edge is only one container padding (12px at
+// <576px, 16px at the 576/768/992/1200 breakpoint boundaries) away from the
+// edge of the viewport. At the old -22px/-14px it crossed that line, and an
+// absolutely positioned box past the right edge of the document is exactly
+// what gives a page a horizontal scrollbar — which is what phones and tablets
+// were showing on /interior-design/ and every guide page under it.
+// -10px clears the narrowest gutter at every breakpoint with room to spare.
 .hq-illustration {
   position: absolute;
   top: -34px;
-  right: -22px;
+  right: -10px;
   width: 92px;
   height: 92px;
   border-radius: 50%;
@@ -24,7 +34,7 @@
     width: 74px;
     height: 74px;
     top: -26px;
-    right: -14px;
+    right: -8px;
   }
 }
 

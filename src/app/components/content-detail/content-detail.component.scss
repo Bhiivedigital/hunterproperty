@@ -14,6 +14,19 @@
   gap: 30px;
 }
 
+// A grid item's automatic minimum size is its content's min-content width, so
+// one wide thing an editor drops into the article — a table, a pasted URL, an
+// image with intrinsic width — stops the column from shrinking and widens the
+// whole page instead of scrolling inside its own box. min-width:0 lets the
+// column shrink to the grid track; the scroll wrappers in cms-rich-text.scss
+// then do their job. The lg rule below already uses minmax(0, …) for the same
+// reason — this is the single-column phone/tablet case it didn't cover.
+.content-page-main,
+.content-page-form,
+.content-page-widgets {
+  min-width: 0;
+}
+
 .content-page-side {
   display: contents;
 }

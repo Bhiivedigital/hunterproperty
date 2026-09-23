@@ -931,6 +931,7 @@ export interface ApiLeadLead extends Struct.CollectionTypeSchema {
         'hero-lead-form',
         'lead-popup',
         'content-page',
+        'pillar-page',
       ]
     >;
     status: Schema.Attribute.Enumeration<['new', 'contacted', 'closed']> &
@@ -1007,6 +1008,7 @@ export interface ApiPillarPagePillarPage extends Struct.CollectionTypeSchema {
       'api::service-content-category.service-content-category'
     >;
     childGuidesTitle: Schema.Attribute.String;
+    content: Schema.Attribute.RichText;
     contentBlocks: Schema.Attribute.DynamicZone<
       [
         'blocks.content-section',
@@ -1018,11 +1020,20 @@ export interface ApiPillarPagePillarPage extends Struct.CollectionTypeSchema {
         'blocks.video-section',
       ]
     >;
+    contentBlocksPosition: Schema.Attribute.Enumeration<
+      ['below-content', 'above-content']
+    > &
+      Schema.Attribute.DefaultTo<'above-content'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     ctaHeading: Schema.Attribute.String;
     ctaText: Schema.Attribute.Text;
+    featuredImage: Schema.Attribute.Media<'images'>;
+    featuredImagePosition: Schema.Attribute.Enumeration<
+      ['top', 'below-intro', 'below-content']
+    > &
+      Schema.Attribute.DefaultTo<'top'>;
     heading: Schema.Attribute.String;
     heroImage: Schema.Attribute.Media<'images'>;
     intro: Schema.Attribute.RichText;
@@ -1161,6 +1172,7 @@ export interface ApiServiceContentPageServiceContentPage
     contentBlocks: Schema.Attribute.DynamicZone<
       [
         'blocks.content-section',
+        'blocks.image-block',
         'blocks.banner',
         'blocks.quick-links',
         'blocks.accordion',
@@ -1169,7 +1181,15 @@ export interface ApiServiceContentPageServiceContentPage
         'blocks.scripts',
       ]
     >;
+    contentBlocksPosition: Schema.Attribute.Enumeration<
+      ['below-content', 'above-content']
+    > &
+      Schema.Attribute.DefaultTo<'above-content'>;
     coverImage: Schema.Attribute.Media<'images'>;
+    coverImagePosition: Schema.Attribute.Enumeration<
+      ['top', 'below-title', 'below-content', 'hidden']
+    > &
+      Schema.Attribute.DefaultTo<'top'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

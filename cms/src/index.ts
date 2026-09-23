@@ -1,4 +1,5 @@
 import type { Core } from '@strapi/strapi';
+import { registerIndexNow } from './indexnow';
 
 const PUBLIC_PERMISSIONS: Record<string, string[]> = {
   'api::service-content-category.service-content-category': ['find', 'findOne'],
@@ -372,10 +373,10 @@ const HOME_SEED: { uid: string; data: Record<string, unknown> }[] = [
     uid: 'api::home-stats.home-stats',
     data: {
       stats: [
-        { icon: 'assets/img/icon/construction.svg', value: '150', suffix: 'k', label: 'Projects Done' },
-        { icon: 'assets/img/icon/happy.svg', value: '25', suffix: 'K', label: 'Happy Clients' },
+        { icon: 'assets/img/icon/construction.svg', value: '100', suffix: '+', label: 'Projects Done' },
+        { icon: 'assets/img/icon/happy.svg', value: '100', suffix: '+', label: 'Happy Clients' },
         { icon: 'assets/img/icon/team-2.svg', value: '120', suffix: '+', label: 'Experts Staff' },
-        { icon: 'assets/img/icon/award.svg', value: '50', suffix: '+', label: 'Win Awards' },
+        { icon: 'assets/img/icon/award.svg', value: '10', suffix: '+', label: 'Win Awards' },
       ],
     },
   },
@@ -516,7 +517,9 @@ async function seedHomeContent(strapi: Core.Strapi) {
 }
 
 export default {
-  register() {},
+  register({ strapi }: { strapi: Core.Strapi }) {
+    registerIndexNow(strapi);
+  },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     await setPublicPermissions(strapi);

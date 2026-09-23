@@ -1,8 +1,7 @@
-// Single source of truth for "which URLs does this site have, and what are
-// their SEO tags" at build time. Consumed by generate-sitemap.mjs (to list
-// them) and generate-static-seo.mjs (to stamp per-page <head> tags into the
-// pre-rendered HTML), so a page can never appear in one and be missing from
-// the other.
+// "Which CMS URLs does this site have, and what are their SEO tags" at build
+// time, for generate-static-seo.mjs to stamp per-page <head> tags into the
+// pre-rendered HTML. The live sitemap (cms/src/api/sitemap) applies the same
+// rules, so every URL it lists gets a real HTML file on the next build.
 
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -102,8 +101,7 @@ export async function collectCmsRoutes() {
     'populate[seo]': 'true',
     'fields[0]': 'slug',
     'fields[1]': 'name',
-    'fields[2]': 'description',
-    'fields[3]': 'updatedAt'
+    'fields[2]': 'description'
   });
 
   for (const category of categories) {
@@ -112,9 +110,6 @@ export async function collectCmsRoutes() {
     if (seo?.noIndex) continue;
     routes.push({
       path: `/${category.slug}`,
-      lastmod: pillar?.updatedAt || category.updatedAt,
-      changefreq: 'weekly',
-      priority: '0.7',
       title: seo?.metaTitle || `${category.name} Guides | Hunter Property`,
       description: seo?.metaDescription
         || toPlainText(pillar?.intro)
@@ -125,17 +120,16 @@ export async function collectCmsRoutes() {
   }
 
   // /services/:slug is no longer a page — it redirects to the category's
-  // pillar page at /:slug, which is already emitted above. Listing a redirect
-  // in the sitemap tells search engines to index a URL that answers 301, so
-  // these routes are deliberately absent.
+  // pillar page at /:slug, which is already emitted above. A redirect needs no
+  // stamped HTML (.htaccess answers it with a 301), so these routes are
+  // deliberately absent.
 
   const pages = await fetchAllPages('service-content-pages', {
     'populate[seo]': 'true',
     'populate[category]': 'true',
     'fields[0]': 'slug',
     'fields[1]': 'title',
-    'fields[2]': 'excerpt',
-    'fields[3]': 'updatedAt'
+    'fields[2]': 'excerpt'
   });
 
   for (const page of pages) {
@@ -143,9 +137,6 @@ export async function collectCmsRoutes() {
     if (!page.category?.slug) continue;
     routes.push({
       path: `/${page.category.slug}/${page.slug}`,
-      lastmod: page.updatedAt,
-      changefreq: 'monthly',
-      priority: '0.6',
       title: page.seo?.metaTitle || `${page.title} | Hunter Property`,
       description: page.seo?.metaDescription || page.excerpt || page.title,
       canonical: page.seo?.canonicalUrl || null,
