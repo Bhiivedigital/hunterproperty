@@ -15,8 +15,9 @@
 // index.html keeps every asset URL resolving from the site root, so the copies
 // boot the same app from any depth.
 //
-// Metadata comes from scripts/lib/cms-routes.mjs — the same source the sitemap
-// uses — so the stamped tags match what SeoService sets once Angular hydrates.
+// Metadata comes from scripts/lib/cms-routes.mjs (same URL rules as the live
+// CMS sitemap), so the stamped tags match what SeoService sets once Angular
+// hydrates.
 
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';

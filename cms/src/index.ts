@@ -1,4 +1,5 @@
 import type { Core } from '@strapi/strapi';
+import { registerIndexNow } from './indexnow';
 
 const PUBLIC_PERMISSIONS: Record<string, string[]> = {
   'api::service-content-category.service-content-category': ['find', 'findOne'],
@@ -516,7 +517,9 @@ async function seedHomeContent(strapi: Core.Strapi) {
 }
 
 export default {
-  register() {},
+  register({ strapi }: { strapi: Core.Strapi }) {
+    registerIndexNow(strapi);
+  },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     await setPublicPermissions(strapi);
