@@ -20,6 +20,10 @@ DirectoryIndex index.html
   # /index.html is the homepage; only "/" should be reachable.
   RewriteRule ^index\.html$ / [R=301,L]
 
+  # /home/ renders the same landing page as "/" (a leftover route); send it to
+  # the one canonical homepage rather than serving a duplicate.
+  RewriteRule ^home/?$ / [R=301,L]
+
   # --- Retired per-service detail pages ------------------------------------
   # /services/<slug> was a thin page repeating a service card's blurb; the real
   # page for a service is its pillar page at /<slug>. Redirect here, not only in
@@ -48,12 +52,12 @@ DirectoryIndex index.html
   RewriteCond %{REQUEST_URI} !/$
   RewriteRule ^(.*)$ /$1/ [R=301,L]
 
-  # --- Static, pre-stamped pages ------------------------------------------
-  # `npm run build` writes dist/.../<route>/index.html for every real page, each
-  # with its own title, description and self-referencing canonical (see
-  # scripts/generate-static-seo.mjs). Those are real directories, so this
-  # passthrough hands them to DirectoryIndex — crawlers get correct <head> tags
-  # in the raw HTML without waiting for Angular to boot.
+  # --- Prerendered pages ---------------------------------------------------
+  # `npm run build` prerenders dist/.../<route>/index.html for every real page:
+  # the full page — headings, text, links, structured data — with its own
+  # title, description and self-referencing canonical. Those are real
+  # directories, so this passthrough hands them to DirectoryIndex and crawlers
+  # get the finished page without waiting for JavaScript.
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
@@ -63,9 +67,11 @@ DirectoryIndex index.html
   # makes Search Console report "Sitemap is HTML" instead of a plain 404.
   RewriteRule \.(xml|txt|json|map|css|js|ico|png|jpe?g|gif|svg|webp|avif|woff2?|ttf|eot|pdf|zip)$ - [L,R=404]
 
-  # Anything left is not a generated page: hand it to the SPA so the client-side
-  # router can render it (or show the noindex 404 page).
-  RewriteRule . /index.html [L]
+  # Anything left is not a prerendered page: hand it to the SPA shell so the
+  # client-side router can render it (a guide published since the last build)
+  # or show the noindex 404 page. spa.html, not index.html: index.html is now
+  # the prerendered homepage, whose content and hydration state belong to "/".
+  RewriteRule . /spa.html [L]
 </IfModule>
 
 # Compress text-based responses

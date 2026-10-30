@@ -1,0 +1,155 @@
+<div class="site-breadcrumb" style="background: url(assets/img/portfolio/02.webp)">
+  <div class="container">
+    <h2 class="breadcrumb-title">Builders in Chennai</h2>
+    <ul class="breadcrumb-menu">
+      <li><a routerLink="/">Home</a></li>
+      <li class="active">Builders in Chennai</li>
+    </ul>
+  </div>
+</div>
+
+<div class="hub-area py-120">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 mx-auto text-center">
+        <div class="site-heading text-center">
+          <span class="site-title-tagline"><i class="far fa-helmet-safety"></i> House Construction Across Chennai</span>
+          <h1 class="site-title">Builders in Chennai for <span>Individual Houses &amp; Villas</span></h1>
+          <div class="heading-divider"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hub-layout">
+      <aside class="hub-aside">
+        <app-hero-lead-form heading="Get a Free Construction Quote" sourceForm="pillar-page"></app-hero-lead-form>
+      </aside>
+
+      <div class="hub-main cms-rich-text">
+        <p class="hub-lead">
+          Hunter Property is a Chennai construction company that designs, gets approval for and builds
+          individual houses, villas and small residential buildings. We work from four offices in the city,
+          in Perambur, Sembiam, Royapettah and Kolathur, and build in every part of Chennai, from Thiruvottiyur
+          in the north to Guduvanchery in the south.
+        </p>
+        <p>
+          You get one team for the whole job: architect, structural engineer, approval filing and site
+          execution. The price is a fixed rate per square foot against a written specification with named
+          brands, and you pay in stages as the work is completed.
+        </p>
+
+        <h2>What it costs to build a house in Chennai</h2>
+        <p>
+          These are our four construction packages. The rate covers the building itself, from foundation to
+          finishing, to the specification listed for each package on our <a routerLink="/">home page</a>.
+        </p>
+        <div class="cms-table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Package</th>
+                <th>Rate per sq ft</th>
+                <th *ngFor="let size of exampleSizes">{{ size | number }} sq ft house</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pkg of packages">
+                <td>{{ pkg.name }}</td>
+                <td>&#8377;{{ pkg.pricePerSqft | number }}</td>
+                <td *ngFor="let size of exampleSizes">&#8377;{{ lakh(pkg.pricePerSqft, size) }} lakh</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="hub-note">
+          Built-up area, not plot area. Approval fees, soil testing, compound wall, sump and interiors are
+          quoted separately. See the <a routerLink="/home-construction/house-construction-cost-chennai">house construction cost guide</a>
+          for how the rate breaks down.
+        </p>
+
+        <h2>Why owners choose Hunter Property</h2>
+        <ul>
+          <li><strong>One contract, end to end.</strong> Design, structural drawings, plan approval and construction are handled by the same team, so nothing falls between consultants.</li>
+          <li><strong>A fixed, itemised rate.</strong> Every quote lists the brands and grades of cement, steel, tiles, electricals and plumbing, so two quotes can be compared line by line.</li>
+          <li><strong>Stage-wise payments.</strong> Each payment is tied to finished work in the construction agreement.</li>
+          <li><strong>Daily progress reports.</strong> Photos and updates from site every working day, so you can follow the build from anywhere.</li>
+          <li><strong>Local knowledge.</strong> Building in Velachery is a different job from building in Kolathur. Our area guides below explain what matters in each part of the city.</li>
+        </ul>
+
+        <h2>How we build your house</h2>
+        <ol>
+          <li><strong>Site visit and consultation.</strong> An engineer visits your plot, checks access, road level and drainage, and talks through your requirements.</li>
+          <li><strong>Document and plot check.</strong> We review the title, patta and layout approval before any design work. Our <a routerLink="/property-legal">property legal team</a> can help with verification.</li>
+          <li><strong>Design and estimate.</strong> Floor plans, elevation and Vastu-compliant layouts, with an itemised estimate on your chosen package.</li>
+          <li><strong>Plan approval.</strong> We file with the authority that covers your plot and follow it through to the permit.</li>
+          <li><strong>Construction.</strong> Soil test, foundation, structure, masonry, plastering, waterproofing and finishes, with an engineer's check at every stage.</li>
+          <li><strong>Handover.</strong> Final inspection with you, a snag list closed before handover, and the documents you need for utility connections.</li>
+        </ol>
+
+        <h2>Who approves a house plan in Chennai</h2>
+        <p>
+          The authority depends on where the plot is and how big the building is. Inside city limits most
+          individual houses are approved by the Greater Chennai Corporation. Tambaram and Avadi have their own
+          city municipal corporations. Larger buildings need approval from CMDA, and plots outside the
+          metropolitan area fall under DTCP. Our <a routerLink="/home-construction/cmda-approval-chennai-process">CMDA approval guide</a>
+          explains the process step by step.
+        </p>
+      </div>
+    </div>
+
+    <section class="hub-areas" *ngIf="zones.length" aria-labelledby="hub-areas-title">
+      <h2 id="hub-areas-title" class="hub-section-title">Builders in your part of Chennai</h2>
+      <p class="hub-section-intro">Every area has its own soil, drainage, approval body and plot sizes. Pick yours for a local guide.</p>
+      <div class="hub-zones">
+        <div class="hub-zone" *ngFor="let group of zones">
+          <h3>{{ group.zone }}</h3>
+          <ul>
+            <li *ngFor="let area of group.areas">
+              <a [routerLink]="areaUrl(area)">Builders in {{ area.name }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="hub-offices" aria-labelledby="hub-offices-title">
+      <h2 id="hub-offices-title" class="hub-section-title">Our offices in Chennai</h2>
+      <div class="hub-office-grid">
+        <div class="hub-office" *ngFor="let office of offices">
+          <h3><i class="far fa-location-dot"></i> {{ office.label }}, {{ office.area }}</h3>
+          <p>{{ office.streetAddress }}, Chennai, Tamil Nadu {{ office.postalCode }}</p>
+        </div>
+      </div>
+      <p class="hub-section-intro">Call <a [href]="'tel:' + telephone">{{ telephone }}</a>, Sunday to Friday, 8 AM to 10 PM.</p>
+    </section>
+
+    <section class="hub-faq" aria-labelledby="hub-faq-title">
+      <h2 id="hub-faq-title" class="hub-section-title">Questions owners ask before building in Chennai</h2>
+      <div class="accordion">
+        <div class="accordion-item" *ngFor="let item of faqs; let i = index">
+          <h3 class="accordion-header">
+            <button class="accordion-button" type="button" [class.collapsed]="openFaq !== i"
+                    [attr.aria-expanded]="openFaq === i" (click)="toggleFaq(i)">
+              <span><i class="far fa-question"></i></span> {{ item.question }}
+            </button>
+          </h3>
+          <div class="accordion-collapse collapse" [class.show]="openFaq === i">
+            <div class="accordion-body">{{ item.answer }}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hub-related">
+      <h2 class="hub-section-title">More from Hunter Property</h2>
+      <ul>
+        <li><a routerLink="/home-construction">Home construction services</a></li>
+        <li><a routerLink="/home-construction/how-to-choose-builder-chennai">How to choose a builder in Chennai</a></li>
+        <li><a routerLink="/home-construction/construction-companies-chennai">How to compare construction quotes</a></li>
+        <li><a routerLink="/interior-design">Interior design</a></li>
+        <li><a routerLink="/renovation">Renovation</a></li>
+        <li><a routerLink="/joint-development">Joint development</a></li>
+      </ul>
+    </section>
+  </div>
+</div>

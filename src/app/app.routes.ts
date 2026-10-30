@@ -10,6 +10,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LandingpageComponent } from './components/landingpage/landingpage.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
+import { BuildersInChennaiComponent } from './components/builders-in-chennai/builders-in-chennai.component';
 
 export const routes: Routes = [
     // Explicit fixed routes must precede the dynamic :categorySlug routes below,
@@ -30,6 +31,8 @@ export const routes: Routes = [
     {path:'services/:slug', redirectTo: ({ params }) => `/${params['slug']}`},
 
     {path:'portfolio', component:PortfolioComponent},
+    // City-wide hub linking every area guide (/home-construction/builders-in-<area>).
+    {path:'builders-in-chennai', component:BuildersInChennaiComponent},
     {path:'privacy-policy', component:PrivacyPolicyComponent},
     {path:'terms-and-conditions', component:TermsConditionsComponent},
     {path:'not-found', component:NotFoundComponent},

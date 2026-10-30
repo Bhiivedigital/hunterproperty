@@ -1,0 +1,586 @@
+<title>Hunter Property Packages</title>
+<meta name="description" content="Every point listed under the four homepage construction packages, for content review.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Roboto:wght@400;500&display=swap">
+<style>
+  :root {
+    --ink: #0A2155; --ink-2: #1b4669; --text: #2A3145; --muted: #6B7386;
+    --accent: #FC8C03; --accent-soft: #FFF3E3;
+    --ground: #FAF8F4; --surface: #FFFFFF; --rule: #E7E2D9; --rule-soft: #F1EDE5;
+    --excl: #D64545; --excl-soft: #FDF0F0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #EEF0F6; --ink-2: #C9D3E6; --text: #D6DAE5; --muted: #A3ACC2;
+      --accent: #FFA133; --accent-soft: #2E2416;
+      --ground: #0F1729; --surface: #172036; --rule: #2A3550; --rule-soft: #22304A;
+      --excl: #FF7A7A; --excl-soft: #3A1F24;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #EEF0F6; --ink-2: #C9D3E6; --text: #D6DAE5; --muted: #A3ACC2;
+    --accent: #FFA133; --accent-soft: #2E2416;
+    --ground: #0F1729; --surface: #172036; --rule: #2A3550; --rule-soft: #22304A;
+    --excl: #FF7A7A; --excl-soft: #3A1F24;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--text); font: 15px/1.55 Roboto, "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px; padding-block: 0 64px; }
+  h1, h2, h3 { font-family: Poppins, "Segoe UI", system-ui, sans-serif; color: var(--ink); margin: 0; text-wrap: balance; }
+
+  /* Header */
+  .hdr { padding-block: 40px 24px; border-bottom: 1px solid var(--rule); }
+  .eyebrow { font: 500 12px/1 Poppins, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+  h1 { font-size: 30px; font-weight: 700; line-height: 1.2; }
+  .lede { max-width: 66ch; margin: 12px 0 0; color: var(--muted); }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 18px 0 0; font-size: 13px; color: var(--muted); }
+  .meta b { color: var(--text); font-weight: 500; }
+
+  /* Sticky nav */
+  .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--ground); border-bottom: 1px solid var(--rule); margin: 0 -20px; padding: 10px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+  .seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; padding: 3px; background: var(--surface); }
+  .seg button { appearance: none; border: 0; background: transparent; color: var(--muted); font: 500 13px/1 Poppins, sans-serif; padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+  .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .jump { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; }
+  .jump a { color: var(--ink-2); text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
+  .jump a:hover, .jump a:focus-visible { border-color: var(--accent); outline: none; }
+
+  /* Summary tiles */
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 28px 0 8px; }
+  .tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 16px 18px; text-decoration: none; color: inherit; display: block; }
+  .tile:hover, .tile:focus-visible { border-color: var(--accent); outline: none; }
+  .tile .n { font: 600 14px/1.3 Poppins, sans-serif; color: var(--ink); }
+  .tile .p { font: 700 26px/1.1 Poppins, sans-serif; color: var(--ink); margin-top: 8px; font-variant-numeric: tabular-nums; }
+  .tile .p small { font-size: 13px; font-weight: 500; color: var(--muted); margin-left: 3px; }
+  .tile .c { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  /* Shared list styling */
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { display: grid; grid-template-columns: minmax(96px, 34%) 1fr; gap: 10px; padding: 7px 0; border-top: 1px solid var(--rule-soft); font-size: 14px; }
+  li:first-child { border-top: 0; }
+  .k { font-weight: 500; color: var(--ink); }
+  .v { color: var(--text); }
+  .v.only { grid-column: 1 / -1; }
+  li.none { grid-template-columns: 1fr; color: var(--muted); }
+  .count { display: inline-block; font: 500 11px/1 Roboto, sans-serif; color: var(--muted); background: var(--rule-soft); border-radius: 999px; padding: 4px 8px; vertical-align: middle; margin-left: 6px; }
+
+  /* By package */
+  .pkg { margin-top: 40px; }
+  .pkg-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; padding-bottom: 12px; border-bottom: 3px solid var(--accent); }
+  .pkg-head h2 { font-size: 24px; font-weight: 700; }
+  .price { margin: 0; font-family: Poppins, sans-serif; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .price .amt { font-size: 26px; font-weight: 700; }
+  .price .unit { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 4px; }
+  .groups { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+  .group { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 18px 8px; }
+  .group h3, .col h3 { font-size: 15px; font-weight: 600; padding-bottom: 8px; margin-bottom: 4px; border-bottom: 1px solid var(--rule); }
+  .group.excluded { border-color: var(--excl); background: var(--excl-soft); }
+  .group.excluded h3 { color: var(--excl); border-color: var(--excl); }
+
+  /* By section */
+  .cmp { margin-top: 40px; }
+  .cmp h2 { font-size: 22px; font-weight: 700; padding-bottom: 12px; border-bottom: 3px solid var(--accent); }
+  .cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 18px; }
+  .col { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px 8px; }
+  .col li { grid-template-columns: 1fr; gap: 2px; }
+
+  [hidden] { display: none !important; }
+
+  @media (max-width: 900px) { .tiles, .cols { grid-template-columns: 1fr 1fr; } .groups { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .tiles, .cols { grid-template-columns: 1fr; } li { grid-template-columns: 1fr; gap: 2px; } h1 { font-size: 24px; } }
+
+  @media print {
+    body { background: #fff; color: #111; font-size: 12px; }
+    .nav { display: none; }
+    .pkg, .cmp { break-before: page; }
+    .group, .col { break-inside: avoid; border-color: #bbb; }
+  }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+  <header class="hdr">
+    <p class="eyebrow">Content review</p>
+    <h1>Homepage pricing packages — every point, as currently published</h1>
+    <p class="lede">This is the exact wording shown under each package on hunterproperty.in. Please mark anything to change, add or remove — prices, brands, sizes, limits or wording.</p>
+    <div class="meta">
+      <span>Extracted <b>2026-09-20</b></span>
+      <span><b>4</b> packages</span>
+      <span><b>10</b> sections each</span>
+      <span><b>248</b> points total</span>
+    </div>
+  </header>
+
+  <nav class="nav" aria-label="Views">
+    <div class="seg" role="group" aria-label="View">
+      <button type="button" id="btn-package" aria-pressed="true">By package</button>
+      <button type="button" id="btn-section" aria-pressed="false">Compare by section</button>
+    </div>
+    <div class="jump" id="jump-package">
+      <a href="#pkg-basic-package">Basic Package</a><a href="#pkg-standard-package">Standard Package</a><a href="#pkg-premium-package">Premium Package</a><a href="#pkg-ultra-luxury">Ultra Luxury</a>
+    </div>
+    <div class="jump" id="jump-section" hidden>
+      <a href="#sec-design">Design</a><a href="#sec-project-management">Project Management</a><a href="#sec-structure">Structure</a><a href="#sec-bathroom-plumbing">Bathroom &amp; Plumbing</a><a href="#sec-flooring">Flooring</a><a href="#sec-kitchen-dining">Kitchen &amp; Dining</a><a href="#sec-door-windows-and-railing">Door, Windows and Railing</a><a href="#sec-painting">Painting</a><a href="#sec-electrical">Electrical</a><a href="#sec-what-s-not-included">What's Not Included</a>
+    </div>
+  </nav>
+
+  <div class="tiles">
+    <a class="tile" href="#pkg-basic-package">
+      <div class="n">Basic Package</div>
+      <div class="p">₹ 2199<small>/Sqft</small></div>
+      <div class="c">57 points</div>
+    </a><a class="tile" href="#pkg-standard-package">
+      <div class="n">Standard Package</div>
+      <div class="p">₹ 2399<small>/Sqft</small></div>
+      <div class="c">62 points</div>
+    </a><a class="tile" href="#pkg-premium-package">
+      <div class="n">Premium Package</div>
+      <div class="p">₹ 2699<small>/Sqft</small></div>
+      <div class="c">61 points</div>
+    </a><a class="tile" href="#pkg-ultra-luxury">
+      <div class="n">Ultra Luxury</div>
+      <div class="p">₹ 3199<small>/Sqft</small></div>
+      <div class="c">68 points</div>
+    </a>
+  </div>
+
+  <div id="view-package">
+<section class="pkg" id="pkg-basic-package">
+  <header class="pkg-head">
+    <h2>Basic Package</h2>
+    <p class="price"><span class="amt">₹ 2199</span><span class="unit">/Sqft</span></p>
+  </header>
+  <div class="groups">
+  
+    <div class="group">
+      <h3>Design <span class="count">2</span></h3>
+      <ul><li><span class="k">Scheme Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Design</span><span class="v">(3D)</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Project Management <span class="count">3</span></h3>
+      <ul><li><span class="k">Site Engineer</span><span class="v">One Visit Per Day</span></li><li><span class="k">Project Manager</span><span class="v">Visit Site Once in a Week</span></li><li><span class="k">Android / IOS App</span><span class="v">Access to APP for Site Status Update</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Structure <span class="count">10</span></h3>
+      <ul><li><span class="k">Basement Height</span><span class="v">Upto 2 Feet</span></li><li><span class="k">Steel</span><span class="v">Any ISI Brand</span></li><li><span class="k">AAC</span><span class="v">For Partition Walls. 8-Inch Thick Exterior Walls | 4 Inch Thick Inner Walls</span></li><li><span class="k">Cement</span><span class="v">Penna / Priya</span></li><li><span class="k">M Sand</span><span class="v">Blockwork &amp; All Masonry Works</span></li><li><span class="k">P Sand</span><span class="v">Plastering Works</span></li><li><span class="k">Concrete Grade</span><span class="v">M20 (Manual Mix)</span></li><li><span class="k">Ceiling Height</span><span class="v">10 Feet</span></li><li><span class="k">Steel Reinforcement</span><span class="v">As per Standard</span></li><li><span class="k">Parapet Wall</span><span class="v">3 Feet Height | 4” Thick (Only for Floor with Headroom)</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Bathroom &amp; Plumbing <span class="count">4</span></h3>
+      <ul><li><span class="k">Wall Tiles</span><span class="v">Upto 7’ Height. Size 2’X1’ Vitrified Tile. Upto ₹40/Sqft</span></li><li><span class="k">Bath &amp; CP Fittings</span><span class="v">Cera | Upto ₹12000 Per Bathroom | Floor Mounted EWC, Wall Mounted Wash Basin, Pillar Tap, Health Faucet, Shower Set, 2-in-1 Wall Mixer</span></li><li><span class="k">Plumbing Pipes &amp; Fittings</span><span class="v">Inner CPVC, Outer PVC, Brands: Any ISI Brand</span></li><li><span class="k">Overhead Tank</span><span class="v">1000 Litres Sintex | 3 Layer | UV Protected | White Colour</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Flooring <span class="count">5</span></h3>
+      <ul><li><span class="k">Living, Dining, Bedrooms &amp; Kitchen</span><span class="v">2’X2’ | Vitrified Tiles Upto ₹45/Sqft. Anuj / Sparrow</span></li><li><span class="k">Balcony &amp; Utility</span><span class="v">Size 1’X1’ | Upto ₹35/Sqft</span></li><li><span class="k">Staircase</span><span class="v">Size 1’X1’ Tile: Upto ₹35/Sqft</span></li><li><span class="k">Car Parking</span><span class="v">‘1X1’ Parking Tile | Upto ₹35/Sqft</span></li><li><span class="k">Terrace Flooring</span><span class="v">Screed Concreting with Waterproofing</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Kitchen &amp; Dining <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tile</span><span class="v">Vitrified Tile (2’X1’) | Upto ₹45/Sqft</span></li><li><span class="k">Sink Faucet</span><span class="v">Upto ₹900/ No</span></li><li><span class="k">Kitchen Sink</span><span class="v">Stainless Steel Single Bowl Upto ₹2800</span></li><li><span class="k">Dining</span><span class="v">Wall Mounted Wash Basin</span></li><li><span class="k">Kitchen Granite Top</span><span class="v">Upto ₹90/Sqft</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Door, Windows and Railing <span class="count">6</span></h3>
+      <ul><li><span class="k">Main Door</span><span class="v">Malaysian Teak Door &amp; Teak Frame | 32mm Thickness | 5’X3’ Thick Frame | 7’ Height 3.5 Feet Width</span></li><li><span class="k">Room Doors</span><span class="v">White Panel Door | Sal Wood Frame | 7’X3’</span></li><li><span class="k">Bathroom Doors</span><span class="v">PVC Door | 7’X2.5’</span></li><li><span class="k">Windows</span><span class="v">Aluminium Sliding Window | Max 4’X4’ | One Window Per Room | 5mm Clear Glass</span></li><li><span class="k">Staircase Railing</span><span class="v">MS Railing</span></li><li><span class="k">Balcony Railing</span><span class="v">MS Railing</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Painting <span class="count">4</span></h3>
+      <ul><li><span class="k">Inner Wall Putty</span><span class="v">2 Coats of Wall Putty | Any ISI Brand</span></li><li><span class="k">Wall Painting</span><span class="v">1 Coat of Primer | 2 Coats of Tractor Emulsion | Any ISI Brand</span></li><li><span class="k">Ceiling Painting</span><span class="v">1 Coat of Primer | 2 Coats of Tractor Emulsion | Any ISI Brand</span></li><li><span class="k">Exterior Paint</span><span class="v">1 Coat of Primer | 2 Coats of Ace | Any ISI Brand</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Electrical <span class="count">12</span></h3>
+      <ul><li><span class="v only">Wires - Essar</span></li><li><span class="v only">Switches - Fybros</span></li><li><span class="k">Bedroom</span><span class="v">2 Switch Box(8-Module). One at Entrance and one at Bed-side</span></li><li><span class="k">Bathroom</span><span class="v">1 Switch Box(Inner) 4-Module, 1 Switch Box(Outer) 3-Module. Point for Heater &amp; Exhaust</span></li><li><span class="k">Living Room</span><span class="v">Upto 4 Switch Box (8-Module)</span></li><li><span class="k">Dining</span><span class="v">1 Switch (8-Module)</span></li><li><span class="k">Pooja</span><span class="v">1 Switch (3-Module)</span></li><li><span class="k">Kitchen</span><span class="v">3 Switch Box (6-Module), Point for HOB, Chimney, RO</span></li><li><span class="k">Utility</span><span class="v">1 Switch Box (4-Modules)</span></li><li><span class="k">AC Points</span><span class="v">1 for Each Bedroom</span></li><li><span class="k">Entrance</span><span class="v">1 Switch Box (6-Module)</span></li><li><span class="k">Balconies</span><span class="v">1 Switch Box (3-Module)</span></li></ul>
+    </div>
+    <div class="group excluded">
+      <h3>What's Not Included <span class="count">6</span></h3>
+      <ul><li><span class="v only">Compound Wall @ 425/Sqft &amp; Gate</span></li><li><span class="v only">Sump &amp; Septic Tank @ 24/Litre</span></li><li><span class="v only">Lift, Lift Pit and Shaft</span></li><li><span class="v only">Electricity Connection</span></li><li><span class="v only">Building Plan Approval</span></li><li><span class="v only">Elevation Special Materials</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="pkg" id="pkg-standard-package">
+  <header class="pkg-head">
+    <h2>Standard Package</h2>
+    <p class="price"><span class="amt">₹ 2399</span><span class="unit">/Sqft</span></p>
+  </header>
+  <div class="groups">
+  
+    <div class="group">
+      <h3>Design <span class="count">6</span></h3>
+      <ul><li><span class="k">Scheme Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Design</span><span class="v">(3D)</span></li><li><span class="k">Half Layout</span><span class="v">All Floors (3D)</span></li><li><span class="k">Electrical Drawings</span><span class="v">All Floors (2D)</span></li><li><span class="k">Plumbing Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Working Drawing</span><span class="v">All Floors (2D)</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Project Management <span class="count">3</span></h3>
+      <ul><li><span class="k">Site Engineer</span><span class="v">Dedicated Full-Time Site Engineer</span></li><li><span class="k">Project Manager</span><span class="v">Visit Site Twice in a Week</span></li><li><span class="k">Architect</span><span class="v">Support Till Design Completion</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Structure <span class="count">10</span></h3>
+      <ul><li><span class="k">Basement Height</span><span class="v">Upto 3 Feet</span></li><li><span class="k">Steel</span><span class="v">Arun TMT / GBR or Equivalent</span></li><li><span class="k">Chamber Bricks</span><span class="v">For Partition Walls. 9-Inch Thick Exterior Walls | 4 Inch Thick Inner Walls</span></li><li><span class="k">Cement</span><span class="v">Ramco / Dalmia</span></li><li><span class="k">M Sand</span><span class="v">Blockwork &amp; All Masonry Works</span></li><li><span class="k">P Sand</span><span class="v">Plastering Works</span></li><li><span class="k">Concrete Grade</span><span class="v">M20 | RMC for Roof</span></li><li><span class="k">Ceiling Height</span><span class="v">10 Feet</span></li><li><span class="k">Steel Reinforcement</span><span class="v">As per Standard</span></li><li><span class="k">Parapet Wall</span><span class="v">3 Feet Height | 6’ Thick (Only for Floor with Headroom)</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Bathroom &amp; Plumbing <span class="count">4</span></h3>
+      <ul><li><span class="k">Wall Tiles</span><span class="v">Upto Ceiling (Full Height). Size 2’X2’ Vitrified Tile. Upto ₹50/Sqft. 1 Colour for 2 Bathrooms</span></li><li><span class="k">Bath &amp; CP Fittings</span><span class="v">Parryware | Upto ₹17000 Per Bathroom | Wall Mounted EWC, Wall Mounted Wash Basin, Pillar Tap, Health Faucet, Shower Set, 2-in-1 Wall Mixer</span></li><li><span class="k">Plumbing Pipes &amp; Fittings</span><span class="v">Inner CPVC, Outer PVC, Brands: Any ISI Brand</span></li><li><span class="k">Overhead Tank</span><span class="v">2000 Litres Sintex | 3 Layer | UV Protected | White Colour</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Flooring <span class="count">5</span></h3>
+      <ul><li><span class="k">Living, Dining, Bedrooms &amp; Kitchen</span><span class="v">4’X2’ | Vitrified Tiles Upto ₹65/Sqft. 1 Model for Living, Dining and Kitchen. KAG / Sunheart or Equivalent</span></li><li><span class="k">Balcony &amp; Utility</span><span class="v">Size 2’X2’ | Upto ₹50/Sqft | Antiskid</span></li><li><span class="k">Staircase</span><span class="v">Full Body Tile: Upto ₹110/Sqft</span></li><li><span class="k">Car Parking</span><span class="v">‘1X1’ Heavy Duty Tile | Upto ₹50/Sqft</span></li><li><span class="k">Terrace Flooring</span><span class="v">Screed Concreting with Waterproofing</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Kitchen &amp; Dining <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tile</span><span class="v">Vitrified Tile (2’X2’) | Upto ₹55/Sqft</span></li><li><span class="k">Sink Faucet</span><span class="v">Upto ₹2000/ No</span></li><li><span class="k">Kitchen Sink</span><span class="v">Stainless Steel Sink with Drain Upto ₹4000</span></li><li><span class="k">Dining</span><span class="v">Wall Mounted Wash Basin</span></li><li><span class="k">Kitchen Granite Top</span><span class="v">Upto ₹140/Sqft</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Door, Windows and Railing <span class="count">6</span></h3>
+      <ul><li><span class="k">Main Door</span><span class="v">Malaysian Teak Door &amp; Teak Frame - Readmade | 35mm Thickness | 5’X3’ Thick Frame | 7’ Height 3.5 Feet Width | Upto 22000/Nos | 1 Nos Only</span></li><li><span class="k">Room Doors</span><span class="v">Flush Door | Sal Wood Frame | 7’X3’</span></li><li><span class="k">Bathroom Doors</span><span class="v">WPC Door &amp; Frame | 7’X2.5’</span></li><li><span class="k">Windows</span><span class="v">UPVC Sliding White | Max 5’X5’ | One Window Per Room | 5mm Clear Glass</span></li><li><span class="k">Staircase Railing</span><span class="v">SS 304 Grade Railing</span></li><li><span class="k">Balcony Railing</span><span class="v">SS 304 Grade Railing with 8mm Toughened Glass with Posts</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Painting <span class="count">5</span></h3>
+      <ul><li><span class="k">Inner Wall Putty</span><span class="v">2 Coats of Wall Putty | Nippon</span></li><li><span class="k">Wall Painting</span><span class="v">1 Coat of Primer | 2 Coats of Breeze Emulsion | Nippon</span></li><li><span class="k">Ceiling Painting</span><span class="v">1 Coat of Primer | 2 Coats of Breeze Emulsion | Nippon</span></li><li><span class="k">Exterior Paint</span><span class="v">1 Coat of Primer | 2 Coats of Sumo Xtra | Nippon</span></li><li><span class="k">Elevation Putty</span><span class="v">2 Coat of Putty for Front Elevation | Nippon Exterior Putty</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Electrical <span class="count">12</span></h3>
+      <ul><li><span class="v only">Wires - Orbit (FRLS)</span></li><li><span class="v only">Switches - Legrand</span></li><li><span class="k">Bedroom</span><span class="v">3 Switch Box(8-Module)</span></li><li><span class="k">Bathroom</span><span class="v">1 Switch Box(Inner) 4-Module, 1 Switch Box(Outer) 3-Module. Point for Heater &amp; Exhaust</span></li><li><span class="k">Living Room</span><span class="v">Upto 4 Switch Box (8-Module)</span></li><li><span class="k">Dining</span><span class="v">1 Switch (8-Module)</span></li><li><span class="k">Pooja</span><span class="v">1 Switch (3-Module)</span></li><li><span class="k">Kitchen</span><span class="v">3 Switch Box (6-Module), Point for HOB, Chimney, RO</span></li><li><span class="k">Utility</span><span class="v">1 Switch Box (4-Modules)</span></li><li><span class="k">AC Points</span><span class="v">1 for Each Bedroom. 1 for Living Room</span></li><li><span class="k">Entrance</span><span class="v">1 Switch Box (6-Module)</span></li><li><span class="k">Balconies</span><span class="v">1 Switch Box (3-Module)</span></li></ul>
+    </div>
+    <div class="group excluded">
+      <h3>What's Not Included <span class="count">6</span></h3>
+      <ul><li><span class="v only">Compound Wall @ 425/Sqft &amp; Gate</span></li><li><span class="v only">Sump &amp; Septic Tank @ 24/Litre</span></li><li><span class="v only">Lift, Lift Pit and Shaft</span></li><li><span class="v only">Electricity Connection</span></li><li><span class="v only">Building Plan Approval</span></li><li><span class="v only">Elevation Special Materials</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="pkg" id="pkg-premium-package">
+  <header class="pkg-head">
+    <h2>Premium Package</h2>
+    <p class="price"><span class="amt">₹ 2699</span><span class="unit">/Sqft</span></p>
+  </header>
+  <div class="groups">
+  
+    <div class="group">
+      <h3>Design <span class="count">10</span></h3>
+      <ul><li><span class="k">Scheme Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Design</span><span class="v">(3D)</span></li><li><span class="k">Half Layout</span><span class="v">All Floors (3D)</span></li><li><span class="k">Electrical Drawings</span><span class="v">All Floors (2D)</span></li><li><span class="k">Plumbing Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Working Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="v only">Soil Test Report</span></li><li><span class="v only">Structural Drawings</span></li><li><span class="k">Furniture Layout</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Detail Drawing</span><span class="v">(2D)</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Project Management <span class="count">3</span></h3>
+      <ul><li><span class="k">Site Engineer</span><span class="v">Dedicated Full-Time Site Engineer</span></li><li><span class="k">Project Manager</span><span class="v">Daily Site Visit</span></li><li><span class="k">Architect</span><span class="v">Dedicated Architect through-out the Project. Stage Wise Site Visit. Material Selection Support.</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Structure <span class="count">12</span></h3>
+      <ul><li><span class="k">Basement Height</span><span class="v">Upto 3.5 Feet</span></li><li><span class="k">Steel</span><span class="v">ARS or Equivalent</span></li><li><span class="k">Wire-Cut Bricks</span><span class="v">For Partition Walls. 9-Inch Thick Exterior Walls | 4 Inch Thick Inner Walls</span></li><li><span class="k">Cement</span><span class="v">Ramco / Dalmia</span></li><li><span class="k">M Sand</span><span class="v">Blockwork &amp; All Masonry Works</span></li><li><span class="k">River Sand</span><span class="v">Plastering Works</span></li><li><span class="k">Concrete Grade</span><span class="v">M20 | RMC for Roof</span></li><li><span class="k">Ceiling Height</span><span class="v">10 Feet(FFL to FFL)</span></li><li><span class="k">Steel Reinforcement</span><span class="v">As per HUNTER PROPERTY Structural Detailing</span></li><li><span class="k">Parapet Wall</span><span class="v">3.5’ Feet Height | 6’ Thick</span></li><li><span class="k">RCC Lift Pit</span><span class="v">Included (If Required)</span></li><li><span class="k">Lift Pit &amp; Shaft</span><span class="v">Included (If Required)</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Bathroom &amp; Plumbing <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tiles</span><span class="v">Upto Ceiling (Full Height). Size 4’X2’ Digital Vitrified Tile. Upto ₹85/Sqft.</span></li><li><span class="k">Bath &amp; CP Fittings</span><span class="v">Jaquar | Upto ₹22000 Per Bathroom | Wall Mounted EWC, Wall Mounted Wash Basin, Pillar Tap, Health Faucet, Shower Set, Concealed Wall Mixer</span></li><li><span class="k">Plumbing Pipes &amp; Fittings</span><span class="v">Inner CPVC, Outer PVC, Brands: Ashirwad / Finolex</span></li><li><span class="k">Overhead Tank</span><span class="v">3000 Litres Sintex | 5 Layer | UV Protected | White Colour, With Sensor</span></li><li><span class="k">Solar Heater Plumbing Lines</span><span class="v">Included (If Required)</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Flooring <span class="count">5</span></h3>
+      <ul><li><span class="k">Living, Dining, Bedrooms &amp; Kitchen</span><span class="v">4’X2’ | Tiles Upto ₹80/Sqft. Somany / Kajaria / KAG / Sunheart</span></li><li><span class="k">Balcony &amp; Utility</span><span class="v">Size 2’X2’ | Upto ₹60/Sqft</span></li><li><span class="k">Staircase</span><span class="v">Granite Upto ₹160/Sqft</span></li><li><span class="k">Car Parking</span><span class="v">‘2X2’ Heavy Stonel | Upto ₹80/Sqft</span></li><li><span class="k">Terrace Flooring</span><span class="v">White Cooling Tile Size 1’X1’ | Anuj | with Waterproofing</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Kitchen &amp; Dining <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tile</span><span class="v">Vitrified Tile (4’X2’) | Upto ₹65/Sqft</span></li><li><span class="k">Sink Faucet</span><span class="v">Designer Brand | Upto ₹3500/ Nos</span></li><li><span class="k">Kitchen Sink</span><span class="v">Quartz Sink with Drain Upto ₹5000</span></li><li><span class="k">Dining</span><span class="v">Wash Basin with Granite Counter</span></li><li><span class="k">Kitchen Granite Top</span><span class="v">Upto ₹160/Sqft</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Door, Windows and Railing <span class="count">6</span></h3>
+      <ul><li><span class="k">Main Door</span><span class="v">Ghana Teak Door &amp; Teak Frame | 35mm Thickness | 5’X3’ Thick Frame | 8’ Height 4 Feet Width.</span></li><li><span class="k">Room Doors</span><span class="v">Flush Door with Laminate | Ghana Wood Frame | 7’X3’</span></li><li><span class="k">Bathroom Doors</span><span class="v">WPC Door &amp; Frame | 7’X2.5’</span></li><li><span class="k">Windows</span><span class="v">UPVC Sliding White - No Restriction on Size and Quantity | 5mm Clear Glass</span></li><li><span class="k">Staircase Railing</span><span class="v">SS 304 Grade Railing</span></li><li><span class="k">Balcony Railing</span><span class="v">10mm Full Toughened Glass with 304 Grade Railing</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Painting <span class="count">5</span></h3>
+      <ul><li><span class="k">Inner Wall Putty</span><span class="v">2 Coats of Wall Putty | Birla</span></li><li><span class="k">Wall Painting</span><span class="v">1 Coat of Primer | 2 Coats of Pro Matex Gold Emulsion | Nippon</span></li><li><span class="k">Ceiling Painting</span><span class="v">1 Coat of Primer | 2 Coats of Pro Matex Gold Emulsion | Nippon</span></li><li><span class="k">Exterior Paint</span><span class="v">1 Coat of Primer | 2 Coats of Weather bond Pro Nippon</span></li><li><span class="k">Elevation Putty</span><span class="v">2 Coat of Putty for Two Sides of Elevation | Birla Wallseal Waterproof</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Electrical <span class="count">4</span></h3>
+      <ul><li><span class="v only">Wires - Finolex / Havells (FRLS)</span></li><li><span class="v only">Switches - GM</span></li><li><span class="v only">No Restriction on Number of Points. Except for Lifts, DG, Curtain Motors, Swimming Pool, RO Plant, Pressure Pump, Intercom, Surveillance System, Exterior Light Point, Gate Automation, Lightning Arrester, Hybrid Solar Heater, Water Fountain, HVAC Systems.</span></li><li><span class="v only">Electricity Panel Board - Single Service with RLCB - Exterior Grade</span></li></ul>
+    </div>
+    <div class="group excluded">
+      <h3>What's Not Included <span class="count">6</span></h3>
+      <ul><li><span class="v only">Compound Wall @ 425/Sqft &amp; Gate</span></li><li><span class="v only">Sump &amp; Septic Tank @ 24/Litre</span></li><li><span class="v only">Lift</span></li><li><span class="v only">Electricity Connection</span></li><li><span class="v only">Building Plan Approval</span></li><li><span class="v only">Elevation Special Materials</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="pkg" id="pkg-ultra-luxury">
+  <header class="pkg-head">
+    <h2>Ultra Luxury</h2>
+    <p class="price"><span class="amt">₹ 3199</span><span class="unit">/Sqft</span></p>
+  </header>
+  <div class="groups">
+  
+    <div class="group">
+      <h3>Design <span class="count">16</span></h3>
+      <ul><li><span class="k">Scheme Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Design</span><span class="v">(3D)</span></li><li><span class="k">Half Layout</span><span class="v">All Floors (3D)</span></li><li><span class="k">Electrical Drawings</span><span class="v">All Floors (2D)</span></li><li><span class="k">Plumbing Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Working Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="v only">Soil Test Report</span></li><li><span class="v only">Structural Drawings</span></li><li><span class="k">Furniture Layout</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Detail Drawing</span><span class="v">(2D)</span></li><li><span class="v only">Site Assessment &amp; Site Plan</span></li><li><span class="k">Interior Views</span><span class="v">All Floors (3D)</span></li><li><span class="k">Interior Detailing</span><span class="v">All Rooms (2D)</span></li><li><span class="v only">Interior 3D Walk-Through</span></li><li><span class="v only">Approval Drawing</span></li><li><span class="v only">Landscaping Architectural Designs</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Project Management <span class="count">3</span></h3>
+      <ul><li><span class="k">Site Engineer</span><span class="v">Dedicated Full-Time Site Engineer</span></li><li><span class="k">Project Manager</span><span class="v">Daily Site Visit</span></li><li><span class="k">Architect</span><span class="v">Dedicated Architect. Frequent Site Visit. Material &amp; Brand Selection Support Including Interiors and Home Decor.</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Structure <span class="count">13</span></h3>
+      <ul><li><span class="k">Basement Height</span><span class="v">Upto 5 Feet</span></li><li><span class="k">Steel</span><span class="v">TATA Steel</span></li><li><span class="k">Wire-Cut Bricks</span><span class="v">For Partition Walls. 9-Inch Thick Exterior Walls | 4 Inch Thick Inner Walls</span></li><li><span class="k">Cement</span><span class="v">Ramco / Dalmia / Coamandel</span></li><li><span class="k">River Sand</span><span class="v">Blockwork &amp; All Masonry Works</span></li><li><span class="k">River Sand</span><span class="v">Plastering Works</span></li><li><span class="k">Concrete Grade</span><span class="v">M25 | RMC for Roof</span></li><li><span class="k">Ceiling Height</span><span class="v">11 Feet(FFL to FFL)</span></li><li><span class="k">Steel Reinforcement</span><span class="v">1.5times Strength all as per HUNTER PROPERTY Structural Drawings and Detailing by HUNTER PROPERTY Structural Engineer</span></li><li><span class="k">Parapet Wall</span><span class="v">3.5’ Feet Height | 6’ Thick (or) Toughened Glass Railing if Required.</span></li><li><span class="k">RCC Lift Pit</span><span class="v">Included (If Required)</span></li><li><span class="v only">RCC Concrete Slab for Base</span></li><li><span class="k">Lift Pit &amp; Shaft</span><span class="v">Included (If Required)</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Bathroom &amp; Plumbing <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tiles</span><span class="v">Upto Ceiling (Full Height). Size 4’X2’ Digital Vitrified Tile. Upto ₹120/Sqft.</span></li><li><span class="k">Bath &amp; CP Fittings</span><span class="v">Kohler | Upto ₹60000 Per Bathroom | Concealed EWC, Counter Top Wash Basin, Marble Counter Slab, Pillar Tap, Health Faucet, Shower Set, Concealed Wall Mixer</span></li><li><span class="k">Plumbing Pipes &amp; Fittings</span><span class="v">Inner CPVC, Outer PVC, HDPE Flexible Pipe. Brands: Ashirwad / Finolex / Jindal</span></li><li><span class="k">RCC Overhead Tank</span><span class="v">6000 Litres with Waterproofing</span></li><li><span class="k">Solar Heater Plumbing Lines</span><span class="v">Included (If Required)</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Flooring <span class="count">5</span></h3>
+      <ul><li><span class="k">Living, Dining, Bedrooms &amp; Kitchen</span><span class="v">6’X6’ | QuartsTiles Upto ₹200/Sqft.</span></li><li><span class="k">Balcony &amp; Utility</span><span class="v">Size 2’X2’ | Upto ₹60/Sqft</span></li><li><span class="k">Staircase</span><span class="v">Marble Upto ₹350/Sqft</span></li><li><span class="k">Car Parking</span><span class="v">Granitel | Upto ₹120/Sqft</span></li><li><span class="k">Terrace Flooring</span><span class="v">2’X2’ Exterior Grade Vitrified Tile. (Any Grade) | with Waterproofing</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Kitchen &amp; Dining <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tile</span><span class="v">Vitrified Designer Tile (4’X2’) | Upto ₹125/Sqft</span></li><li><span class="k">Sink Faucet</span><span class="v">Floor Mounted Pull-Out | Upto ₹8000/ Nos</span></li><li><span class="k">Kitchen Sink</span><span class="v">Multifunctional Sink Upto ₹15000</span></li><li><span class="k">Dining</span><span class="v">Premium Designer Collection Wash Basin with Marble Counter and Designer Top</span></li><li><span class="k">Kitchen Top</span><span class="v">Quarts Stone Upto ₹350/Sqft</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Door, Windows and Railing <span class="count">6</span></h3>
+      <ul><li><span class="k">Main Door</span><span class="v">Designer Wood Door of Height upto 8 Feet X 5 Feet (or) Security Steel Door of Size (8’X4.5’) Pure Stainless Steel with Digital Lock.</span></li><li><span class="k">Room Doors</span><span class="v">Flush Door with Laminate | Ghana Wood Frame | 7’X3’</span></li><li><span class="k">Bathroom Doors</span><span class="v">Water Proof Flush Door with Designer Laminates | 8’X3’</span></li><li><span class="k">Windows</span><span class="v">Openable Type | UPVC Coloured | No Restriction on Size and Quantity | Toughened Glass</span></li><li><span class="k">Staircase Railing</span><span class="v">Toughened Glass with SS (or) Wood Railing (or) Aluminium</span></li><li><span class="k">Balcony Railing</span><span class="v">10mm Full Toughened Glass with Aluminium Railing</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Painting <span class="count">5</span></h3>
+      <ul><li><span class="k">Inner Wall Putty</span><span class="v">2 Coats of Wall Putty | Birla</span></li><li><span class="k">Wall Painting</span><span class="v">1 Coat of Primer | 2 Coats of Royal Shyne | Asian</span></li><li><span class="k">Ceiling Painting</span><span class="v">1 Coat of Primer | 2 Coats of Royal Shyne | Nippon</span></li><li><span class="k">Exterior Paint</span><span class="v">1 Coat of Primer | 2 Coats of Apex Ultima Protek | Asian</span></li><li><span class="k">Elevation Putty</span><span class="v">2 Coat of Putty for All Sides of Elevation | Birla Wallseal Waterproofing</span></li></ul>
+    </div>
+    <div class="group">
+      <h3>Electrical <span class="count">4</span></h3>
+      <ul><li><span class="v only">Wires - Finolex / Havells (FRLS)</span></li><li><span class="v only">Switches - Touch Switches with Glass Plates.</span></li><li><span class="v only">No Restriction on Number of Points. Except for Lifts, DG, Curtain Motors, Swimming Pool, RO Plant, Pressure Pump, Intercom, Surveillance System, Exterior Light Point, Gate Automation, Lightning Arrester, Hybrid Solar Heater, Water Fountain, HVAC Systems.</span></li><li><span class="v only">Electricity Panel Board - Upto 2 Service Connection with RLCB Exterior Grade</span></li></ul>
+    </div>
+    <div class="group excluded">
+      <h3>What's Not Included <span class="count">6</span></h3>
+      <ul><li><span class="v only">Compound Wall @ 425/Sqft &amp; Gate</span></li><li><span class="v only">Sump &amp; Septic Tank @ 24/Litre</span></li><li><span class="v only">Lift</span></li><li><span class="v only">Electricity Connection</span></li><li><span class="v only">Building Plan Approval</span></li><li><span class="v only">Elevation Special Materials</span></li></ul>
+    </div>
+  </div>
+</section></div>
+  <div id="view-section" hidden>
+<section class="cmp" id="sec-design">
+  <h2>Design</h2>
+  <div class="cols">
+  
+    <div class="col">
+      <h3>Basic Package <span class="count">2</span></h3>
+      <ul><li><span class="k">Scheme Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Design</span><span class="v">(3D)</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Standard Package <span class="count">6</span></h3>
+      <ul><li><span class="k">Scheme Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Design</span><span class="v">(3D)</span></li><li><span class="k">Half Layout</span><span class="v">All Floors (3D)</span></li><li><span class="k">Electrical Drawings</span><span class="v">All Floors (2D)</span></li><li><span class="k">Plumbing Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Working Drawing</span><span class="v">All Floors (2D)</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Premium Package <span class="count">10</span></h3>
+      <ul><li><span class="k">Scheme Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Design</span><span class="v">(3D)</span></li><li><span class="k">Half Layout</span><span class="v">All Floors (3D)</span></li><li><span class="k">Electrical Drawings</span><span class="v">All Floors (2D)</span></li><li><span class="k">Plumbing Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Working Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="v only">Soil Test Report</span></li><li><span class="v only">Structural Drawings</span></li><li><span class="k">Furniture Layout</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Detail Drawing</span><span class="v">(2D)</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Ultra Luxury <span class="count">16</span></h3>
+      <ul><li><span class="k">Scheme Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Design</span><span class="v">(3D)</span></li><li><span class="k">Half Layout</span><span class="v">All Floors (3D)</span></li><li><span class="k">Electrical Drawings</span><span class="v">All Floors (2D)</span></li><li><span class="k">Plumbing Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="k">Working Drawing</span><span class="v">All Floors (2D)</span></li><li><span class="v only">Soil Test Report</span></li><li><span class="v only">Structural Drawings</span></li><li><span class="k">Furniture Layout</span><span class="v">All Floors (2D)</span></li><li><span class="k">Elevation Detail Drawing</span><span class="v">(2D)</span></li><li><span class="v only">Site Assessment &amp; Site Plan</span></li><li><span class="k">Interior Views</span><span class="v">All Floors (3D)</span></li><li><span class="k">Interior Detailing</span><span class="v">All Rooms (2D)</span></li><li><span class="v only">Interior 3D Walk-Through</span></li><li><span class="v only">Approval Drawing</span></li><li><span class="v only">Landscaping Architectural Designs</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="cmp" id="sec-project-management">
+  <h2>Project Management</h2>
+  <div class="cols">
+  
+    <div class="col">
+      <h3>Basic Package <span class="count">3</span></h3>
+      <ul><li><span class="k">Site Engineer</span><span class="v">One Visit Per Day</span></li><li><span class="k">Project Manager</span><span class="v">Visit Site Once in a Week</span></li><li><span class="k">Android / IOS App</span><span class="v">Access to APP for Site Status Update</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Standard Package <span class="count">3</span></h3>
+      <ul><li><span class="k">Site Engineer</span><span class="v">Dedicated Full-Time Site Engineer</span></li><li><span class="k">Project Manager</span><span class="v">Visit Site Twice in a Week</span></li><li><span class="k">Architect</span><span class="v">Support Till Design Completion</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Premium Package <span class="count">3</span></h3>
+      <ul><li><span class="k">Site Engineer</span><span class="v">Dedicated Full-Time Site Engineer</span></li><li><span class="k">Project Manager</span><span class="v">Daily Site Visit</span></li><li><span class="k">Architect</span><span class="v">Dedicated Architect through-out the Project. Stage Wise Site Visit. Material Selection Support.</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Ultra Luxury <span class="count">3</span></h3>
+      <ul><li><span class="k">Site Engineer</span><span class="v">Dedicated Full-Time Site Engineer</span></li><li><span class="k">Project Manager</span><span class="v">Daily Site Visit</span></li><li><span class="k">Architect</span><span class="v">Dedicated Architect. Frequent Site Visit. Material &amp; Brand Selection Support Including Interiors and Home Decor.</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="cmp" id="sec-structure">
+  <h2>Structure</h2>
+  <div class="cols">
+  
+    <div class="col">
+      <h3>Basic Package <span class="count">10</span></h3>
+      <ul><li><span class="k">Basement Height</span><span class="v">Upto 2 Feet</span></li><li><span class="k">Steel</span><span class="v">Any ISI Brand</span></li><li><span class="k">AAC</span><span class="v">For Partition Walls. 8-Inch Thick Exterior Walls | 4 Inch Thick Inner Walls</span></li><li><span class="k">Cement</span><span class="v">Penna / Priya</span></li><li><span class="k">M Sand</span><span class="v">Blockwork &amp; All Masonry Works</span></li><li><span class="k">P Sand</span><span class="v">Plastering Works</span></li><li><span class="k">Concrete Grade</span><span class="v">M20 (Manual Mix)</span></li><li><span class="k">Ceiling Height</span><span class="v">10 Feet</span></li><li><span class="k">Steel Reinforcement</span><span class="v">As per Standard</span></li><li><span class="k">Parapet Wall</span><span class="v">3 Feet Height | 4” Thick (Only for Floor with Headroom)</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Standard Package <span class="count">10</span></h3>
+      <ul><li><span class="k">Basement Height</span><span class="v">Upto 3 Feet</span></li><li><span class="k">Steel</span><span class="v">Arun TMT / GBR or Equivalent</span></li><li><span class="k">Chamber Bricks</span><span class="v">For Partition Walls. 9-Inch Thick Exterior Walls | 4 Inch Thick Inner Walls</span></li><li><span class="k">Cement</span><span class="v">Ramco / Dalmia</span></li><li><span class="k">M Sand</span><span class="v">Blockwork &amp; All Masonry Works</span></li><li><span class="k">P Sand</span><span class="v">Plastering Works</span></li><li><span class="k">Concrete Grade</span><span class="v">M20 | RMC for Roof</span></li><li><span class="k">Ceiling Height</span><span class="v">10 Feet</span></li><li><span class="k">Steel Reinforcement</span><span class="v">As per Standard</span></li><li><span class="k">Parapet Wall</span><span class="v">3 Feet Height | 6’ Thick (Only for Floor with Headroom)</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Premium Package <span class="count">12</span></h3>
+      <ul><li><span class="k">Basement Height</span><span class="v">Upto 3.5 Feet</span></li><li><span class="k">Steel</span><span class="v">ARS or Equivalent</span></li><li><span class="k">Wire-Cut Bricks</span><span class="v">For Partition Walls. 9-Inch Thick Exterior Walls | 4 Inch Thick Inner Walls</span></li><li><span class="k">Cement</span><span class="v">Ramco / Dalmia</span></li><li><span class="k">M Sand</span><span class="v">Blockwork &amp; All Masonry Works</span></li><li><span class="k">River Sand</span><span class="v">Plastering Works</span></li><li><span class="k">Concrete Grade</span><span class="v">M20 | RMC for Roof</span></li><li><span class="k">Ceiling Height</span><span class="v">10 Feet(FFL to FFL)</span></li><li><span class="k">Steel Reinforcement</span><span class="v">As per HUNTER PROPERTY Structural Detailing</span></li><li><span class="k">Parapet Wall</span><span class="v">3.5’ Feet Height | 6’ Thick</span></li><li><span class="k">RCC Lift Pit</span><span class="v">Included (If Required)</span></li><li><span class="k">Lift Pit &amp; Shaft</span><span class="v">Included (If Required)</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Ultra Luxury <span class="count">13</span></h3>
+      <ul><li><span class="k">Basement Height</span><span class="v">Upto 5 Feet</span></li><li><span class="k">Steel</span><span class="v">TATA Steel</span></li><li><span class="k">Wire-Cut Bricks</span><span class="v">For Partition Walls. 9-Inch Thick Exterior Walls | 4 Inch Thick Inner Walls</span></li><li><span class="k">Cement</span><span class="v">Ramco / Dalmia / Coamandel</span></li><li><span class="k">River Sand</span><span class="v">Blockwork &amp; All Masonry Works</span></li><li><span class="k">River Sand</span><span class="v">Plastering Works</span></li><li><span class="k">Concrete Grade</span><span class="v">M25 | RMC for Roof</span></li><li><span class="k">Ceiling Height</span><span class="v">11 Feet(FFL to FFL)</span></li><li><span class="k">Steel Reinforcement</span><span class="v">1.5times Strength all as per HUNTER PROPERTY Structural Drawings and Detailing by HUNTER PROPERTY Structural Engineer</span></li><li><span class="k">Parapet Wall</span><span class="v">3.5’ Feet Height | 6’ Thick (or) Toughened Glass Railing if Required.</span></li><li><span class="k">RCC Lift Pit</span><span class="v">Included (If Required)</span></li><li><span class="v only">RCC Concrete Slab for Base</span></li><li><span class="k">Lift Pit &amp; Shaft</span><span class="v">Included (If Required)</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="cmp" id="sec-bathroom-plumbing">
+  <h2>Bathroom &amp; Plumbing</h2>
+  <div class="cols">
+  
+    <div class="col">
+      <h3>Basic Package <span class="count">4</span></h3>
+      <ul><li><span class="k">Wall Tiles</span><span class="v">Upto 7’ Height. Size 2’X1’ Vitrified Tile. Upto ₹40/Sqft</span></li><li><span class="k">Bath &amp; CP Fittings</span><span class="v">Cera | Upto ₹12000 Per Bathroom | Floor Mounted EWC, Wall Mounted Wash Basin, Pillar Tap, Health Faucet, Shower Set, 2-in-1 Wall Mixer</span></li><li><span class="k">Plumbing Pipes &amp; Fittings</span><span class="v">Inner CPVC, Outer PVC, Brands: Any ISI Brand</span></li><li><span class="k">Overhead Tank</span><span class="v">1000 Litres Sintex | 3 Layer | UV Protected | White Colour</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Standard Package <span class="count">4</span></h3>
+      <ul><li><span class="k">Wall Tiles</span><span class="v">Upto Ceiling (Full Height). Size 2’X2’ Vitrified Tile. Upto ₹50/Sqft. 1 Colour for 2 Bathrooms</span></li><li><span class="k">Bath &amp; CP Fittings</span><span class="v">Parryware | Upto ₹17000 Per Bathroom | Wall Mounted EWC, Wall Mounted Wash Basin, Pillar Tap, Health Faucet, Shower Set, 2-in-1 Wall Mixer</span></li><li><span class="k">Plumbing Pipes &amp; Fittings</span><span class="v">Inner CPVC, Outer PVC, Brands: Any ISI Brand</span></li><li><span class="k">Overhead Tank</span><span class="v">2000 Litres Sintex | 3 Layer | UV Protected | White Colour</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Premium Package <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tiles</span><span class="v">Upto Ceiling (Full Height). Size 4’X2’ Digital Vitrified Tile. Upto ₹85/Sqft.</span></li><li><span class="k">Bath &amp; CP Fittings</span><span class="v">Jaquar | Upto ₹22000 Per Bathroom | Wall Mounted EWC, Wall Mounted Wash Basin, Pillar Tap, Health Faucet, Shower Set, Concealed Wall Mixer</span></li><li><span class="k">Plumbing Pipes &amp; Fittings</span><span class="v">Inner CPVC, Outer PVC, Brands: Ashirwad / Finolex</span></li><li><span class="k">Overhead Tank</span><span class="v">3000 Litres Sintex | 5 Layer | UV Protected | White Colour, With Sensor</span></li><li><span class="k">Solar Heater Plumbing Lines</span><span class="v">Included (If Required)</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Ultra Luxury <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tiles</span><span class="v">Upto Ceiling (Full Height). Size 4’X2’ Digital Vitrified Tile. Upto ₹120/Sqft.</span></li><li><span class="k">Bath &amp; CP Fittings</span><span class="v">Kohler | Upto ₹60000 Per Bathroom | Concealed EWC, Counter Top Wash Basin, Marble Counter Slab, Pillar Tap, Health Faucet, Shower Set, Concealed Wall Mixer</span></li><li><span class="k">Plumbing Pipes &amp; Fittings</span><span class="v">Inner CPVC, Outer PVC, HDPE Flexible Pipe. Brands: Ashirwad / Finolex / Jindal</span></li><li><span class="k">RCC Overhead Tank</span><span class="v">6000 Litres with Waterproofing</span></li><li><span class="k">Solar Heater Plumbing Lines</span><span class="v">Included (If Required)</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="cmp" id="sec-flooring">
+  <h2>Flooring</h2>
+  <div class="cols">
+  
+    <div class="col">
+      <h3>Basic Package <span class="count">5</span></h3>
+      <ul><li><span class="k">Living, Dining, Bedrooms &amp; Kitchen</span><span class="v">2’X2’ | Vitrified Tiles Upto ₹45/Sqft. Anuj / Sparrow</span></li><li><span class="k">Balcony &amp; Utility</span><span class="v">Size 1’X1’ | Upto ₹35/Sqft</span></li><li><span class="k">Staircase</span><span class="v">Size 1’X1’ Tile: Upto ₹35/Sqft</span></li><li><span class="k">Car Parking</span><span class="v">‘1X1’ Parking Tile | Upto ₹35/Sqft</span></li><li><span class="k">Terrace Flooring</span><span class="v">Screed Concreting with Waterproofing</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Standard Package <span class="count">5</span></h3>
+      <ul><li><span class="k">Living, Dining, Bedrooms &amp; Kitchen</span><span class="v">4’X2’ | Vitrified Tiles Upto ₹65/Sqft. 1 Model for Living, Dining and Kitchen. KAG / Sunheart or Equivalent</span></li><li><span class="k">Balcony &amp; Utility</span><span class="v">Size 2’X2’ | Upto ₹50/Sqft | Antiskid</span></li><li><span class="k">Staircase</span><span class="v">Full Body Tile: Upto ₹110/Sqft</span></li><li><span class="k">Car Parking</span><span class="v">‘1X1’ Heavy Duty Tile | Upto ₹50/Sqft</span></li><li><span class="k">Terrace Flooring</span><span class="v">Screed Concreting with Waterproofing</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Premium Package <span class="count">5</span></h3>
+      <ul><li><span class="k">Living, Dining, Bedrooms &amp; Kitchen</span><span class="v">4’X2’ | Tiles Upto ₹80/Sqft. Somany / Kajaria / KAG / Sunheart</span></li><li><span class="k">Balcony &amp; Utility</span><span class="v">Size 2’X2’ | Upto ₹60/Sqft</span></li><li><span class="k">Staircase</span><span class="v">Granite Upto ₹160/Sqft</span></li><li><span class="k">Car Parking</span><span class="v">‘2X2’ Heavy Stonel | Upto ₹80/Sqft</span></li><li><span class="k">Terrace Flooring</span><span class="v">White Cooling Tile Size 1’X1’ | Anuj | with Waterproofing</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Ultra Luxury <span class="count">5</span></h3>
+      <ul><li><span class="k">Living, Dining, Bedrooms &amp; Kitchen</span><span class="v">6’X6’ | QuartsTiles Upto ₹200/Sqft.</span></li><li><span class="k">Balcony &amp; Utility</span><span class="v">Size 2’X2’ | Upto ₹60/Sqft</span></li><li><span class="k">Staircase</span><span class="v">Marble Upto ₹350/Sqft</span></li><li><span class="k">Car Parking</span><span class="v">Granitel | Upto ₹120/Sqft</span></li><li><span class="k">Terrace Flooring</span><span class="v">2’X2’ Exterior Grade Vitrified Tile. (Any Grade) | with Waterproofing</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="cmp" id="sec-kitchen-dining">
+  <h2>Kitchen &amp; Dining</h2>
+  <div class="cols">
+  
+    <div class="col">
+      <h3>Basic Package <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tile</span><span class="v">Vitrified Tile (2’X1’) | Upto ₹45/Sqft</span></li><li><span class="k">Sink Faucet</span><span class="v">Upto ₹900/ No</span></li><li><span class="k">Kitchen Sink</span><span class="v">Stainless Steel Single Bowl Upto ₹2800</span></li><li><span class="k">Dining</span><span class="v">Wall Mounted Wash Basin</span></li><li><span class="k">Kitchen Granite Top</span><span class="v">Upto ₹90/Sqft</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Standard Package <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tile</span><span class="v">Vitrified Tile (2’X2’) | Upto ₹55/Sqft</span></li><li><span class="k">Sink Faucet</span><span class="v">Upto ₹2000/ No</span></li><li><span class="k">Kitchen Sink</span><span class="v">Stainless Steel Sink with Drain Upto ₹4000</span></li><li><span class="k">Dining</span><span class="v">Wall Mounted Wash Basin</span></li><li><span class="k">Kitchen Granite Top</span><span class="v">Upto ₹140/Sqft</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Premium Package <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tile</span><span class="v">Vitrified Tile (4’X2’) | Upto ₹65/Sqft</span></li><li><span class="k">Sink Faucet</span><span class="v">Designer Brand | Upto ₹3500/ Nos</span></li><li><span class="k">Kitchen Sink</span><span class="v">Quartz Sink with Drain Upto ₹5000</span></li><li><span class="k">Dining</span><span class="v">Wash Basin with Granite Counter</span></li><li><span class="k">Kitchen Granite Top</span><span class="v">Upto ₹160/Sqft</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Ultra Luxury <span class="count">5</span></h3>
+      <ul><li><span class="k">Wall Tile</span><span class="v">Vitrified Designer Tile (4’X2’) | Upto ₹125/Sqft</span></li><li><span class="k">Sink Faucet</span><span class="v">Floor Mounted Pull-Out | Upto ₹8000/ Nos</span></li><li><span class="k">Kitchen Sink</span><span class="v">Multifunctional Sink Upto ₹15000</span></li><li><span class="k">Dining</span><span class="v">Premium Designer Collection Wash Basin with Marble Counter and Designer Top</span></li><li><span class="k">Kitchen Top</span><span class="v">Quarts Stone Upto ₹350/Sqft</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="cmp" id="sec-door-windows-and-railing">
+  <h2>Door, Windows and Railing</h2>
+  <div class="cols">
+  
+    <div class="col">
+      <h3>Basic Package <span class="count">6</span></h3>
+      <ul><li><span class="k">Main Door</span><span class="v">Malaysian Teak Door &amp; Teak Frame | 32mm Thickness | 5’X3’ Thick Frame | 7’ Height 3.5 Feet Width</span></li><li><span class="k">Room Doors</span><span class="v">White Panel Door | Sal Wood Frame | 7’X3’</span></li><li><span class="k">Bathroom Doors</span><span class="v">PVC Door | 7’X2.5’</span></li><li><span class="k">Windows</span><span class="v">Aluminium Sliding Window | Max 4’X4’ | One Window Per Room | 5mm Clear Glass</span></li><li><span class="k">Staircase Railing</span><span class="v">MS Railing</span></li><li><span class="k">Balcony Railing</span><span class="v">MS Railing</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Standard Package <span class="count">6</span></h3>
+      <ul><li><span class="k">Main Door</span><span class="v">Malaysian Teak Door &amp; Teak Frame - Readmade | 35mm Thickness | 5’X3’ Thick Frame | 7’ Height 3.5 Feet Width | Upto 22000/Nos | 1 Nos Only</span></li><li><span class="k">Room Doors</span><span class="v">Flush Door | Sal Wood Frame | 7’X3’</span></li><li><span class="k">Bathroom Doors</span><span class="v">WPC Door &amp; Frame | 7’X2.5’</span></li><li><span class="k">Windows</span><span class="v">UPVC Sliding White | Max 5’X5’ | One Window Per Room | 5mm Clear Glass</span></li><li><span class="k">Staircase Railing</span><span class="v">SS 304 Grade Railing</span></li><li><span class="k">Balcony Railing</span><span class="v">SS 304 Grade Railing with 8mm Toughened Glass with Posts</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Premium Package <span class="count">6</span></h3>
+      <ul><li><span class="k">Main Door</span><span class="v">Ghana Teak Door &amp; Teak Frame | 35mm Thickness | 5’X3’ Thick Frame | 8’ Height 4 Feet Width.</span></li><li><span class="k">Room Doors</span><span class="v">Flush Door with Laminate | Ghana Wood Frame | 7’X3’</span></li><li><span class="k">Bathroom Doors</span><span class="v">WPC Door &amp; Frame | 7’X2.5’</span></li><li><span class="k">Windows</span><span class="v">UPVC Sliding White - No Restriction on Size and Quantity | 5mm Clear Glass</span></li><li><span class="k">Staircase Railing</span><span class="v">SS 304 Grade Railing</span></li><li><span class="k">Balcony Railing</span><span class="v">10mm Full Toughened Glass with 304 Grade Railing</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Ultra Luxury <span class="count">6</span></h3>
+      <ul><li><span class="k">Main Door</span><span class="v">Designer Wood Door of Height upto 8 Feet X 5 Feet (or) Security Steel Door of Size (8’X4.5’) Pure Stainless Steel with Digital Lock.</span></li><li><span class="k">Room Doors</span><span class="v">Flush Door with Laminate | Ghana Wood Frame | 7’X3’</span></li><li><span class="k">Bathroom Doors</span><span class="v">Water Proof Flush Door with Designer Laminates | 8’X3’</span></li><li><span class="k">Windows</span><span class="v">Openable Type | UPVC Coloured | No Restriction on Size and Quantity | Toughened Glass</span></li><li><span class="k">Staircase Railing</span><span class="v">Toughened Glass with SS (or) Wood Railing (or) Aluminium</span></li><li><span class="k">Balcony Railing</span><span class="v">10mm Full Toughened Glass with Aluminium Railing</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="cmp" id="sec-painting">
+  <h2>Painting</h2>
+  <div class="cols">
+  
+    <div class="col">
+      <h3>Basic Package <span class="count">4</span></h3>
+      <ul><li><span class="k">Inner Wall Putty</span><span class="v">2 Coats of Wall Putty | Any ISI Brand</span></li><li><span class="k">Wall Painting</span><span class="v">1 Coat of Primer | 2 Coats of Tractor Emulsion | Any ISI Brand</span></li><li><span class="k">Ceiling Painting</span><span class="v">1 Coat of Primer | 2 Coats of Tractor Emulsion | Any ISI Brand</span></li><li><span class="k">Exterior Paint</span><span class="v">1 Coat of Primer | 2 Coats of Ace | Any ISI Brand</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Standard Package <span class="count">5</span></h3>
+      <ul><li><span class="k">Inner Wall Putty</span><span class="v">2 Coats of Wall Putty | Nippon</span></li><li><span class="k">Wall Painting</span><span class="v">1 Coat of Primer | 2 Coats of Breeze Emulsion | Nippon</span></li><li><span class="k">Ceiling Painting</span><span class="v">1 Coat of Primer | 2 Coats of Breeze Emulsion | Nippon</span></li><li><span class="k">Exterior Paint</span><span class="v">1 Coat of Primer | 2 Coats of Sumo Xtra | Nippon</span></li><li><span class="k">Elevation Putty</span><span class="v">2 Coat of Putty for Front Elevation | Nippon Exterior Putty</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Premium Package <span class="count">5</span></h3>
+      <ul><li><span class="k">Inner Wall Putty</span><span class="v">2 Coats of Wall Putty | Birla</span></li><li><span class="k">Wall Painting</span><span class="v">1 Coat of Primer | 2 Coats of Pro Matex Gold Emulsion | Nippon</span></li><li><span class="k">Ceiling Painting</span><span class="v">1 Coat of Primer | 2 Coats of Pro Matex Gold Emulsion | Nippon</span></li><li><span class="k">Exterior Paint</span><span class="v">1 Coat of Primer | 2 Coats of Weather bond Pro Nippon</span></li><li><span class="k">Elevation Putty</span><span class="v">2 Coat of Putty for Two Sides of Elevation | Birla Wallseal Waterproof</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Ultra Luxury <span class="count">5</span></h3>
+      <ul><li><span class="k">Inner Wall Putty</span><span class="v">2 Coats of Wall Putty | Birla</span></li><li><span class="k">Wall Painting</span><span class="v">1 Coat of Primer | 2 Coats of Royal Shyne | Asian</span></li><li><span class="k">Ceiling Painting</span><span class="v">1 Coat of Primer | 2 Coats of Royal Shyne | Nippon</span></li><li><span class="k">Exterior Paint</span><span class="v">1 Coat of Primer | 2 Coats of Apex Ultima Protek | Asian</span></li><li><span class="k">Elevation Putty</span><span class="v">2 Coat of Putty for All Sides of Elevation | Birla Wallseal Waterproofing</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="cmp" id="sec-electrical">
+  <h2>Electrical</h2>
+  <div class="cols">
+  
+    <div class="col">
+      <h3>Basic Package <span class="count">12</span></h3>
+      <ul><li><span class="v only">Wires - Essar</span></li><li><span class="v only">Switches - Fybros</span></li><li><span class="k">Bedroom</span><span class="v">2 Switch Box(8-Module). One at Entrance and one at Bed-side</span></li><li><span class="k">Bathroom</span><span class="v">1 Switch Box(Inner) 4-Module, 1 Switch Box(Outer) 3-Module. Point for Heater &amp; Exhaust</span></li><li><span class="k">Living Room</span><span class="v">Upto 4 Switch Box (8-Module)</span></li><li><span class="k">Dining</span><span class="v">1 Switch (8-Module)</span></li><li><span class="k">Pooja</span><span class="v">1 Switch (3-Module)</span></li><li><span class="k">Kitchen</span><span class="v">3 Switch Box (6-Module), Point for HOB, Chimney, RO</span></li><li><span class="k">Utility</span><span class="v">1 Switch Box (4-Modules)</span></li><li><span class="k">AC Points</span><span class="v">1 for Each Bedroom</span></li><li><span class="k">Entrance</span><span class="v">1 Switch Box (6-Module)</span></li><li><span class="k">Balconies</span><span class="v">1 Switch Box (3-Module)</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Standard Package <span class="count">12</span></h3>
+      <ul><li><span class="v only">Wires - Orbit (FRLS)</span></li><li><span class="v only">Switches - Legrand</span></li><li><span class="k">Bedroom</span><span class="v">3 Switch Box(8-Module)</span></li><li><span class="k">Bathroom</span><span class="v">1 Switch Box(Inner) 4-Module, 1 Switch Box(Outer) 3-Module. Point for Heater &amp; Exhaust</span></li><li><span class="k">Living Room</span><span class="v">Upto 4 Switch Box (8-Module)</span></li><li><span class="k">Dining</span><span class="v">1 Switch (8-Module)</span></li><li><span class="k">Pooja</span><span class="v">1 Switch (3-Module)</span></li><li><span class="k">Kitchen</span><span class="v">3 Switch Box (6-Module), Point for HOB, Chimney, RO</span></li><li><span class="k">Utility</span><span class="v">1 Switch Box (4-Modules)</span></li><li><span class="k">AC Points</span><span class="v">1 for Each Bedroom. 1 for Living Room</span></li><li><span class="k">Entrance</span><span class="v">1 Switch Box (6-Module)</span></li><li><span class="k">Balconies</span><span class="v">1 Switch Box (3-Module)</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Premium Package <span class="count">4</span></h3>
+      <ul><li><span class="v only">Wires - Finolex / Havells (FRLS)</span></li><li><span class="v only">Switches - GM</span></li><li><span class="v only">No Restriction on Number of Points. Except for Lifts, DG, Curtain Motors, Swimming Pool, RO Plant, Pressure Pump, Intercom, Surveillance System, Exterior Light Point, Gate Automation, Lightning Arrester, Hybrid Solar Heater, Water Fountain, HVAC Systems.</span></li><li><span class="v only">Electricity Panel Board - Single Service with RLCB - Exterior Grade</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Ultra Luxury <span class="count">4</span></h3>
+      <ul><li><span class="v only">Wires - Finolex / Havells (FRLS)</span></li><li><span class="v only">Switches - Touch Switches with Glass Plates.</span></li><li><span class="v only">No Restriction on Number of Points. Except for Lifts, DG, Curtain Motors, Swimming Pool, RO Plant, Pressure Pump, Intercom, Surveillance System, Exterior Light Point, Gate Automation, Lightning Arrester, Hybrid Solar Heater, Water Fountain, HVAC Systems.</span></li><li><span class="v only">Electricity Panel Board - Upto 2 Service Connection with RLCB Exterior Grade</span></li></ul>
+    </div>
+  </div>
+</section>
+<section class="cmp" id="sec-what-s-not-included">
+  <h2>What's Not Included</h2>
+  <div class="cols">
+  
+    <div class="col">
+      <h3>Basic Package <span class="count">6</span></h3>
+      <ul><li><span class="v only">Compound Wall @ 425/Sqft &amp; Gate</span></li><li><span class="v only">Sump &amp; Septic Tank @ 24/Litre</span></li><li><span class="v only">Lift, Lift Pit and Shaft</span></li><li><span class="v only">Electricity Connection</span></li><li><span class="v only">Building Plan Approval</span></li><li><span class="v only">Elevation Special Materials</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Standard Package <span class="count">6</span></h3>
+      <ul><li><span class="v only">Compound Wall @ 425/Sqft &amp; Gate</span></li><li><span class="v only">Sump &amp; Septic Tank @ 24/Litre</span></li><li><span class="v only">Lift, Lift Pit and Shaft</span></li><li><span class="v only">Electricity Connection</span></li><li><span class="v only">Building Plan Approval</span></li><li><span class="v only">Elevation Special Materials</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Premium Package <span class="count">6</span></h3>
+      <ul><li><span class="v only">Compound Wall @ 425/Sqft &amp; Gate</span></li><li><span class="v only">Sump &amp; Septic Tank @ 24/Litre</span></li><li><span class="v only">Lift</span></li><li><span class="v only">Electricity Connection</span></li><li><span class="v only">Building Plan Approval</span></li><li><span class="v only">Elevation Special Materials</span></li></ul>
+    </div>
+    <div class="col">
+      <h3>Ultra Luxury <span class="count">6</span></h3>
+      <ul><li><span class="v only">Compound Wall @ 425/Sqft &amp; Gate</span></li><li><span class="v only">Sump &amp; Septic Tank @ 24/Litre</span></li><li><span class="v only">Lift</span></li><li><span class="v only">Electricity Connection</span></li><li><span class="v only">Building Plan Approval</span></li><li><span class="v only">Elevation Special Materials</span></li></ul>
+    </div>
+  </div>
+</section></div>
+</div>
+
+<script>
+  (function () {
+    var views = { package: document.getElementById('view-package'), section: document.getElementById('view-section') };
+    var jumps = { package: document.getElementById('jump-package'), section: document.getElementById('jump-section') };
+    var btns  = { package: document.getElementById('btn-package'), section: document.getElementById('btn-section') };
+    function show(which) {
+      Object.keys(views).forEach(function (k) {
+        var on = k === which;
+        views[k].hidden = !on; jumps[k].hidden = !on; btns[k].setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      try { localStorage.setItem('hp-pkg-view', which); } catch (e) {}
+    }
+    btns.package.addEventListener('click', function () { show('package'); });
+    btns.section.addEventListener('click', function () { show('section'); });
+    var saved = null; try { saved = localStorage.getItem('hp-pkg-view'); } catch (e) {}
+    if (location.hash.indexOf('#sec-') === 0) saved = 'section';
+    if (saved === 'section') show('section');
+  })();
+</script>

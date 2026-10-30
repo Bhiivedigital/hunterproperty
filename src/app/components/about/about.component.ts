@@ -5,6 +5,7 @@ import { ProjectskillsComponent } from '../homelayout/projectskills/projectskill
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { TeamComponent } from "../homelayout/team/team.component";
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HomeContentService } from '../../shared/services/home-content.service';
 import { TestimonialItem } from '../../shared/models/home-content.model';
@@ -12,7 +13,7 @@ import { TestimonialItem } from '../../shared/models/home-content.model';
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, AboutsectionComponent, WorkingprocessComponent, ProjectskillsComponent, CarouselModule, TeamComponent],
+  imports: [CommonModule, RouterLink, AboutsectionComponent, WorkingprocessComponent, ProjectskillsComponent, CarouselModule, TeamComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]

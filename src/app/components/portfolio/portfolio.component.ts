@@ -1,3 +1,4 @@
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -8,7 +9,7 @@ import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe'
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [CommonModule, CldSrcsetPipe, CldSizesPipe],
+  imports: [CommonModule, RouterLink, CldSrcsetPipe, CldSizesPipe],
   templateUrl: './portfolio.component.html',
   styleUrl: './portfolio.component.scss'
 })

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { StrapiService } from './strapi.service';
 import {
@@ -50,16 +50,10 @@ export class HomeContentService {
     const params = { 'populate[slides][populate]': 'backgroundImage' };
     const key = 'home-banner' + JSON.stringify(params);
     if (!this.requestCache.has(key)) {
-      // index.html fires this same request (with a matching prefetched-image
-      // preload) before Angular even finishes bootstrapping, so the LCP hero
-      // image isn't stuck waiting for app boot + this HTTP round-trip in
-      // series. Reuse that in-flight/settled fetch here instead of issuing a
-      // second identical request.
-      const prefetch = (typeof window !== 'undefined' ? (window as any).__heroBannerFetch : undefined) as
-        Promise<{ data: any }> | undefined;
-      const raw$: Observable<any> = prefetch
-        ? from(prefetch).pipe(map(res => res?.data))
-        : this.strapi.getSingle<any>('home-banner', params).pipe(map(res => res.data));
+      // The homepage is prerendered with this response inlined (HTTP transfer
+      // cache), so the hero <img> is already in the HTML the browser parses and
+      // hydration reuses the data without a second request to Strapi.
+      const raw$: Observable<any> = this.strapi.getSingle<any>('home-banner', params).pipe(map(res => res.data));
 
       this.requestCache.set(key, raw$.pipe(map(data => ({
         ...data,

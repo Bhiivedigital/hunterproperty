@@ -24,6 +24,8 @@ type SitemapUrl = {
 const STATIC_ROUTES: (Omit<SitemapUrl, 'lastmod'> & { hub?: boolean })[] = [
   { path: '/', changefreq: 'daily', priority: '1.0', hub: true },
   { path: '/services', changefreq: 'daily', priority: '0.9', hub: true },
+  // Lists every area guide, so it changes whenever one does.
+  { path: '/builders-in-chennai', changefreq: 'weekly', priority: '0.9', hub: true },
   { path: '/contactus', changefreq: 'daily', priority: '0.8' },
   { path: '/about', changefreq: 'daily', priority: '0.7' },
   { path: '/portfolio', changefreq: 'daily', priority: '0.7' },

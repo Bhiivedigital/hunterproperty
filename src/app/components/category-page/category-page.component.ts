@@ -14,6 +14,7 @@ import { QuickLinksComponent } from '../../shared/quick-links/quick-links.compon
 import { ContentBlocksComponent } from '../../shared/content-blocks/content-blocks.component';
 import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe';
 import { HeroLeadFormComponent } from '../homelayout/hero-lead-form/hero-lead-form.component';
+import { faqEntries } from '../../shared/seo/faq';
 
 // The category page is a pillar page: its job is to expose every child guide as
 // a crawlable internal link, not to sell each one with a card. Links are cheap
@@ -196,7 +197,6 @@ export class CategoryPageComponent implements OnInit {
         this.total = result.total;
       });
 
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
@@ -217,6 +217,13 @@ export class CategoryPageComponent implements OnInit {
       { name: category.name, url: `/${category.slug}` }
     ]);
     this.structuredData.clear('article');
+    this.structuredData.setService({
+      name: `${category.name} in Chennai`,
+      serviceType: category.name,
+      description: this.richText.toPlainText(pillar?.intro) || this.richText.toPlainText(category.description) || `${category.name} by Hunter Property in Chennai.`,
+      url: `/${category.slug}`
+    });
+    this.structuredData.setFaq(faqEntries(pillar?.contentBlocks, this.richText));
   }
 
   private goToNotFound(): void {

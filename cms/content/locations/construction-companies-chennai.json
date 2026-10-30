@@ -1,0 +1,33 @@
+{
+  "slug": "construction-companies-chennai",
+  "mode": "update",
+  "title": "Comparing Construction Company Quotes in Chennai: What to Ask",
+  "seo": {
+    "metaTitle": "How to Compare Construction Quotes in Chennai | Hunter Property",
+    "metaDescription": "Two Chennai construction quotes can be lakhs apart for the same house. Compare turnkey and labour rates, area basis, BOQs and approvals with these questions."
+  },
+  "excerpt": "Construction quotes for the same Chennai house can differ by lakhs. This guide explains the three contract models, what a 2026 rate should include and the four written questions that expose the gap.",
+  "faqTitle": "Comparing construction quotes: common questions",
+  "faqs": [
+    {
+      "question": "Why does a rate on carpet area look cheaper than one on built-up area?",
+      "answer": "<p>Because the same house measures differently. Built-up, carpet and plinth area can differ by around 20% for an identical house, so two rates are only comparable once you know which area each is quoted on.</p>"
+    },
+    {
+      "question": "What is a BOQ and why should a quote include one?",
+      "answer": "<p>A bill of quantities names brands and grades: cement brand, steel grade, tile budget per sq ft, sanitaryware allowance. Without it, you are comparing adjectives rather than specifications.</p>"
+    },
+    {
+      "question": "What does an unusually low quote usually leave out?",
+      "answer": "<p>Something that has to be paid for anyway. In our experience it is most often approvals, the compound wall, or the difference between branded and unbranded fittings. Ask which specification tier the number represents.</p>"
+    },
+    {
+      "question": "What should I verify about a construction company before signing?",
+      "answer": "<p>GST registration and a PAN, two completed projects you can visit that were handed over around eighteen months ago, and one client the company did not nominate. Ask that client what slipped.</p>"
+    },
+    {
+      "question": "What does a Hunter Property quote include?",
+      "answer": "<p>Our packages are priced per sq ft of built-up area: Basic ₹2,199, Standard ₹2,399, Premium ₹2,699 and Ultra Luxury ₹3,199. Approvals, soil test, compound wall, sump and interiors are quoted separately. Our quotes assume turnkey unless you ask otherwise, and they name brands and grades line by line.</p>"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "slug": "services-home-construction-chennai",
+  "mode": "update",
+  "title": "Home Construction Services in Chennai: Design to Handover",
+  "seo": {
+    "metaTitle": "Turnkey Home Construction Services in Chennai | Hunter Property",
+    "metaDescription": "Turnkey house construction in Chennai: soil test, design, approvals, then building with daily site reports and stage-linked payments. Request a site visit."
+  },
+  "excerpt": "Our turnkey home construction service covers the soil test, design and drawings, approvals, construction with daily site updates and a defects walkthrough at handover, with materials named in every quote.",
+  "faqTitle": "Our home construction service: common questions",
+  "faqs": [
+    {
+      "question": "What are your home construction packages?",
+      "answer": "<p>Our packages are priced per sq ft of built-up area: Basic ₹2,199, Standard ₹2,399, Premium ₹2,699 and Ultra Luxury ₹3,199. Approvals, soil test, compound wall, sump and interiors are quoted separately. Every quote names the brand and grade behind each line.</p>"
+    },
+    {
+      "question": "What updates will I get during construction?",
+      "answer": "<p>A daily report from site: photographs, what was done, what is next and what is holding things up. You should not have to drive across the city to find out whether the slab was poured.</p>"
+    },
+    {
+      "question": "What does your quote include, and what does it leave out?",
+      "answer": "<p>Included: structural work, masonry, plastering, flooring, doors and windows, electrical, plumbing and painting, with the material specification named against each line. Not included unless stated: compound wall, sump, borewell, landscaping, interiors, soil test and approval or statutory fees.</p>"
+    },
+    {
+      "question": "How are payments scheduled?",
+      "answer": "<p>Against completed stages, never against dates. You pay for work you can see, after you have seen it.</p>"
+    },
+    {
+      "question": "Why do you book the soil test on day one?",
+      "answer": "<p>Because it decides the foundation, and the report takes four to six weeks. Running it alongside design keeps it from holding up the rest of the project.</p>"
+    }
+  ]
+}

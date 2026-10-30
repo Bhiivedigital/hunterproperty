@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && node scripts/generate-static-seo.mjs",
+    "build": "node scripts/write-prerender-routes.mjs && ng build && node scripts/postbuild.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -17,7 +17,9 @@
     "@angular/forms": "^18.2.0",
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
+    "@angular/platform-server": "^18.2.14",
     "@angular/router": "^18.2.0",
+    "@angular/ssr": "^18.2.14",
     "@emailjs/browser": "^4.4.1",
     "bootstrap": "^5.3.6",
     "ngx-owl-carousel-o": "^18.0.1",
@@ -37,6 +39,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "purgecss": "^6.0.0",
+    "subset-font": "^2.9.0",
     "typescript": "~5.4.2"
   }
 }
