@@ -53,10 +53,10 @@
 
         <!-- navbar -->
         <div class="main-navigation" [class.nav-scrolled]="isScrolled">
-            <nav class="navbar navbar-expand-lg">
+            <nav class="navbar navbar-expand-lg" [class.fixed-top]="isScrolled">
                 <div class="container position-relative">
-                    <a class="navbar-brand" href="index.html">
-                        <img src="assets/img/logo/logo.webp" alt="logo">
+                    <a class="navbar-brand" routerLink="/" aria-label="Hunter Property home">
+                        <img src="assets/img/logo/logo.webp" alt="Hunter Property" width="180" height="59">
                     </a>
                     <div class="mobile-menu-right">
                         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
                     </div>
                     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div class="offcanvas-header">
-                            <a href="index.html" class="offcanvas-brand" id="offcanvasNavbarLabel">
+                            <a routerLink="/" class="offcanvas-brand" id="offcanvasNavbarLabel">
                                 <img src="../../../assets/img/logo/logo.webp" alt="">
                             </a>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="far fa-xmark"></i></button>
@@ -100,6 +100,9 @@
                                                      </ul>
                                                  </div>
                                              </div>
+                                             <a class="mega-menu-hub-link" routerLink="/builders-in-chennai" (click)="closeMegaMenuMobile()">
+                                                 <i class="far fa-location-dot"></i> Builders in Chennai: find your area <i class="fas fa-arrow-right"></i>
+                                             </a>
                                          </div>
                                      </div>
                                  </li>
@@ -115,7 +118,7 @@
                                     </div>
                                     <div class="content">
                                         <h6>Email</h6>
-                                        <a href=""><span class="">info&#64;hunterproperty.in</span></a>
+                                        <a href="mailto:info@hunterproperty.in"><span class="">info&#64;hunterproperty.in</span></a>
                                     </div>
                                 </li>
                                 <li class="list-item">
@@ -151,7 +154,7 @@
                             <!-- nav-right -->
                             <div class="nav-right">
                                 <div class="nav-btn">
-                                    <a class="theme-btn" role="button" (click)="openQuotePopup()">Get a Quote<i class="fas fa-arrow-right"></i></a>
+                                    <a class="theme-btn" href="/contactus/" (click)="openQuotePopup($event)">Get a Quote<i class="fas fa-arrow-right"></i></a>
                                 </div>
                                 <!-- <button type="button" class="sidebar-btn nav-right-link" data-bs-toggle="offcanvas" data-bs-target="#sidebarPopup">
                                     <span></span>
@@ -172,7 +175,7 @@
       <!-- sidebar-popup -->
     <div class="sidebar-popup offcanvas offcanvas-end" tabindex="-1" id="sidebarPopup">
         <div class="offcanvas-header">
-            <a href="index.html" class="sidebar-popup-logo">
+            <a routerLink="/" class="sidebar-popup-logo">
                 <img src="assets/img/logo/logo.webp" alt="">
             </a>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
@@ -195,7 +198,7 @@
                             </div>
                             <div class="content">
                                 <h6>Email</h6>
-                                <a href=""><span class="">info&#64;hunterproperty.in</span></a>
+                                <a href="mailto:info@hunterproperty.in"><span class="">info&#64;hunterproperty.in</span></a>
                             </div>
                         </li>
                         <li>

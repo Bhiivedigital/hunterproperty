@@ -1,5 +1,5 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SafeHtml } from '@angular/platform-browser';
 import { ServiceContentService } from '../../shared/services/service-content.service';
@@ -12,6 +12,10 @@ import { CldSrcsetPipe, CldSizesPipe } from '../../shared/pipes/cloudinary.pipe'
 import { QuickLinksComponent } from '../../shared/quick-links/quick-links.component';
 import { RichTextPipe } from '../../shared/pipes/rich-text.pipe';
 import { ContentBlocksComponent } from '../../shared/content-blocks/content-blocks.component';
+import { AreaPanelComponent } from '../../shared/area-panel/area-panel.component';
+import { AreaDirectoryService } from '../../shared/services/area-directory.service';
+import { Area, AREAS_BY_SLUG, AREA_CATEGORY_SLUG } from '../../shared/seo/areas';
+import { faqEntries } from '../../shared/seo/faq';
 
 // Clears the fixed header (top bar + floating navbar), matching the pillar
 // page's aside, with a little air left under a panel pinned by its bottom.
@@ -29,7 +33,8 @@ const STICKY_BOTTOM_GAP = 20;
     CldSrcsetPipe,
     CldSizesPipe,
     QuickLinksComponent,
-    RichTextPipe
+    RichTextPipe,
+    AreaPanelComponent
   ],
   templateUrl: './content-detail.component.html',
   styleUrl: './content-detail.component.scss'
@@ -39,9 +44,13 @@ export class ContentDetailComponent implements OnInit, OnDestroy {
   page?: ServiceContentPage;
   pageContent?: SafeHtml;
   related: ServiceContentPageSummary[] = [];
+  /** Set when this guide is one of the Chennai area pages. */
+  area?: Area;
+  nearbyAreas: Area[] = [];
 
   private sideEl?: HTMLElement;
   private sideResizeObserver?: ResizeObserver;
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   /**
    * The sticky sidebar. It is only re-measured when it actually changes size
@@ -53,7 +62,7 @@ export class ContentDetailComponent implements OnInit, OnDestroy {
   set sidePanel(ref: ElementRef<HTMLElement> | undefined) {
     this.sideResizeObserver?.disconnect();
     this.sideEl = ref?.nativeElement;
-    if (!this.sideEl) return;
+    if (!this.sideEl || !this.isBrowser) return;
     this.sideResizeObserver = new ResizeObserver(() => this.updateSideOffset());
     this.sideResizeObserver.observe(this.sideEl);
     this.updateSideOffset();
@@ -79,7 +88,8 @@ export class ContentDetailComponent implements OnInit, OnDestroy {
     private contentService: ServiceContentService,
     private richText: RichTextService,
     private seo: SeoService,
-    private structuredData: StructuredDataService
+    private structuredData: StructuredDataService,
+    private areaDirectory: AreaDirectoryService
   ) {}
 
   /**
@@ -92,7 +102,7 @@ export class ContentDetailComponent implements OnInit, OnDestroy {
   @HostListener('window:resize')
   updateSideOffset(): void {
     const el = this.sideEl;
-    if (!el) return;
+    if (!el || !this.isBrowser) return;
     const height = el.offsetHeight;
     const fits = height + STICKY_TOP + STICKY_BOTTOM_GAP <= window.innerHeight;
     const top = fits ? STICKY_TOP : window.innerHeight - height - STICKY_BOTTOM_GAP;
@@ -147,8 +157,20 @@ export class ContentDetailComponent implements OnInit, OnDestroy {
         url: path
       });
 
+      this.structuredData.setFaq(faqEntries(page.contentBlocks, this.richText));
+
+      this.area = categorySlug === AREA_CATEGORY_SLUG ? AREAS_BY_SLUG.get(contentSlug) : undefined;
+      this.nearbyAreas = [];
+      if (this.area) {
+        const area = this.area;
+        this.structuredData.setAreaService(area, path);
+        this.areaDirectory.getPublishedAreas().subscribe(live => {
+          const liveSlugs = new Set(live.map(a => a.slug));
+          this.nearbyAreas = area.nearby.filter(slug => liveSlugs.has(slug)).map(slug => AREAS_BY_SLUG.get(slug)!);
+        });
+      }
+
       this.contentService.getRelatedContentPages(categorySlug, contentSlug, 3).subscribe(related => this.related = related);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 

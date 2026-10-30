@@ -11,6 +11,11 @@ import { ImageOptimizationService, ImagePurpose } from './image-optimization.ser
 // Promote that syntax to a real <img> before anything else runs.
 const MARKDOWN_IMAGE_RE = /!\[([^\]]*)\]\(\s*(<[^>]+>|[^\s)]+)(?:\s+"[^"]*")?\s*\)/g;
 
+// Editors keep working notes (target keywords, character counts) in HTML
+// comments at the top of an article. They are not content, and in prerendered
+// pages they would ship in the HTML every visitor and crawler downloads.
+const HTML_COMMENT_RE = /<!--[\s\S]*?-->/g;
+
 const IMG_TAG_RE = /<img\b[^>]*>/gi;
 const SRC_ATTR_RE = /\ssrc\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i;
 const TABLE_TAG_RE = /<\/?table\b[^>]*>/gi;
@@ -36,6 +41,7 @@ export class RichTextService {
   toPlainText(raw: string | undefined | null): string | undefined {
     if (!raw) return undefined;
     const text = raw
+      .replace(HTML_COMMENT_RE, '')
       .replace(MARKDOWN_IMAGE_RE, '')
       .replace(/<[^>]+>/g, ' ')
       .replace(/&nbsp;/gi, ' ')
@@ -52,7 +58,7 @@ export class RichTextService {
    * and they load lazily so body images never compete with the LCP element.
    */
   normalize(raw: string, purpose: ImagePurpose = 'content'): string {
-    const html = raw.replace(MARKDOWN_IMAGE_RE, (_match, alt: string, url: string) => {
+    const html = raw.replace(HTML_COMMENT_RE, '').replace(MARKDOWN_IMAGE_RE, (_match, alt: string, url: string) => {
       // `<…>` is markdown's escape for a URL containing spaces.
       const src = url.startsWith('<') && url.endsWith('>') ? url.slice(1, -1) : url;
       return `<img src="${this.escapeAttr(src)}" alt="${this.escapeAttr(alt)}">`;

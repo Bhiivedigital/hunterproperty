@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LeadPopupService } from '../lead-popup/lead-popup.service';
 import { ServiceContentService } from '../services/service-content.service';
@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   menuCategories: MenuCategory[] = [];
   megaMenuOpen = false;
   private headerTopResizeObserver?: ResizeObserver;
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   constructor(private leadPopupService: LeadPopupService, private contentService: ServiceContentService) {}
 
@@ -30,7 +31,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.contentService.getMenuCategories().subscribe(categories => this.menuCategories = categories);
   }
 
+  // Prerendered as desktop, so the HTML crawlers read carries the real
+  // /services link rather than the mobile toggle with no href.
   get isDesktop(): boolean {
+    if (!this.isBrowser) return true;
     return window.innerWidth >= DESKTOP_BREAKPOINT;
   }
 
@@ -66,7 +70,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isScrolled = window.scrollY > 50;
   }
 
-  openQuotePopup(): void {
+  // Real href so the link is crawlable; the popup opens in place.
+  openQuotePopup(event?: Event): void {
+    event?.preventDefault();
     this.leadPopupService.open();
   }
 
@@ -80,6 +86,7 @@ callNow(): void {
   window.location.href = `tel:${phoneNumber}`;
 }
  ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
     const navLinks = document.querySelectorAll('.nav-link');
     const offcanvasNavbar = document.getElementById('offcanvasNavbar');
     const offcanvasAnother = document.getElementById('offcanvasAnother');

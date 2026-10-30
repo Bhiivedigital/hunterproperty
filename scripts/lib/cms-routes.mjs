@@ -1,7 +1,7 @@
-// "Which CMS URLs does this site have, and what are their SEO tags" at build
-// time, for generate-static-seo.mjs to stamp per-page <head> tags into the
-// pre-rendered HTML. The live sitemap (cms/src/api/sitemap) applies the same
-// rules, so every URL it lists gets a real HTML file on the next build.
+// "Which CMS URLs does this site have" at build time, for
+// write-prerender-routes.mjs to hand to the prerenderer. The live sitemap
+// (cms/src/api/sitemap) applies the same rules, so every URL it lists gets a
+// fully rendered HTML file on the next build.
 
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';

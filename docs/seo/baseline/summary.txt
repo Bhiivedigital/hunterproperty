@@ -1,0 +1,4 @@
+area-mobile.json       {"performance":20,"accessibility":82,"best-practices":96,"seo":92} FCP 3.2 s LCP 15.5 s TBT 610 ms CLS 1.081 SI 10.4 s bytes Total size was 2,304 KiB
+category-mobile.json   {"performance":24,"accessibility":82,"best-practices":96,"seo":92} FCP 2.0 s LCP 15.5 s TBT 710 ms CLS 1.066 SI 7.7 s bytes Total size was 2,236 KiB
+home-desktop.json      {"performance":39,"accessibility":86,"best-practices":96,"seo":92} FCP 1.4 s LCP 6.7 s TBT 570 ms CLS 0.029 SI 4.8 s bytes Total size was 5,741 KiB
+home-mobile.json       {"performance":6,"accessibility":83,"best-practices":96,"seo":85} FCP 3.0 s LCP 16.5 s TBT 4,590 ms CLS 0.901 SI 13.5 s bytes Total size was 5,611 KiB

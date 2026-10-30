@@ -1,0 +1,72 @@
+.hub-layout {
+  display: grid;
+  gap: 32px;
+  margin-top: 16px;
+
+  @media (min-width: 992px) {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+
+    .hub-aside { grid-column: 2; grid-row: 1; position: sticky; top: 100px; align-self: start; }
+    .hub-main { grid-column: 1; grid-row: 1; }
+  }
+}
+
+.hub-lead { font-size: 18px; }
+.hub-note { font-size: 14px; opacity: .85; }
+
+.hub-section-title { margin: 56px 0 12px; font-size: 30px; }
+.hub-section-intro { margin-bottom: 20px; }
+
+.hub-zones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+
+  h3 { font-size: 19px; margin-bottom: 10px; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { padding: 4px 0; border-bottom: 1px dashed rgba(10, 33, 85, .12); }
+}
+
+.hub-office-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.hub-office {
+  padding: 18px;
+  border: 1px solid rgba(10, 33, 85, .12);
+  border-radius: 12px;
+
+  h3 { font-size: 17px; }
+  h3 i { color: var(--theme-color); }
+  p { margin: 0; }
+}
+
+.hub-related ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding-left: 18px;
+}
+
+.hub-zones a,
+.hub-related a {
+  color: var(--color-dark, #0a2155);
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover { color: var(--theme-color); }
+}
+
+// Grid items default to min-width: auto, which let the form card push past
+// the column on a phone.
+.hub-aside,
+.hub-main {
+  min-width: 0;
+}
+
+.hub-aside app-hero-lead-form {
+  display: block;
+}

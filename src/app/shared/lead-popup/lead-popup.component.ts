@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LeadPopupService } from './lead-popup.service';
@@ -35,6 +35,7 @@ export class LeadPopupComponent implements OnInit {
   private isHomeRoute = true;
   private timerId: any;
   private autoTriggered = false;
+  private readonly platformId = inject(PLATFORM_ID);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,7 +65,11 @@ export class LeadPopupComponent implements OnInit {
       service: ['', Validators.required]
     });
 
-    this.timerId = setTimeout(() => this.triggerPopup(), TIMER_TRIGGER_MS);
+    // Browser only: a pending 45s timer would hold every prerendered page open
+    // until it fired, since prerendering waits for the app to go idle.
+    if (isPlatformBrowser(this.platformId)) {
+      this.timerId = setTimeout(() => this.triggerPopup(), TIMER_TRIGGER_MS);
+    }
   }
 
   get f(): { [key: string]: AbstractControl } {

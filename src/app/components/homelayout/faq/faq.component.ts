@@ -5,11 +5,14 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HomeContentService } from '../../../shared/services/home-content.service';
 import { HomeFaq, HomeTestimonials } from '../../../shared/models/home-content.model';
 import { RichTextPipe } from '../../../shared/pipes/rich-text.pipe';
+import { RouterLink } from '@angular/router';
+import { StructuredDataService } from '../../../shared/services/structured-data.service';
+import { RichTextService } from '../../../shared/services/rich-text.service';
 
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [CommonModule, CarouselModule, RichTextPipe],
+  imports: [CommonModule, CarouselModule, RichTextPipe, RouterLink],
   templateUrl: './faq.component.html',
   styleUrl: './faq.component.scss',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
@@ -20,12 +23,21 @@ export class FaqComponent implements OnInit {
   testimonials?: HomeTestimonials;
   testimonialsTitleHtml?: SafeHtml;
 
-  constructor(private homeContentService: HomeContentService, private sanitizer: DomSanitizer) {}
+  constructor(
+    private homeContentService: HomeContentService,
+    private sanitizer: DomSanitizer,
+    private structuredData: StructuredDataService,
+    private richText: RichTextService
+  ) {}
 
   ngOnInit(): void {
     this.homeContentService.getFaq().subscribe(faq => {
       this.faq = faq;
       this.faqTitleHtml = this.sanitizer.bypassSecurityTrustHtml(faq.titleHtml);
+      this.structuredData.setFaq((faq.items ?? []).map(item => ({
+        question: this.richText.toPlainText(item.question) ?? '',
+        answer: this.richText.toPlainText(item.answer) ?? ''
+      })).filter(item => item.question && item.answer));
     });
     this.homeContentService.getTestimonials().subscribe(testimonials => {
       this.testimonials = testimonials;

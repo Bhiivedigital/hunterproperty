@@ -1,0 +1,33 @@
+{
+  "slug": "builders-in-korattur",
+  "mode": "update",
+  "title": "Builders in Korattur: Lake-Side Plots and Older Layouts",
+  "seo": {
+    "metaTitle": "Builders in Korattur | New Homes & Rebuilds | Hunter Property",
+    "metaDescription": "Building near Korattur lake? We start with a soil test and a structural read of the existing house, then quote dewatering, sump and demolition as named lines."
+  },
+  "excerpt": "In Korattur two questions come first: what the ground near the lake does, and what the existing house is made of. This guide covers both, plus lane access, plot size and how the quote is built.",
+  "faqTitle": "Building in Korattur: questions owners ask",
+  "faqs": [
+    {
+      "question": "What do your house construction packages cost in Korattur?",
+      "answer": "<p>Our packages are priced per sq ft of built-up area: Basic ₹2,199, Standard ₹2,399, Premium ₹2,699 and Ultra Luxury ₹3,199. Approvals, soil test, compound wall, sump and interiors are quoted separately. Depending on the plot, we add demolition and debris disposal, dewatering and external sump waterproofing where the water table is high, and an access premium only if the lane blocks delivery.</p>"
+    },
+    {
+      "question": "Who approves a house plan in Korattur?",
+      "answer": "<p>For a typical individual house in Korattur, the building permit comes from the Greater Chennai Corporation; larger buildings go to CMDA. We prepare the drawings and handle the submission, with the approval fees quoted separately.</p>"
+    },
+    {
+      "question": "Why test the soil before demolition in Korattur?",
+      "answer": "<p>Because the result can change the foundation design. Low-lying ground in Chennai commonly means clay or filled soil with low bearing capacity, and knowing that early keeps both the foundation and the budget right before work begins.</p>"
+    },
+    {
+      "question": "How do setbacks affect a smaller Korattur plot?",
+      "answer": "<p>Setbacks take a fixed amount whatever the plot size, so they take proportionally more of a small one. Our first sketch tests the buildable footprint against your brief. Where the plot is tight, building upward spreads foundation and roof cost over more floors.</p>"
+    },
+    {
+      "question": "What is dewatering and when is it needed?",
+      "answer": "<p>Pumping groundwater out of the excavation so the foundation can be built in the dry. It is needed where the water table is high, which is more likely on plots near the lake, and we list it as its own line.</p>"
+    }
+  ]
+}

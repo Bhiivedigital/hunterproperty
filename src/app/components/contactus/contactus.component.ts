@@ -1,3 +1,4 @@
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,7 +7,7 @@ import { EMAILJS_CONFIG, LeadService } from '../../shared/services/lead.service'
 @Component({
   selector: 'app-contactus',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule],
   templateUrl: './contactus.component.html',
   styleUrl: './contactus.component.scss'
 })

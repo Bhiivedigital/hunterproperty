@@ -25,9 +25,9 @@ interface StaticRouteSeo {
 const SITE_URL = 'https://www.hunterproperty.in';
 const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/img/logo/logo.png`;
 
-// Same table `scripts/generate-static-seo.mjs` stamps into the pre-rendered
-// HTML, so the tags a crawler sees in view-source and the tags Angular sets
-// after hydration can't drift apart.
+// Title and description for the fixed routes. Prerendering runs this same
+// service, so the tags in each page's HTML are exactly the ones Angular keeps
+// after hydration.
 const STATIC_ROUTE_SEO = staticRouteSeo as unknown as Record<string, StaticRouteSeo | undefined>;
 
 @Injectable({

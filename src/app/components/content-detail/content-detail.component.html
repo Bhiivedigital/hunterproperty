@@ -85,6 +85,8 @@
 
             <ng-container *ngTemplateOutlet="cover; context: { $implicit: 'below-title' }"></ng-container>
 
+            <app-area-panel *ngIf="area" [area]="area" [nearby]="nearbyAreas" [categorySlug]="page.category.slug"></app-area-panel>
+
             <div class="content-page-body cms-rich-text" [innerHTML]="pageContent"></div>
 
             <ng-container *ngTemplateOutlet="cover; context: { $implicit: 'below-content' }"></ng-container>

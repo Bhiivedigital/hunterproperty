@@ -1,10 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../src/assets/css/style.css";
+@import "../src/assets/fonts/fonts.css";
 @import "../src/assets/css/all-fontawesome.min.css";
 @import "../src/assets/css/animate.min.css";
-@import "../src/assets/css/magnific-popup.min.css";
-@import "../src/assets/css/nice-select.min.css";
 @import "../src/assets/css/cms-rich-text.scss";
 @import "../src/assets/css/cms-icons.scss";
 
@@ -511,4 +510,50 @@ iframe,
 embed,
 object {
     max-width: 100%;
+}
+
+// Page banners: the title is the page's <h1> (one per page, for search
+// engines) but keeps the size it had as an <h2>, so nothing shifts visually.
+.site-breadcrumb h1.breadcrumb-title,
+.site-breadcrumb h1.hero-title {
+    font-size: 35px;
+}
+
+// Logos carry width/height attributes so the browser reserves their space
+// before they load; CSS sets the displayed width, so the height must follow it.
+.navbar-brand img,
+.offcanvas-brand img,
+.sidebar-popup-logo img,
+.footer-logo img {
+    height: auto;
+}
+
+// "Builders in Chennai" link under the Services mega menu (global: the header
+// component stylesheet is already near its size budget).
+.mega-menu-hub-link {
+    display: block;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--theme-color-light);
+    color: var(--color-dark, #0a2155);
+    font-weight: 600;
+
+    i { color: var(--theme-color); margin: 0 4px; }
+}
+
+// Hero carousel before its script runs. Prerendered, the carousel has no
+// measured width yet (its stage carries `width: NaNpx`), so every slide,
+// including the loop's cloned copies, stacks in the page; once the browser
+// sizes it everything jumps (a 0.7 layout-shift score on desktop). Until then
+// show exactly the slide the carousel will open on: the first real one.
+.slidersec .owl-stage[style*="NaN"] > .owl-item {
+    display: none;
+}
+.slidersec .owl-stage[style*="NaN"] > .owl-item:not(.cloned) {
+    display: block;
+    width: 100%;
+}
+.slidersec .owl-stage[style*="NaN"] > .owl-item:not(.cloned) ~ .owl-item:not(.cloned) {
+    display: none;
 }

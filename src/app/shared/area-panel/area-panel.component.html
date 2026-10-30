@@ -1,0 +1,43 @@
+<section class="area-panel" [attr.aria-label]="'Building in ' + area.name">
+  <h2 class="area-panel-title">House construction in {{ area.name }} at a glance</h2>
+  <dl class="area-panel-facts">
+    <div>
+      <dt><i class="far fa-location-dot"></i> Pincode</dt>
+      <dd>{{ area.pincodes.join(', ') }} &middot; {{ area.zone }}</dd>
+    </div>
+    <div>
+      <dt><i class="far fa-file-lines"></i> Plan approval</dt>
+      <dd>{{ area.approvals }}</dd>
+    </div>
+    <div>
+      <dt><i class="far fa-helmet-safety"></i> What matters most here</dt>
+      <dd>{{ area.keyConsideration }}</dd>
+    </div>
+    <div>
+      <dt><i class="far fa-indian-rupee-sign"></i> Construction cost</dt>
+      <dd>From &#8377;{{ fromPrice | number }} per sq ft
+        <span class="area-panel-packages">({{ packages.length }} packages:
+          <ng-container *ngFor="let pkg of packages; let last = last">{{ pkg.name }} &#8377;{{ pkg.pricePerSqft | number }}{{ last ? '' : ', ' }}</ng-container>)</span>
+      </dd>
+    </div>
+    <div>
+      <dt><i class="far fa-building"></i> Served from</dt>
+      <dd>Our {{ office.area }} {{ office.label | lowercase }}, {{ office.streetAddress }}, Chennai {{ office.postalCode }}</dd>
+    </div>
+  </dl>
+
+  <div class="area-panel-actions">
+    <a class="theme-btn" href="/contactus/" (click)="openQuote($event)">Get a Free Quote for {{ area.name }}<i class="fas fa-arrow-right"></i></a>
+    <a class="theme-btn2" [href]="'tel:' + telephone">Call {{ telephone }}<i class="fas fa-phone"></i></a>
+  </div>
+
+  <div class="area-panel-nearby" *ngIf="nearby.length">
+    <h3>Builders in nearby areas</h3>
+    <ul>
+      <li *ngFor="let near of nearby">
+        <a [routerLink]="['/' + categorySlug, near.slug]">Builders in {{ near.name }}</a>
+      </li>
+      <li><a routerLink="/builders-in-chennai">All areas we build in across Chennai</a></li>
+    </ul>
+  </div>
+</section>

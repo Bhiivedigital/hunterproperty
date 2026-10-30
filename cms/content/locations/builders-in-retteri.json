@@ -1,0 +1,33 @@
+{
+  "slug": "builders-in-retteri",
+  "mode": "update",
+  "title": "Builders in Retteri: Building Safely on Lake-Edge Plots",
+  "seo": {
+    "metaTitle": "Builders in Retteri | Home Construction | Hunter Property",
+    "metaDescription": "Building near Retteri lake? We check patta classification, buffer rules and approval feasibility before you buy, then design the plinth, foundation and sump."
+  },
+  "excerpt": "Near Retteri lake, the land classification decides whether a house can be approved at all. This guide covers the documents to check before buying, then the plinth, soil and sump decisions low ground needs.",
+  "faqTitle": "Building in Retteri: questions owners ask",
+  "faqs": [
+    {
+      "question": "Can you check a Retteri plot before I buy it?",
+      "answer": "<p>Yes. Before we price, we look at the patta and land classification, the distance from the water body and any buffer rule, and whether approval is actually feasible. If a plot cannot be sanctioned, we will tell you to walk away rather than take it on.</p>"
+    },
+    {
+      "question": "What do your house construction packages cost in Retteri?",
+      "answer": "<p>Our packages are priced per sq ft of built-up area: Basic ₹2,199, Standard ₹2,399, Premium ₹2,699 and Ultra Luxury ₹3,199. Approvals, soil test, compound wall, sump and interiors are quoted separately. Where the soil test shows poor bearing capacity or a high water table, a deeper foundation, a higher plinth and dewatering during excavation are added as named lines at estimate stage.</p>"
+    },
+    {
+      "question": "Who approves a house plan in Retteri?",
+      "answer": "<p>For a typical individual house in Retteri, the building permit comes from the Greater Chennai Corporation; larger buildings go to CMDA. Near the lake, approval also depends on the land classification supporting residential use, so that is settled first.</p>"
+    },
+    {
+      "question": "Why is a soil test essential near Retteri lake?",
+      "answer": "<p>Land near a tank is often low-lying, and low ground in Chennai commonly means clay or filled soil with low bearing capacity. The test decides the foundation type, so we run it before the foundation is designed rather than finding out at excavation.</p>"
+    },
+    {
+      "question": "How do you waterproof a sump where the water table is high?",
+      "answer": "<p>From the outside. A high water table pushes groundwater against the sump walls, and waterproofing only the inside lets it seep in. We specify external waterproofing on these plots and plan dewatering for the excavation.</p>"
+    }
+  ]
+}
