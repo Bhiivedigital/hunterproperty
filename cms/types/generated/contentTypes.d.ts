@@ -932,6 +932,7 @@ export interface ApiLeadLead extends Struct.CollectionTypeSchema {
         'lead-popup',
         'content-page',
         'pillar-page',
+        'chatbot',
       ]
     >;
     status: Schema.Attribute.Enumeration<['new', 'contacted', 'closed']> &
