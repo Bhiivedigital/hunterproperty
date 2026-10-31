@@ -14,6 +14,8 @@ interface ChatMessage {
   leadForm?: boolean;
 }
 
+const TEASER_KEY = 'hp-chat-teaser-seen';
+
 const SERVICES = [
   'Dream Home Construction',
   'Interior Design Solutions',
@@ -42,6 +44,7 @@ export class ChatbotComponent {
   @ViewChild('input') inputRef?: ElementRef<HTMLInputElement>;
 
   open = false;
+  showTeaser = false;
   typing = false;
   draft = '';
   messages: ChatMessage[] = [];
@@ -59,10 +62,21 @@ export class ChatbotComponent {
   private lastQuestion = '';
   private lastService = '';
 
-  constructor(private http: HttpClient, private leadService: LeadService) {}
+  constructor(private http: HttpClient, private leadService: LeadService) {
+    // A one-line hello a few seconds after the page settles, once per visit.
+    if (!sessionStorage.getItem(TEASER_KEY)) {
+      setTimeout(() => { if (!this.open) this.showTeaser = true; }, 6000);
+    }
+  }
+
+  dismissTeaser(): void {
+    this.showTeaser = false;
+    sessionStorage.setItem(TEASER_KEY, '1');
+  }
 
   toggle(): void {
     this.open = !this.open;
+    if (this.showTeaser) this.dismissTeaser();
     if (!this.open) return;
     this.track('chatbot_open');
     if (!this.kbRequested) {

@@ -2,6 +2,7 @@ node_modules
 .angular
 dist
 *.zip
+*.xlsx
 
 # Strapi CMS
 cms/.tmp
