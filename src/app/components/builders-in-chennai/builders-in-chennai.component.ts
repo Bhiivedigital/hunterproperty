@@ -52,7 +52,7 @@ export class BuildersInChennaiComponent implements OnInit {
     },
     {
       question: 'How long does it take to build an individual house in Chennai?',
-      answer: 'A ground plus one house of about 1,500 to 2,000 sq ft typically takes 8 to 12 months from start of work, after approvals. The schedule depends on plot access, soil, the design and how quickly decisions on finishes are made. The timeline is fixed in the contract with stage-wise milestones.'
+      answer: 'Homes usually take 6 to 9 months and commercial buildings 8 to 12 months. The schedule depends on plot access, soil, the design and how quickly decisions on finishes are made; we share a detailed timeline during planning.'
     },
     {
       question: 'How do you make sure the quality is right?',

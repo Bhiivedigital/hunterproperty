@@ -13,3 +13,9 @@
 <app-requestquote></app-requestquote>
 <app-faq></app-faq>
 <app-featured-guides></app-featured-guides>
+
+<!-- Chat assistant: its own lazy chunk, fetched once the browser is idle, so it
+     never delays the page or appears in the prerendered HTML. -->
+@defer (on idle) {
+  <app-chatbot></app-chatbot>
+}

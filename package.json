@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "node scripts/write-prerender-routes.mjs && ng build && node scripts/postbuild.mjs",
+    "build": "node scripts/write-prerender-routes.mjs && node scripts/build-chatbot-kb.mjs && ng build && node scripts/postbuild.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

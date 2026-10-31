@@ -1,0 +1,68 @@
+<button type="button" class="chat-launcher" [class.is-open]="open" (click)="toggle()"
+        [attr.aria-expanded]="open" aria-controls="hp-chat" [attr.aria-label]="open ? 'Close chat' : 'Chat with us'">
+  <i [class]="open ? 'fas fa-xmark' : 'fas fa-comments'"></i>
+  <span class="chat-launcher-label" *ngIf="!open">Ask us</span>
+</button>
+
+<section class="chat-panel" id="hp-chat" *ngIf="open" role="dialog" aria-label="Hunter Property assistant">
+  <header class="chat-head">
+    <div>
+      <strong>Hunter Property Assistant</strong>
+      <span>Construction help · Chennai</span>
+    </div>
+    <button type="button" class="chat-close" (click)="close()" aria-label="Close chat"><i class="fas fa-xmark"></i></button>
+  </header>
+
+  <div class="chat-body" #scroller aria-live="polite">
+    <ng-container *ngFor="let m of messages">
+
+      <div class="chat-msg user" *ngIf="m.from === 'user'">{{ m.text }}</div>
+
+      <div class="chat-msg bot" *ngIf="m.from === 'bot' && m.reply as r">
+        <p *ngFor="let t of r.text">{{ t }}</p>
+        <ul *ngIf="r.list?.length"><li *ngFor="let item of r.list">{{ item }}</li></ul>
+        <p class="chat-note" *ngIf="r.note">{{ r.note }}</p>
+        <div class="chat-links" *ngIf="r.links?.length">
+          <ng-container *ngFor="let l of r.links">
+            <a *ngIf="isInternal(l.url)" [routerLink]="path(l.url)" [fragment]="fragment(l.url)" (click)="close()">{{ l.label }} <i class="fas fa-arrow-right"></i></a>
+            <a *ngIf="!isInternal(l.url)" [href]="l.url" target="_blank" rel="noopener">{{ l.label }}</a>
+          </ng-container>
+        </div>
+        <div class="chat-actions" *ngIf="r.actions?.length">
+          <ng-container *ngFor="let a of r.actions">
+            <button *ngIf="a === 'lead'" type="button" class="act lead" (click)="onAction('lead')"><i class="fas fa-phone-volume"></i> Get a free callback</button>
+            <a *ngIf="a === 'whatsapp'" class="act wa" [href]="whatsappUrl()" target="_blank" rel="noopener" (click)="onAction('whatsapp')"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a *ngIf="a === 'call'" class="act" [href]="contact.tel" (click)="onAction('call')"><i class="fas fa-phone"></i> Call {{ contact.telLabel }}</a>
+            <a *ngIf="a === 'email'" class="act" [href]="mailto()" (click)="onAction('email')"><i class="fas fa-envelope"></i> Email</a>
+          </ng-container>
+        </div>
+        <div class="chat-chips" *ngIf="r.chips?.length">
+          <button type="button" *ngFor="let c of r.chips" (click)="send(c)">{{ c }}</button>
+        </div>
+      </div>
+
+      <form class="chat-msg bot chat-lead" *ngIf="m.leadForm" (ngSubmit)="submitLead()" novalidate>
+        <p>Share your details and our team will call you back with a free estimate.</p>
+        <input name="name" [(ngModel)]="lead.name" placeholder="Your name" autocomplete="name"
+               [class.invalid]="leadSubmitted && !lead.name.trim()">
+        <input name="phone" [(ngModel)]="lead.phone" placeholder="10-digit mobile number" inputmode="tel" autocomplete="tel"
+               [class.invalid]="leadSubmitted && !phoneValid">
+        <input name="location" [(ngModel)]="lead.location" placeholder="Plot / site area in Chennai"
+               [class.invalid]="leadSubmitted && !lead.location.trim()">
+        <select name="service" [(ngModel)]="lead.service" aria-label="Service">
+          <option *ngFor="let s of services" [value]="s">{{ s }}</option>
+        </select>
+        <button type="submit" class="act lead" [disabled]="leadSending">{{ leadSending ? 'Sending…' : 'Request callback' }}</button>
+        <small class="chat-error" *ngIf="leadFailed">Sorry, that didn't go through. Please call or WhatsApp us on {{ contact.telLabel }}.</small>
+      </form>
+
+    </ng-container>
+
+    <div class="chat-msg bot typing" *ngIf="typing" aria-label="Typing"><span></span><span></span><span></span></div>
+  </div>
+
+  <form class="chat-input" (ngSubmit)="send()">
+    <input #input name="draft" [(ngModel)]="draft" placeholder="Ask about cost, packages, areas…" autocomplete="off" maxlength="300" aria-label="Your question">
+    <button type="submit" [disabled]="!draft.trim()" aria-label="Send"><i class="fas fa-paper-plane"></i></button>
+  </form>
+</section>

@@ -77,7 +77,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   goToWhatsApp(): void {
-  const phoneNumber = '7550110784'; // Use international format, no + or spaces
+  const phoneNumber = '917550110784'; // International format (91 = India), no + or spaces
   const url = `https://wa.me/${phoneNumber}`;
   window.open(url, '_blank');
 }

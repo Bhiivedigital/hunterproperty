@@ -13,11 +13,12 @@ import { FeaturedGuidesComponent } from './featured-guides/featured-guides.compo
 import { WorkingprocessComponent } from './workingprocess/workingprocess.component';
 import { ProjectskillsComponent } from './projectskills/projectskills.component';
 import { RequestquoteComponent } from "./requestquote/requestquote.component";
+import { ChatbotComponent } from '../../shared/chatbot/chatbot.component';
 
 @Component({
   selector: 'app-homelayout',
   standalone: true,
-  imports: [BannerComponent, FeatureareaComponent, AboutsectionComponent, ServicesectionComponent, HomeportfolioComponent, PricingComponent, PricingComponent, WhychooseusComponent, TeamComponent, FaqComponent, FeaturedGuidesComponent, WorkingprocessComponent, ProjectskillsComponent, RequestquoteComponent],
+  imports: [BannerComponent, FeatureareaComponent, AboutsectionComponent, ServicesectionComponent, HomeportfolioComponent, PricingComponent, PricingComponent, WhychooseusComponent, TeamComponent, FaqComponent, FeaturedGuidesComponent, WorkingprocessComponent, ProjectskillsComponent, RequestquoteComponent, ChatbotComponent],
   templateUrl: './homelayout.component.html',
   styleUrl: './homelayout.component.scss'
 })
